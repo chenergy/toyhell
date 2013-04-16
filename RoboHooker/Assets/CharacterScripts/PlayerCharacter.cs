@@ -45,6 +45,17 @@ public class PlayerCharacter : MonoBehaviour {
         }
         m_control.Move(m_movement*Time.deltaTime);
     }
+    private void Unequip()
+    {
+        if (m_LeftWeapon != null)
+        {
+            m_LeftScript.Deequip();
+            m_LeftScript = null;
+            m_LeftWeapon.transform.position = transform.position;
+            m_LeftWeapon = null;
+            
+        }
+    }
 
     private void applyGravity()
     {
@@ -76,6 +87,10 @@ public class PlayerCharacter : MonoBehaviour {
     {
         if (Input.GetKey(m_LeftEquipKey))
         {
+            if ((m_LeftWeapon != null)&&(m_LeftScript!=newWeapon))
+            {
+                Unequip();
+            }
             newWeapon.gameObject.transform.position = m_socketLoc.transform.position;
             newWeapon.Equip(gameObject);
             m_LeftScript = newWeapon;

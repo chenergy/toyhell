@@ -7,6 +7,10 @@ public class SocketWeapon : Weapon {
     {
         transform.parent=Character.transform;
     }
+    public void Deequip()
+    {
+        transform.parent = null;
+    }
 
     public KeyCode fireKey
     {
