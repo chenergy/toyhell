@@ -37,7 +37,7 @@ public class PlayerCharacter : MonoBehaviour {
         Debug.Log(m_Aim + ", " + m_Movedir);
         m_movement.x = m_movementSpeed * m_Movedir;
         applyGravity();
-        if ((Input.GetKey(m_JumpKey)||Input.GetKeyDown(m_jumpButton)) && m_control.isGrounded)
+        if ((Input.GetKey(m_JumpKey)||Input.GetKey(m_jumpButton)) && m_control.isGrounded)
         {
             Debug.Log("jump");
             m_movement.y = m_jumpSpeed;
