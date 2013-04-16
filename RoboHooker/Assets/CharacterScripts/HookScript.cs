@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class SocketWeapon : MonoBehaviour {
+public class HookScript : Weapon {
+
 
 }

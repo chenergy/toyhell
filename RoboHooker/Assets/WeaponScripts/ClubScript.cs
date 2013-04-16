@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class ClubScript : MonoBehaviour {
+public class ClubScript : SocketWeapon {
 
 	// Use this for initialization
 	void Start () {

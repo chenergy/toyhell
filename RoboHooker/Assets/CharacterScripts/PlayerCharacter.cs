@@ -12,9 +12,12 @@ public class PlayerCharacter : MonoBehaviour {
     public KeyCode m_RightKey;
     public KeyCode m_JumpKey;
     public KeyCode m_LeftEquipKey;
+    public string m_MoveAxis;
+    public string m_AimAxisX;
+    public string m_AimAxisY;
 
     public GameObject m_LeftWeapon;
-    public SocketedWeapon m_LeftScript;
+    public SocketWeapon m_LeftScript;
 
     private Vector3 m_movement;
     private CharacterController m_control;
@@ -28,13 +31,9 @@ public class PlayerCharacter : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(m_LeftKey))
-            m_movement.x = m_movementSpeed * (-1);
-        else if (Input.GetKey(m_RightKey))
-            m_movement.x = m_movementSpeed;
-        else
-            m_movement.x = 0;
-
+        float m_Movedir = Input.GetAxis(m_MoveAxis);
+        Vector2 m_Aim = new Vector2(Input.GetAxis(m_AimAxisX), Input.GetAxis(m_AimAxisY));
+        m_movement.x = m_movementSpeed * m_Movedir;
         applyGravity();
     
         if (Input.GetKey(m_JumpKey)&&m_control.isGrounded)
@@ -55,8 +54,16 @@ public class PlayerCharacter : MonoBehaviour {
     }
     public void OnTriggerEnter(Collider other)
     {
+        SocketWeapon sw = (SocketWeapon)other.gameObject.GetComponent<SocketWeapon>();
+        if (sw != null)
+            pickUpWeapon(sw);
     }
-    protected virtual void pickUpWeapon(SocketedWeapon newWeapon)
+    protected virtual void pickUpWeapon(SocketWeapon newWeapon)
     {
+        if (Input.GetKey(m_LeftEquipKey))
+        {
+            m_LeftScript = newWeapon;
+            m_LeftWeapon = newWeapon.gameObject;
+        }
     }
 }
