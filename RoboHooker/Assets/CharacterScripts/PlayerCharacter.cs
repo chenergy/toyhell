@@ -12,6 +12,7 @@ public class PlayerCharacter : MonoBehaviour {
     public KeyCode m_RightKey;
     public KeyCode m_JumpKey;
     public KeyCode m_LeftEquipKey;
+    public string m_jumpButton;
     public string m_MoveAxis;
     public string m_AimAxisX;
     public string m_AimAxisY;
@@ -33,11 +34,14 @@ public class PlayerCharacter : MonoBehaviour {
     {
         float m_Movedir = Input.GetAxis(m_MoveAxis);
         Vector2 m_Aim = new Vector2(Input.GetAxis(m_AimAxisX), Input.GetAxis(m_AimAxisY));
+        Debug.Log(m_Aim + ", " + m_Movedir);
         m_movement.x = m_movementSpeed * m_Movedir;
         applyGravity();
-    
-        if (Input.GetKey(m_JumpKey)&&m_control.isGrounded)
+        if ((Input.GetKey(m_JumpKey)||Input.GetKeyDown(m_jumpButton)) && m_control.isGrounded)
+        {
+            Debug.Log("jump");
             m_movement.y = m_jumpSpeed;
+        }
         m_control.Move(m_movement*Time.deltaTime);
     }
 
@@ -45,7 +49,7 @@ public class PlayerCharacter : MonoBehaviour {
     {
         if (!m_control.isGrounded)
         {
-            m_movement = m_movement + (Physics.gravity * Time.deltaTime);
+            m_movement.y = m_movement.y + (Physics.gravity.y * Time.deltaTime);
         }
         else
         {
