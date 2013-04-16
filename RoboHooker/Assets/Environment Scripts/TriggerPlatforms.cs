@@ -4,7 +4,9 @@ using System.Collections;
 public class TriggerPlatforms : MonoBehaviour 
 {
 	//public GameObject Platform;
-
+	private bool colliding = false;
+	private bool activated = false;
+	
 	// Use this for initialization
 	void Start () {
 	
@@ -12,19 +14,28 @@ public class TriggerPlatforms : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (Input.GetButton("Fire2")){
+			if (colliding && !activated){
+				Debug.Log("playing platform animation");
+				GameObject platform = GameObject.Find("Platform");
+				platform.animation["platform_animations"].speed = .5f;
+				platform.animation.Play("platform_animations");
+				activated = true;
+			}
+		}
 	}
 	
 	void OnTriggerEnter(Collider player) 
 	{
 		if (player.tag == "Player")
 		{
-			Debug.Log("playing platform animation");
-			GameObject platform = GameObject.Find("Platform");
-			platform.animation["platform_animations"].speed = .5f;
-			platform.animation.Play("platform_animations");
+			colliding = true;
 		}
 		
     }
+	
+	void OnTriggerExti(Collider player){
+		colliding = false;
+	}
 }
 
