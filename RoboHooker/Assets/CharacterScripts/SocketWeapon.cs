@@ -11,16 +11,4 @@ public class SocketWeapon : Weapon {
     {
         transform.parent = null;
     }
-
-    public KeyCode fireKey
-    {
-        get
-        {
-            return m_fireKey;
-        }
-        set
-        {
-            m_fireKey = value;
-        }
-    }
 }

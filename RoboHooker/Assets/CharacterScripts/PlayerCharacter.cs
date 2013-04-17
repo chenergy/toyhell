@@ -11,7 +11,12 @@ public class PlayerCharacter : MonoBehaviour {
     public KeyCode m_LeftKey;
     public KeyCode m_RightKey;
     public KeyCode m_JumpKey;
+
+    //Will hard code these, temporary leaving them public to allow for quick changes
+    //should be possible to setup keyboard equivalents in the input manager
+    //they should be set in stone by April 23, 2013
     public string m_LeftEquipKey;
+    public string m_Attack;
     public string m_jumpButton;
     public string m_MoveAxis;
     public string m_AimAxisX;
@@ -36,7 +41,17 @@ public class PlayerCharacter : MonoBehaviour {
     void Update()
     {
         float m_Movedir = Input.GetAxis(m_MoveAxis);
+        float m_fire = Input.GetAxis(m_Attack);
         Vector2 m_Aim = new Vector2(Input.GetAxis(m_AimAxisX), Input.GetAxis(m_AimAxisY));
+        if (m_fire != 0)
+        {
+            if (m_fire > 0)
+                m_mainWeaponScript.fire(m_Aim);
+            else if (m_LeftWeapon != null)
+            {
+                m_LeftScript.fire(m_Aim);
+            }
+        }
         m_movement.x = m_movementSpeed * m_Movedir;
         applyGravity();
         if ((Input.GetKey(m_JumpKey)||Input.GetKey(m_jumpButton)) && m_control.isGrounded)
