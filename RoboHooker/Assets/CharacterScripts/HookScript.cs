@@ -10,16 +10,20 @@ public class HookScript : Weapon {
     private FireStage m_current;
     private GameObject m_hookedObject;
     private Hooker m_hooker;
+    private Transform m_hookerTrans;
+    private Transform m_real;
 
     public void Start()
     {
         m_current = FireStage.Ready;
         m_hooker = transform.parent.parent.gameObject.GetComponent<Hooker>();
+        m_real = transform.parent;
+        m_hookerTrans = transform.parent.parent;
     }
 
     public void Update()
     {
-        Debug.Log(m_current);
+//        Debug.Log(m_current);
         m_timer = m_timer + Time.deltaTime;
         switch (m_current)
         {
@@ -43,7 +47,8 @@ public class HookScript : Weapon {
                 }
                 break;
             case FireStage.Swinging:
-
+                Vector3 dir=m_hookerTrans.localPosition.normalized*(-1);
+                m_hookerTrans.localPosition = m_hookerTrans.localPosition + (dir * Time.deltaTime * m_returnSpeed);
                 break;
         }
     }
@@ -69,7 +74,11 @@ public class HookScript : Weapon {
                     realIn();
                     break;
                 case FireStage.Swinging:
+                    Debug.Log("drop");
+                    m_hookerTrans.parent = null;
+                    transform.parent = m_real;
                     m_hooker.Drop();
+                    realIn();
                     break;
             }
         }
@@ -78,15 +87,20 @@ public class HookScript : Weapon {
     public void OnCollisionEnter(Collision other)
     {
         Debug.Log(other.gameObject.name);
-        if ((m_current==FireStage.Firing)&&(other.gameObject.tag!="Player"))
+        if ((m_current==FireStage.Firing)&&(other.gameObject.tag=="Grabbable"))
         {
-            realIn();
+            Destroy(collider);
+            Destroy(rigidbody);
+            transform.parent = null;
+            m_hooker.Swing = true;
+            m_hookerTrans.parent = transform;
+            m_current = FireStage.Swinging;
         }
     }
     public void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.gameObject.name);
-        if ((m_current == FireStage.Firing) && (other.gameObject.tag != "Player"))
+        if ((m_current == FireStage.Firing) && (other.gameObject.tag != "Player")&&(other.transform.parent!=transform.parent.parent))
         {
             realIn();
             if (other.gameObject.GetComponent<SocketWeapon>() != null)
@@ -98,6 +112,7 @@ public class HookScript : Weapon {
     }
     private void realIn()
     {
+        Debug.Log("realling in");
         m_current = FireStage.Returning;
         Destroy(collider);
         Destroy(rigidbody);

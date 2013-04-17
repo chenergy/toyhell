@@ -38,7 +38,7 @@ public class PlayerCharacter : MonoBehaviour {
         m_movement = new Vector3();
     }
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         float m_Movedir = Input.GetAxis(m_MoveAxis);
         float m_fire = Input.GetAxis(m_Attack);
