@@ -55,14 +55,12 @@ public class HookScript : Weapon {
 
     public override void fire(Vector2 dir)
     {
-        Debug.Log("Fire");
         if (m_timer > m_minTimeBetweenFire)
         {
             m_timer = 0;
             switch (m_current)
             {
                 case FireStage.Ready:
-                    Debug.Log("Firing dir " + dir.x * m_power + ", " + dir.y * m_power);
                     gameObject.AddComponent<BoxCollider>();
                     gameObject.AddComponent<Rigidbody>();
                     rigidbody.constraints = RigidbodyConstraints.FreezePositionZ;
@@ -86,7 +84,6 @@ public class HookScript : Weapon {
     }
     public void OnCollisionEnter(Collision other)
     {
-        Debug.Log(other.gameObject.name);
         if ((m_current==FireStage.Firing)&&(other.gameObject.tag=="Grabbable"))
         {
             Destroy(collider);

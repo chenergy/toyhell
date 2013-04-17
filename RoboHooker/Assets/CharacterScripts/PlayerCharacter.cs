@@ -42,6 +42,7 @@ public class PlayerCharacter : MonoBehaviour {
     {
         float m_Movedir = Input.GetAxis(m_MoveAxis);
         float m_fire = Input.GetAxis(m_Attack);
+        
         Vector2 m_Aim = new Vector2(Input.GetAxis(m_AimAxisX), Input.GetAxis(m_AimAxisY));
         if (m_fire != 0)
         {

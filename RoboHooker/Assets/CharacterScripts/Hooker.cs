@@ -19,7 +19,9 @@ public class Hooker : PlayerCharacter {
             base.Update();
         }
         else if (m_fire > 0)
+        {
             m_mainWeaponScript.fire(Vector2.zero);
+        }
 
     }
     public void Drop()
