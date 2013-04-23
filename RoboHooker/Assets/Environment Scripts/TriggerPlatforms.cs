@@ -18,8 +18,11 @@ public class TriggerPlatforms : MonoBehaviour
 			if (colliding && !activated){
 				Debug.Log("playing platform animation");
 				GameObject platform = GameObject.Find("Platform");
+				GameObject trigger = GameObject.Find("trigger");
 				platform.animation["platform_animations"].speed = .5f;
 				platform.animation.Play("platform_animations");
+				trigger.animation.Play();
+				
 				activated = true;
 			}
 		}
