@@ -11,6 +11,6 @@ public class PencilScript : SocketWeapon {
     }
     public override void fire(Vector2 dir)
     {
-        m_animator.StartPlayback();
+//        m_animator.StartPlayback();
     }
 }
