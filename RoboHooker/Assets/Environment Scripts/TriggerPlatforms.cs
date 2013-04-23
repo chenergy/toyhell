@@ -21,7 +21,7 @@ public class TriggerPlatforms : MonoBehaviour
 				GameObject trigger = GameObject.Find("trigger");
 				platform.animation["platform_animations"].speed = .5f;
 				platform.animation.Play("platform_animations");
-				trigger.animation.Play();
+				trigger.animation.Play("trigger");
 				
 				activated = true;
 			}
