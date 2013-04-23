@@ -28,12 +28,14 @@ public class PlayerCharacter : MonoBehaviour {
     public GameObject m_LeftWeapon;
     public SocketWeapon m_LeftScript;
 
-    private Vector3 m_movement;
+    protected Vector3 m_movement;
     private CharacterController m_control;
+    private float m_zPosition;
 
     // Use this for initialization
     void Start()
     {
+        m_zPosition = transform.position.z;
         m_control = (CharacterController)GetComponent<CharacterController>();
         m_movement = new Vector3();
     }
@@ -54,11 +56,14 @@ public class PlayerCharacter : MonoBehaviour {
             }
         }
         m_movement.x = m_movementSpeed * m_Movedir;
+
         applyGravity();
-        if ((Input.GetKey(m_JumpKey)||Input.GetKey(m_jumpButton)) && m_control.isGrounded)
+        if ((Input.GetKey(m_JumpKey)||Input.GetButtonDown(m_jumpButton)) && m_control.isGrounded)
         {
             m_movement.y = m_jumpSpeed;
         }
+        transform.position = new Vector3(transform.position.x, transform.position.y, m_zPosition);
+
         m_control.Move(m_movement*Time.deltaTime);
     }
     private void Unequip()
@@ -99,9 +104,9 @@ public class PlayerCharacter : MonoBehaviour {
         OnTriggerEnter(other);
     }
 
-    protected virtual void pickUpWeapon(SocketWeapon newWeapon)
+    private void pickUpWeapon(SocketWeapon newWeapon)
     {
-        if (Input.GetKey(m_LeftEquipKey))
+        if (Input.GetButtonDown(m_LeftEquipKey))
         {
             if ((m_LeftWeapon != null)&&(m_LeftScript!=newWeapon))
             {

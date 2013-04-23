@@ -107,6 +107,7 @@ public class HookScript : Weapon {
             }
         }
     }
+ 
     private void realIn()
     {
         Debug.Log("realling in");
@@ -114,4 +115,5 @@ public class HookScript : Weapon {
         Destroy(collider);
         Destroy(rigidbody);
     }
+ 
 }
