@@ -12,26 +12,24 @@ namespace FSM
 			Actor actor = (Actor) o;
 			Vector3 direction = actor.TargetPosition - actor.Position;
 			
+			Debug.Log("Moving to: " + actor.TargetPosition);
+			Debug.DrawLine(actor.Position, actor.TargetPosition);
+			
+			// Quick Rotation
+			//actor.controller.transform.LookAt(actor.TargetPosition);
+			
+			// Slow Rotation
 			if (Quaternion.Angle(actor.Rotation, actor.TargetRotation) > 5.0f){
 				actor.Rotation = Quaternion.Slerp(actor.Rotation, actor.TargetRotation, Time.deltaTime * 
-					(actor.TurnSpeed * 3.0f));
+					(actor.TurnSpeed));
 			}
+			
+			Debug.DrawRay(actor.Position, actor.controller.transform.forward);
 			
 			if (direction.magnitude > 0.2f){
 				actor.controller.Move(new Vector3((direction.normalized * (actor.MoveSpeed * 0.01f)).x, 0, 
 					(direction.normalized * (actor.MoveSpeed * 0.01f)).z));
 			}
-			
-			if ((Quaternion.Angle(actor.Rotation, actor.TargetRotation) < 5.0f) && (direction.magnitude < 0.1f))
-			{
-				actor.TargetPosition = actor.Position;
-				actor.TargetRotation = actor.Rotation;
-				fsmc.dispatch("idle", this);
-			}
-			
-			//Debug.Log("distance: " + direction.magnitude);
-			//fsmc.Attributes.PlayEnemy("run", this.moveSpeed);
-			
         }
     }
 }

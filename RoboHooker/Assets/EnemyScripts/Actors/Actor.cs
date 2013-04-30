@@ -13,22 +13,21 @@ namespace Actors
 		
 		
 		public void MoveToPosition(Vector3 targetPosition){
-			Quaternion targetRotation = Quaternion.LookRotation( 
-					new Vector3(targetPosition.x, this.Position.y, targetPosition.z) - this.Position);
+			// Do not consider y in the target location
+			this.TargetPosition = new Vector3(targetPosition.x, this.Position.y, targetPosition.z);
 			
-			this.TargetPosition = targetPosition;
-			this.TargetRotation = targetRotation;
-		
+			//this.TargetPosition = targetPosition;
+			this.TargetRotation = Quaternion.LookRotation(this.TargetPosition - this.Position);
+
 			if (fsmc.CurrentState.Name != "moveToPosition")
 				fsmc.dispatch("moveToPosition", this);
 		}
 		
+		
 		public void Attack(){
-			
 			if (fsmc.CurrentState.Name != "attack")
 				fsmc.dispatch("attack", this);
 		}
-		
 		
 		public GameObject gameObject{
 			get{ return (GameObject)attributes["gameObject"]; }
@@ -45,13 +44,13 @@ namespace Actors
 		}
 		
 		public Vector3 Position{
-			get{ return (Vector3)attributes["position"]; }
-			set{ attributes["position"] = value; }
+			get{ return (Vector3)this.controller.transform.position; }
+			set{ this.controller.transform.position = value; }
 		}
 		
 		public Quaternion Rotation{
-			get{ return (Quaternion)attributes["rotation"]; }
-			set{ attributes["rotation"] = value; }
+			get{ return (Quaternion)this.gameObject.transform.rotation; }
+			set{ this.gameObject.transform.rotation = value; }
 		}
 		
 		public Vector3 TargetPosition{
@@ -77,6 +76,35 @@ namespace Actors
 		public float ActionTimer{
 			get{ return (float)attributes["actionTimer"]; }
 			set{ attributes["actionTimer"] = value; }
+		}
+		
+		public float AttackTime{
+			get{ return (float)attributes["attackTime"]; }
+			set{ attributes["attackTime"] = value; }
+		}
+		
+		public float AttackLength{
+			get{ return (float)attributes["attackLength"]; }
+			set{ attributes["attackLength"] = value; }
+		}
+		
+		public bool HasAttacked{
+			get{ return (bool)attributes["hasAttacked"]; }
+			set{ attributes["hasAttacked"] = value; }
+		}
+		
+		public GameObject Hitbox{
+			get{ return (GameObject)attributes["hitbox"]; }
+			set{ attributes["hitbox"] = value; }
+		}
+		
+		public Vector3 AttackOffset{
+			get{ return (Vector3)attributes["attackOffset"]; }
+		}
+		
+		public int Damage{
+			get{ return (int)attributes["damage"]; }
+			set{ attributes["damage"] = value; }
 		}
 		
 		public void Update(){

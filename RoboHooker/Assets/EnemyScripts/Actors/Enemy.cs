@@ -44,12 +44,14 @@ namespace Actors{
 		}
 		
 		public void Patrol(float patrolPauseTime){
-			float distance = (this.PatrolTarget.transform.position - this.Position).magnitude;
+			// Do not consider y in the target location
+			Vector3 PatrolTargetPosition = new Vector3(this.PatrolTarget.transform.position.x, this.Position.y, this.PatrolTarget.transform.position.z);
+			float distance = (PatrolTargetPosition - this.Position).magnitude;
 			
 			if (distance < 0.2f){
 				
 				if (this.ActionTimer < patrolPauseTime){
-					Debug.Log(this.ActionTimer);
+					//Debug.Log(this.ActionTimer);
 					this.ActionTimer += Time.deltaTime;
 					this.fsmc.dispatch("idle", this);
 				}

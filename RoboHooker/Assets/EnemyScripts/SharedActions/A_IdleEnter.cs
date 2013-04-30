@@ -8,6 +8,7 @@ namespace FSM
     {
         public override void execute(FSMContext fsmc, object o)
         {
+			Debug.Log("idling");
         }
     }
 }

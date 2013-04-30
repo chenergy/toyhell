@@ -2,13 +2,15 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/EnemyScripts/Input/EnemyInput.cs">
     <Files>
-      <File FileName="Assets/EnemyScripts/Input/EnemyInput.cs" Line="6" Column="23" />
-      <File FileName="Assets/EnemyScripts/Actors/Enemy.cs" Line="24" Column="43" />
-      <File FileName="Assets/EnemyScripts/Actors/Actor.cs" Line="27" Column="4" />
-      <File FileName="Assets/EnemyScripts/SharedActions/A_MoveToPosition.cs" Line="29" Column="33" />
-      <File FileName="Assets/EnemyScripts/SharedActions/A_Attack.cs" Line="14" Column="29" />
-      <File FileName="Assets/Environment Scripts/TriggerBox.cs" Line="54" Column="18" />
-      <File FileName="Assets/EnemyScripts/SharedActions/A_Idle.cs" Line="15" Column="2" />
+      <File FileName="Assets/EnemyScripts/Input/EnemyInput.cs" Line="48" Column="43" />
+      <File FileName="Assets/EnemyScripts/Actors/Enemy.cs" Line="54" Column="36" />
+      <File FileName="Assets/EnemyScripts/Actors/Actor.cs" Line="102" Column="43" />
+      <File FileName="Assets/EnemyScripts/SharedActions/A_MoveToPosition.cs" Line="1" Column="1" />
+      <File FileName="Assets/EnemyScripts/Actors/Repository.cs" Line="11" Column="29" />
+      <File FileName="Assets/EnemyScripts/SharedActions/A_Attack.cs" Line="16" Column="117" />
+      <File FileName="Assets/EnemyScripts/SharedActions/A_AttackExit.cs" Line="14" Column="30" />
+      <File FileName="Assets/Environment Scripts/HitboxScript.cs" Line="7" Column="28" />
+      <File FileName="Assets/EnemyScripts/FSMFramework/State.cs" Line="58" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

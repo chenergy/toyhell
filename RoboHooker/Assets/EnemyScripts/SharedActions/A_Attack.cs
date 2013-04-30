@@ -11,11 +11,24 @@ namespace FSM
         {
 			Actor actor = (Actor) o;
 			
-			if (actor.ActionTimer < 5.0f){
-				fsmc.dispatch("idle", o);
+			if (!actor.HasAttacked && (actor.ActionTimer > actor.AttackTime)){
+				
+				GameObject hitbox = (GameObject)UnityEngine.Object.Instantiate(actor.Hitbox, actor.Position + actor.AttackOffset, Quaternion.identity);
+				
+				hitbox.GetComponent<HitboxScript>().damage = actor.Damage;
+				hitbox.GetComponent<HitboxScript>().attackLength = actor.AttackLength;
+				Debug.Log("Enemy weapon damage:" + (actor.Damage));
+				
+				Physics.IgnoreCollision(actor.controller, hitbox.collider);
+				//Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemies"), LayerMask.NameToLayer("Projectiles"));
+				
+				actor.HasAttacked = true;
 			}
 			
-			Debug.Log("attacking");
+			if (actor.ActionTimer > 5.0f){
+				fsmc.dispatch("idle", o);
+			}
+			actor.ActionTimer += Time.deltaTime;
         }
     }
 }

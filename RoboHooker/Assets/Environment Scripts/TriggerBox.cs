@@ -42,7 +42,7 @@ public class TriggerBox : MonoBehaviour {
 	
 	void OnTriggerEnter(Collider other){
 		
-		if (other == GameObject.FindGameObjectWithTag("Player").collider){
+		if (other.tag == "Player"){
 			triggered = true;
 			player = other.gameObject;
 		}
