@@ -1,6 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+<<<<<<< HEAD
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/EnemyScripts/Input/EnemyInput.cs">
+=======
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\CharacterScripts\PlayerCharacter.cs">
+>>>>>>> 7804537d7860fb834d966f27eadb272caf8fd547
     <Files>
       <File FileName="Assets/EnemyScripts/Input/EnemyInput.cs" Line="48" Column="43" />
       <File FileName="Assets/EnemyScripts/Actors/Enemy.cs" Line="54" Column="36" />
