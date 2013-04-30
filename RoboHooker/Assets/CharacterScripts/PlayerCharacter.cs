@@ -20,11 +20,13 @@ public class PlayerCharacter : MonoBehaviour {
     public GameObject m_LeftWeapon;
     public SocketWeapon m_LeftScript;
 
+    public AnimationClip m_spawn;
     public AnimationClip m_run;
     public AnimationClip m_primaryFire;
     public AnimationClip m_socketFire;
     public AnimationClip m_jump;
-
+    public AnimationClip m_idle;
+    public AnimationClip m_hurt;
 
     protected GamePadManager m_controller;
     protected Vector3 m_movement;
@@ -38,6 +40,7 @@ public class PlayerCharacter : MonoBehaviour {
         m_control = (CharacterController)GetComponent<CharacterController>();
         m_movement = new Vector3();
         m_controller = new GamePadManager(m_player);
+        PlayClip(m_spawn, WrapMode.Once);
     }
     // Update is called once per frame
     public virtual void Update()
@@ -50,20 +53,12 @@ public class PlayerCharacter : MonoBehaviour {
         {
             if (m_fire > 0)
             {
-                if (m_primaryFire != null)
-                {
-                    animation.clip = m_primaryFire;
-                    animation.Play();
-                }
+                PlayClip(m_primaryFire,WrapMode.Once);
                 m_mainWeaponScript.fire(m_Aim);
             }
             else if (m_LeftWeapon != null)
             {
-                if (m_socketFire != null)
-                {
-                    animation.clip = m_socketFire;
-                    animation.Play();
-                }
+                PlayClip(m_socketFire, WrapMode.Once);
                 m_LeftScript.fire(m_Aim);
             }
         }
@@ -72,10 +67,15 @@ public class PlayerCharacter : MonoBehaviour {
         applyGravity();
         if ((Input.GetKey(m_JumpKey) || Input.GetButton(m_controller.m_jumpButton)) && m_control.isGrounded)
         {
+            Debug.Log("jump");
+            PlayClip(m_jump, WrapMode.PingPong);
             m_movement.y = m_jumpSpeed;
         }
         transform.position = new Vector3(transform.position.x, transform.position.y, m_zPosition);
-
+        if (m_movement.magnitude > 1)
+            PlayClip(m_run, WrapMode.Loop);
+        else
+            PlayClip(m_idle, WrapMode.Loop);
         m_control.Move(m_movement*Time.deltaTime);
     }
     private void Unequip()
@@ -128,6 +128,18 @@ public class PlayerCharacter : MonoBehaviour {
             newWeapon.Equip(gameObject);
             m_LeftScript = newWeapon;
             m_LeftWeapon = newWeapon.gameObject;
+        }
+    }
+    private void PlayClip(AnimationClip ac, WrapMode mode)
+    {
+        if (ac != null)
+        {
+            Debug.Log(ac.name + " not null");
+            if (!animation.IsPlaying(ac.name))
+            {
+                animation.wrapMode = mode;
+                animation.Play(ac.name);
+            }
         }
     }
 }
