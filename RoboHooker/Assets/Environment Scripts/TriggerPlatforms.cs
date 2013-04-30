@@ -14,11 +14,9 @@ public class TriggerPlatforms : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-<<<<<<< HEAD
-		if (Input.GetButton("Fire2")){
-=======
-//		if (Input.GetButton("P1interact")){
->>>>>>> 8fbe32a61e325182eaec12b923d0ef2c240b5ae4
+        // use GamePadManager.Activate to determine the interaction
+        // it'll return true when ever either player hits the interact button
+		if (GamePadManager.Activate){
 			if (colliding && !activated){
 				Debug.Log("playing platform animation");
 				GameObject platform = GameObject.Find("Platform");
@@ -28,7 +26,7 @@ public class TriggerPlatforms : MonoBehaviour
 				trigger.animation.Play("trigger");
 				
 				activated = true;
-//			}
+			}
 		}
 	}
 	

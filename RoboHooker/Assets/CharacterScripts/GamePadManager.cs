@@ -2,8 +2,9 @@ using UnityEngine;
 using System.Collections;
 
 public enum gamepad { one, two };
-public class GamePadManager {
-        public string m_LeftEquipKey;
+public class GamePadManager
+{
+    public string m_LeftEquipKey;
     public string m_Attack;
     public string m_jumpButton;
     public string m_MoveAxisX;
@@ -37,6 +38,46 @@ public class GamePadManager {
                 m_activate = "P2activate";
                 break;
         }
+    }
+    public static bool Equip
+    {
+        get
+        {
+            if (Input.GetButton("P1equip") || Input.GetButton("P2equip"))
+                return true;
+            else
+                return false;
+        }
+    }
+    public static bool Attack{
+        get
+        {
+            if (Input.GetAxis("P2fire") != 0 || Input.GetAxis("P1fire") != 0)
+                return true;
+            else
+                return false;
+        }
+}
+    public static bool Jump
+    {
+        get
+        {
+            if (Input.GetButton("P1jump") || Input.GetButton("P2jump"))
+                return true;
+            else
+                return false;
+        }
+    }
+    public static bool Activate
+    {
+        get
+        {
+            if (Input.GetButton("P2activate") || Input.GetButton("P1activate"))
+                return true;
+            else
+                return false;
+        }
 
     }
+    
 }

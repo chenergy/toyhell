@@ -14,9 +14,10 @@ public class TriggerLevel : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-        //this is probably going to need some more work
-        //I'll make an input handling class tonight to help avoid this -Fern
-		if (Input.GetButton("Fire3")){
+        // use GamePadManager.Activate to determine the interaction
+        // it'll return true when ever either player hits the interact button
+        if (GamePadManager.Activate)
+        {
 			if (colliding && !activated){
 				Debug.Log("loading next level");
 				Application.LoadLevel("level1");
