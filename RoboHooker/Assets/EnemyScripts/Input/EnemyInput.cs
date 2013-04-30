@@ -26,6 +26,7 @@ public class EnemyInput : MonoBehaviour
 	void Start(){
 		patrolPoint1.renderer.enabled = false;
 		patrolPoint2.renderer.enabled = false;
+		hitboxPoint.renderer.enabled = false;
 		CharacterController controller = this.GetComponent<CharacterController>();
 		
 		attributes = new Dictionary<string, object>();
