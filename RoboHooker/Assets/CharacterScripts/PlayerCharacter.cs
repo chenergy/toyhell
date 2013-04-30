@@ -20,6 +20,12 @@ public class PlayerCharacter : MonoBehaviour {
     public GameObject m_LeftWeapon;
     public SocketWeapon m_LeftScript;
 
+    public AnimationClip m_run;
+    public AnimationClip m_primaryFire;
+    public AnimationClip m_socketFire;
+    public AnimationClip m_jump;
+
+
     protected GamePadManager m_controller;
     protected Vector3 m_movement;
     private CharacterController m_control;
@@ -43,18 +49,29 @@ public class PlayerCharacter : MonoBehaviour {
         if (m_fire != 0)
         {
             if (m_fire > 0)
+            {
+                if (m_primaryFire != null)
+                {
+                    animation.clip = m_primaryFire;
+                    animation.Play();
+                }
                 m_mainWeaponScript.fire(m_Aim);
+            }
             else if (m_LeftWeapon != null)
             {
+                if (m_socketFire != null)
+                {
+                    animation.clip = m_socketFire;
+                    animation.Play();
+                }
                 m_LeftScript.fire(m_Aim);
             }
         }
         m_movement.x = m_movementSpeed * m_Movedir;
 
         applyGravity();
-        if ((Input.GetKey(m_JumpKey) || Input.GetButtonDown(m_controller.m_jumpButton)) && m_control.isGrounded)
+        if ((Input.GetKey(m_JumpKey) || Input.GetButton(m_controller.m_jumpButton)) && m_control.isGrounded)
         {
-            Debug.Log("jumping");
             m_movement.y = m_jumpSpeed;
         }
         transform.position = new Vector3(transform.position.x, transform.position.y, m_zPosition);
