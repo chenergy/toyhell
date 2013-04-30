@@ -7,20 +7,12 @@ public class PlayerCharacter : MonoBehaviour {
     public float m_movementSpeed;
     public float m_jumpSpeed;
 
-    //Don't have a controller at the moment, will get one tomorrow
     public KeyCode m_LeftKey;
     public KeyCode m_RightKey;
     public KeyCode m_JumpKey;
 
-    //Will hard code these, temporary leaving them public to allow for quick changes
-    //should be possible to setup keyboard equivalents in the input manager
-    //they should be set in stone by April 23, 2013
-    public string m_LeftEquipKey;
-    public string m_Attack;
-    public string m_jumpButton;
-    public string m_MoveAxis;
-    public string m_AimAxisX;
-    public string m_AimAxisY;
+    public gamepad m_player;
+
 
     public Weapon m_mainWeaponScript;
     public GameObject m_socketLoc;
@@ -28,37 +20,57 @@ public class PlayerCharacter : MonoBehaviour {
     public GameObject m_LeftWeapon;
     public SocketWeapon m_LeftScript;
 
+    public AnimationClip m_run;
+    public AnimationClip m_primaryFire;
+    public AnimationClip m_socketFire;
+    public AnimationClip m_jump;
+
+
+    protected GamePadManager m_controller;
     protected Vector3 m_movement;
     private CharacterController m_control;
     private float m_zPosition;
-
+    
     // Use this for initialization
     void Start()
     {
         m_zPosition = transform.position.z;
         m_control = (CharacterController)GetComponent<CharacterController>();
         m_movement = new Vector3();
+        m_controller = new GamePadManager(m_player);
     }
     // Update is called once per frame
     public virtual void Update()
     {
-        float m_Movedir = Input.GetAxis(m_MoveAxis);
-        float m_fire = Input.GetAxis(m_Attack);
-        
-        Vector2 m_Aim = new Vector2(Input.GetAxis(m_AimAxisX), Input.GetAxis(m_AimAxisY));
+        float m_Movedir = Input.GetAxis(m_controller.m_MoveAxisX);
+        float m_fire = Input.GetAxis(m_controller.m_Attack);
+
+        Vector2 m_Aim = new Vector2(Input.GetAxis(m_controller.m_AimAxisX), Input.GetAxis(m_controller.m_AimAxisY));
         if (m_fire != 0)
         {
             if (m_fire > 0)
+            {
+                if (m_primaryFire != null)
+                {
+                    animation.clip = m_primaryFire;
+                    animation.Play();
+                }
                 m_mainWeaponScript.fire(m_Aim);
+            }
             else if (m_LeftWeapon != null)
             {
+                if (m_socketFire != null)
+                {
+                    animation.clip = m_socketFire;
+                    animation.Play();
+                }
                 m_LeftScript.fire(m_Aim);
             }
         }
         m_movement.x = m_movementSpeed * m_Movedir;
 
         applyGravity();
-        if ((Input.GetKey(m_JumpKey)||Input.GetButtonDown(m_jumpButton)) && m_control.isGrounded)
+        if ((Input.GetKey(m_JumpKey) || Input.GetButton(m_controller.m_jumpButton)) && m_control.isGrounded)
         {
             m_movement.y = m_jumpSpeed;
         }
@@ -106,7 +118,7 @@ public class PlayerCharacter : MonoBehaviour {
 
     private void pickUpWeapon(SocketWeapon newWeapon)
     {
-        if (Input.GetButtonDown(m_LeftEquipKey))
+        if (Input.GetButtonDown(m_controller.m_LeftEquipKey))
         {
             if ((m_LeftWeapon != null)&&(m_LeftScript!=newWeapon))
             {

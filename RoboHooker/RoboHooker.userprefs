@@ -1,8 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+<<<<<<< HEAD
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Environment Scripts\TriggerPlatforms.cs">
     <Files>
       <File FileName="Assets\Environment Scripts\TriggerPlatforms.cs" Line="17" Column="29" />
+=======
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\EnemyScripts\Input\EnemyInput.cs">
+    <Files>
+      <File FileName="Assets\EnemyScripts\Input\EnemyInput.cs" Line="1" Column="1" />
+      <File FileName="Assets\EnemyScripts\SharedActions\A_Attack.cs" Line="1" Column="1" />
+>>>>>>> 8fbe32a61e325182eaec12b923d0ef2c240b5ae4
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
