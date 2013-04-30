@@ -14,7 +14,11 @@ public class TriggerPlatforms : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
+<<<<<<< HEAD
+		if (Input.GetButton("Fire2")){
+=======
 //		if (Input.GetButton("P1interact")){
+>>>>>>> 8fbe32a61e325182eaec12b923d0ef2c240b5ae4
 			if (colliding && !activated){
 				Debug.Log("playing platform animation");
 				GameObject platform = GameObject.Find("Platform");

@@ -16,7 +16,7 @@ public class TriggerLevel : MonoBehaviour
 	void Update () {
         //this is probably going to need some more work
         //I'll make an input handling class tonight to help avoid this -Fern
-		if (Input.GetButton("P1interact")){
+		if (Input.GetButton("Fire3")){
 			if (colliding && !activated){
 				Debug.Log("loading next level");
 				Application.LoadLevel("level1");
