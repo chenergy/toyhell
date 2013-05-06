@@ -97,14 +97,24 @@ namespace Actors
 			get{ return (GameObject)attributes["hitbox"]; }
 			set{ attributes["hitbox"] = value; }
 		}
-		
+		/*
 		public Vector3 AttackOffset{
 			get{ return (Vector3)attributes["attackOffset"]; }
 		}
-		
+		*/
 		public int Damage{
 			get{ return (int)attributes["damage"]; }
 			set{ attributes["damage"] = value; }
+		}
+		
+		public int CurrentHP{
+			get{ return (int)attributes["currentHP"]; }
+			set{ attributes["currentHP"] = value; }
+		}
+		
+		public int MaxHP{
+			get{ return (int)attributes["maxHP"]; }
+			set{ attributes["maxHP"] = value; }
 		}
 		
 		public void Update(){

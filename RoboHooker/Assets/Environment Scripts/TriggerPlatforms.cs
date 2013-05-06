@@ -14,6 +14,7 @@ public class TriggerPlatforms : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
+		
 		if (Input.GetButton("P1interact")){
 			if (colliding && !activated){
 				Debug.Log("playing platform animation");
@@ -26,6 +27,7 @@ public class TriggerPlatforms : MonoBehaviour
 				activated = true;
 			}
 		}
+		
 	}
 	
 	void OnTriggerEnter(Collider player) 

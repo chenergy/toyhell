@@ -3,14 +3,20 @@ using System.Collections;
 
 public class HitboxScript : MonoBehaviour {
 	
-	public int damage;
-	public float attackLength;
-	private float timer = 0.0f;
+	private int damage;
+	private float attackLength;
+	private GameObject parent;
+	
+	void Start(){
+		parent = this.transform.parent.gameObject;
+		damage = parent.GetComponent<EnemyInput>().damage;
+		Physics.IgnoreCollision(parent.collider, this.collider);
+	}
 	
 	void Update () {
-		if (timer > attackLength){
-			GameObject.Destroy(this.gameObject);
-		}
-		timer += Time.deltaTime;
+	}
+	
+	public int Damage{
+		get{ return damage; }
 	}
 }

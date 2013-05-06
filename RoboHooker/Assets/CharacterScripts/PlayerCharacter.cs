@@ -31,6 +31,7 @@ public class PlayerCharacter : MonoBehaviour {
     protected Vector3 m_movement;
     private CharacterController m_control;
     private float m_zPosition;
+	private bool m_gravityOn = true;
 
     // Use this for initialization
     void Start()
@@ -57,7 +58,7 @@ public class PlayerCharacter : MonoBehaviour {
         }
         m_movement.x = m_movementSpeed * m_Movedir;
 
-        applyGravity();
+        if (m_gravityOn){ applyGravity(); }
         if ((Input.GetKey(m_JumpKey)||Input.GetButtonDown(m_jumpButton)) && m_control.isGrounded)
         {
             m_movement.y = m_jumpSpeed;
@@ -118,4 +119,14 @@ public class PlayerCharacter : MonoBehaviour {
             m_LeftWeapon = newWeapon.gameObject;
         }
     }
+	
+	public void stopGravity(){
+		m_movement.y = 0;
+		m_gravityOn = false;
+	}
+	
+	public void startGravity(){
+		m_gravityOn = true;
+	}
+	
 }

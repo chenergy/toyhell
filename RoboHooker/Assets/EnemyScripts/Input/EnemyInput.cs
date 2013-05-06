@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using FSM;
 using Actors;
 
-[RequireComponent (typeof (CharacterController))]
+[RequireComponent (typeof(CharacterController))]
 
 public class EnemyInput : MonoBehaviour
 {
 	public GameObject 	patrolPoint1;
 	public GameObject 	patrolPoint2;
-	public GameObject	hooker;
-	public GameObject	hitboxShape;
-	public GameObject	hitboxPoint;
+	public GameObject	hitbox;
 	public float		moveSpeed 		= 2.0f;
 	public float 		turnSpeed 		= 5.0f;
 	public float 		agroRange 		= 0.0f; 
@@ -19,19 +17,27 @@ public class EnemyInput : MonoBehaviour
 	public float		attackTime		= 1.0f;
 	public float		attackLength	= 1.0f;
 	public int			damage			= 10;
+	public int			maxHP			= 100;
 	
+	private GameObject	hooker;
+	private CharacterController	controller;
+	private int			currentHP;
 	private Enemy 		enemy;
 	private Dictionary<string, object> attributes;
+	private bool		isFalling = false;
 	
 	void Start(){
+		hooker = GameObject.Find("Hooker");
+		currentHP = 100;
 		patrolPoint1.renderer.enabled = false;
 		patrolPoint2.renderer.enabled = false;
-		hitboxPoint.renderer.enabled = false;
-		CharacterController controller = this.GetComponent<CharacterController>();
+		hitbox.renderer.enabled = false;
+		hitbox.collider.enabled = false;
+		controller = this.GetComponent<CharacterController>();
 		
 		attributes = new Dictionary<string, object>();
 		attributes["gameObject"] = this.gameObject;
-		attributes["controller"] = this.GetComponent<CharacterController>();
+		attributes["controller"] = controller;
 		attributes["hooker"] = hooker;
 		attributes["moveSpeed"] = moveSpeed;
 		attributes["turnSpeed"] = turnSpeed;
@@ -44,9 +50,11 @@ public class EnemyInput : MonoBehaviour
 		attributes["attackTime"] = attackTime;
 		attributes["attackLength"] = attackLength;
 		attributes["damage"] = damage;
+		attributes["maxHP"] = maxHP;
+		attributes["currentHP"] = currentHP;
+		
 		attributes["hasAttacked"] = false;
-		attributes["hitbox"] = hitboxShape;
-		attributes["attackOffset"] = hitboxPoint.transform.position - this.transform.position;
+		attributes["hitbox"] = hitbox;
 		
 		enemy = new Enemy(attributes); // Pass the dictionary to the enemy
 	}
@@ -80,18 +88,20 @@ public class EnemyInput : MonoBehaviour
 		enemy.Update();
 	}
 	
-	void OnCollisionEnter(Collision collision){
-		GameObject gobj = collision.gameObject;
+	/*
+	void OnTriggerEnter(Collider other){
+		GameObject gobj = other.gameObject;
 		if (gobj.tag == "Hitbox"){
 			Debug.Log("Hit by Attack.");
 		}
 	}
+	*/
 	
-	private void applyGravity()
+	void applyGravity()
     {
         if (!enemy.controller.isGrounded)
         {
-            enemy.Position += new Vector3(0.0f, (Physics.gravity.y * Time.deltaTime), 0.0f);
+            enemy.controller.Move(new Vector3(0.0f, (Physics.gravity.y * Time.deltaTime), 0.0f));
         }
 	}
 }
