@@ -9,7 +9,7 @@ public class CameraScript : MonoBehaviour {
 	public float minDistance = 15;
 	public float maxDistance = 2000;
 	public float YOffset = 3;
-	public float ZOffset = -3;
+	public float ZOffset = -15;
 	
 	// Use this for initialization
 	void Start () {

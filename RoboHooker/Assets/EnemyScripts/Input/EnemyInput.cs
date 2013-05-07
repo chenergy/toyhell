@@ -65,8 +65,8 @@ public class EnemyInput : MonoBehaviour
 	
 	void Update (){
 		// Update User Attributes
-		this.currentHP 	= enemy.CurrentHP;
-		this.maxHP		= enemy.MaxHP;
+		this.currentHP 	= this.enemy.CurrentHP;
+		this.maxHP		= this.enemy.MaxHP;
 		enemy.MoveSpeed = moveSpeed;
 		enemy.TurnSpeed = turnSpeed;
 		enemy.Position 	= enemy.controller.transform.position;
