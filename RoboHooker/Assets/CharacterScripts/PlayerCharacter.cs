@@ -46,35 +46,34 @@ public class PlayerCharacter : MonoBehaviour {
     // Update is called once per frame
     public virtual void Update()
     {
-        float m_Movedir = Input.GetAxis(m_controller.m_MoveAxisX);
-        float m_fire = Input.GetAxis(m_controller.m_Attack);
+        float movedir = Input.GetAxis(m_controller.m_MoveAxisX);
+        float fire = Input.GetAxis(m_controller.m_Attack);
 
-        Vector2 m_Aim = new Vector2(Input.GetAxis(m_controller.m_AimAxisX), Input.GetAxis(m_controller.m_AimAxisY));
-        if (m_fire != 0)
+        Vector2 aim = new Vector2(Input.GetAxis(m_controller.m_AimAxisX), Input.GetAxis(m_controller.m_AimAxisY));
+        if (fire != 0)
         {
-            if (m_fire > 0)
+            if (fire > 0)
             {
                 PlayClip(m_primaryFire,WrapMode.Once);
-                m_mainWeaponScript.fire(m_Aim);
+                m_mainWeaponScript.fire(aim);
             }
             else if (m_LeftWeapon != null)
             {
                 PlayClip(m_socketFire, WrapMode.Once);
-                m_LeftScript.fire(m_Aim);
+                m_LeftScript.fire(aim);
             }
         }
-        Debug.Log("Dir " + m_Movedir + " cur " + transform.forward.x);
-        if ((m_Movedir != transform.forward.x) && m_Movedir != 0)
+        if ((movedir != transform.forward.x) && movedir != 0)
         {
-            Debug.Log(m_Movedir+ " " + transform.forward);
+            Debug.Log(movedir+ " " + transform.forward);
             float rot = m_turnSpeed * Time.deltaTime;
-            float maxRot = Vector2.Angle(new Vector2(m_Movedir, 0), new Vector2(transform.forward.x, transform.forward.z));
+            float maxRot = Vector2.Angle(new Vector2(movedir, 0), new Vector2(transform.forward.x, transform.forward.z));
             if (rot > maxRot)
             {
                 rot = maxRot;
             }
             Debug.Log(rot +" max "+ maxRot);
-            if (m_Movedir < 0 && transform.forward.x > 0)
+            if (movedir < 0 && transform.forward.x > 0)
             {
                 transform.Rotate(transform.up, rot);
             }
@@ -84,7 +83,7 @@ public class PlayerCharacter : MonoBehaviour {
             }
         }
             
-        m_movement.x = m_movementSpeed * m_Movedir;
+        m_movement.x = m_movementSpeed * movedir;
 
         if (m_gravityOn) 
             applyGravity(); // Added to modify gravity when climbing ladders
