@@ -18,13 +18,14 @@ public class EnemyInput : MonoBehaviour
 	public float		attackLength	= 1.0f;
 	public int			damage			= 10;
 	public int			maxHP			= 100;
+	public int			currentHP		= 100;
 	
 	private GameObject	hooker;
 	private CharacterController	controller;
-	private int			currentHP;
-	private Enemy 		enemy;
 	private Dictionary<string, object> attributes;
 	private bool		isFalling = false;
+	
+	private	Enemy 		enemy;
 	
 	void Start(){
 		hooker = GameObject.Find("Hooker");
@@ -33,6 +34,9 @@ public class EnemyInput : MonoBehaviour
 		patrolPoint2.renderer.enabled = false;
 		hitbox.renderer.enabled = false;
 		hitbox.collider.enabled = false;
+		hitbox.gameObject.GetComponent<HitboxScript>().Damage = damage;
+		Physics.IgnoreCollision(hitbox.collider, this.collider);
+		
 		controller = this.GetComponent<CharacterController>();
 		
 		attributes = new Dictionary<string, object>();
@@ -61,10 +65,11 @@ public class EnemyInput : MonoBehaviour
 	
 	void Update (){
 		// Update User Attributes
+		this.currentHP 	= enemy.CurrentHP;
+		this.maxHP		= enemy.MaxHP;
 		enemy.MoveSpeed = moveSpeed;
 		enemy.TurnSpeed = turnSpeed;
 		enemy.Position 	= enemy.controller.transform.position;
-		//enemy.Rotation 	= enemy.controller.transform.rotation;
 		
 		Vector3 targetPos 	= hooker.transform.position;
 		float 	targetDist 	= (targetPos - enemy.Position).magnitude;

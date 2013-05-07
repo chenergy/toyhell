@@ -3,14 +3,9 @@ using System.Collections;
 
 public class HitboxScript : MonoBehaviour {
 	
-	private int damage;
-	private float attackLength;
-	private GameObject parent;
+	private int damage = 0;
 	
 	void Start(){
-		parent = this.transform.parent.gameObject;
-		damage = parent.GetComponent<EnemyInput>().damage;
-		Physics.IgnoreCollision(parent.collider, this.collider);
 	}
 	
 	void Update () {
@@ -18,5 +13,15 @@ public class HitboxScript : MonoBehaviour {
 	
 	public int Damage{
 		get{ return damage; }
+		set{ this.damage = value; }
+	}
+	
+	void OnTriggerEnter(Collider other){
+		if (other.gameObject.tag == "Player"){
+			//Debug.Break();
+			this.collider.enabled = false;
+			this.renderer.enabled = false;
+			GameData.LoseHp(other.gameObject, damage);
+		}
 	}
 }

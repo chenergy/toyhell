@@ -7,6 +7,7 @@ public class LadderScript : MonoBehaviour {
 	private float savedSpeed;
 	
 	void Start(){
+		this.renderer.enabled = false;
 	}
 	
 	void OnTriggerStay(){
@@ -15,7 +16,7 @@ public class LadderScript : MonoBehaviour {
 			player.GetComponent<PlayerCharacter>().stopGravity();
 		}
 		
-		if ((Input.GetAxis("Ladder") > 0)){
+		if ((Input.GetAxis("P1moveY") > 0) || (Input.GetAxis("P2moveY") > 0)){
 			onLadder = true;
 			player.transform.position += new Vector3(0.0f, 0.2f, 0.0f);
 		}

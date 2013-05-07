@@ -32,12 +32,8 @@ public class PlayerCharacter : MonoBehaviour {
     protected Vector3 m_movement;
     private CharacterController m_control;
     private float m_zPosition;
-<<<<<<< HEAD
 	private bool m_gravityOn = true;
-
-=======
     
->>>>>>> 1a062eac9f3fb2344cd40faae2e1a02abc8a1b9b
     // Use this for initialization
     void Start()
     {
@@ -69,13 +65,9 @@ public class PlayerCharacter : MonoBehaviour {
         }
         m_movement.x = m_movementSpeed * m_Movedir;
 
-<<<<<<< HEAD
-        if (m_gravityOn){ applyGravity(); }
-        if ((Input.GetKey(m_JumpKey)||Input.GetButtonDown(m_jumpButton)) && m_control.isGrounded)
-=======
-        applyGravity();
-        if ((Input.GetKey(m_JumpKey) || Input.GetButton(m_controller.m_jumpButton)) && m_control.isGrounded)
->>>>>>> 1a062eac9f3fb2344cd40faae2e1a02abc8a1b9b
+        if (m_gravityOn) applyGravity(); // Added to modify gravity when climbing ladders
+        
+		if ((Input.GetKey(m_JumpKey) || Input.GetButton(m_controller.m_jumpButton)) && m_control.isGrounded)
         {
             Debug.Log("jump");
             PlayClip(m_jump, WrapMode.PingPong);
@@ -140,18 +132,6 @@ public class PlayerCharacter : MonoBehaviour {
             m_LeftWeapon = newWeapon.gameObject;
         }
     }
-<<<<<<< HEAD
-	
-	public void stopGravity(){
-		m_movement.y = 0;
-		m_gravityOn = false;
-	}
-	
-	public void startGravity(){
-		m_gravityOn = true;
-	}
-	
-=======
     private void PlayClip(AnimationClip ac, WrapMode mode)
     {
         if (ac != null)
@@ -164,5 +144,13 @@ public class PlayerCharacter : MonoBehaviour {
             }
         }
     }
->>>>>>> 1a062eac9f3fb2344cd40faae2e1a02abc8a1b9b
+	
+	public void stopGravity(){
+		m_movement.y = 0;
+		m_gravityOn = false;
+	}
+	
+	public void startGravity(){
+		m_gravityOn = true;
+	}
 }
