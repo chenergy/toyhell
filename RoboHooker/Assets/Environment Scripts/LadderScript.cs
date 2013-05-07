@@ -7,7 +7,7 @@ public class LadderScript : MonoBehaviour {
 	private float savedSpeed;
 	
 	void Start(){
-		this.renderer.enabled = false;
+		//this.renderer.enabled = false;
 	}
 	
 	void OnTriggerStay(){
