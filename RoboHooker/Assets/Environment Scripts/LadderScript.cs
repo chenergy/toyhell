@@ -13,8 +13,8 @@ public class LadderScript : MonoBehaviour {
 	void OnTriggerStay(){
 		Debug.Log(player.transform.position);
 		if (onLadder){
-			player.GetComponent<PlayerCharacter>().stopGravity();
-		}
+            player.GetComponent<PlayerCharacter>().Climbing = true;
+        }
 		
 		if ((Input.GetAxis("P1moveY") > 0) || (Input.GetAxis("P2moveY") > 0)){
 			onLadder = true;
@@ -32,7 +32,7 @@ public class LadderScript : MonoBehaviour {
 	void OnTriggerExit(Collider collider){
 		if (collider.gameObject.tag == "Player"){
 			//collider.gameObject.GetComponent<PlayerCharacter>().m_movementSpeed = savedSpeed;
-			player.GetComponent<PlayerCharacter>().startGravity();
+            player.GetComponent<PlayerCharacter>().Climbing = false;
 			player = null;
 			onLadder = false;
 		}
