@@ -6,19 +6,18 @@ public class HookScript : Weapon {
     public float m_power;
     public float m_returnSpeed;
     public float m_minTimeBetweenFire;
+    public Hooker m_hooker;
     private float m_timer;
     private FireStage m_current;
     private GameObject m_hookedObject;
-    private Hooker m_hooker;
     private Transform m_hookerTrans;
     private Transform m_real;
 
     public void Start()
     {
         m_current = FireStage.Ready;
-        m_hooker = transform.parent.parent.gameObject.GetComponent<Hooker>();
         m_real = transform.parent;
-        m_hookerTrans = transform.parent.parent;
+        m_hookerTrans = m_hooker.transform;
     }
 
     public void Update()

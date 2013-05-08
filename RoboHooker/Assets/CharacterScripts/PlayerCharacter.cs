@@ -50,6 +50,14 @@ public class PlayerCharacter : MonoBehaviour {
         float fire = Input.GetAxis(m_controller.m_Attack);
 
         Vector2 aim = new Vector2(Input.GetAxis(m_controller.m_AimAxisX), Input.GetAxis(m_controller.m_AimAxisY));
+        if (Input.GetKey(m_LeftKey))
+        {
+            movedir = -1;
+        }
+        else if (Input.GetKey(m_RightKey))
+        {
+            movedir = 1;
+        }
         if (fire != 0)
         {
             if (fire > 0)
@@ -75,7 +83,7 @@ public class PlayerCharacter : MonoBehaviour {
             Debug.Log(rot +" max "+ maxRot);
             if (movedir < 0 && transform.forward.x > 0)
             {
-                transform.Rotate(transform.up, rot);
+                transform.Rotate(transform.up, (-1)*rot);
             }
             else
             {
@@ -154,7 +162,7 @@ public class PlayerCharacter : MonoBehaviour {
     }
     private void PlayClip(AnimationClip ac, WrapMode mode)
     {
-        if (ac != null)
+        if ((ac != null)&&(animation!=null))
         {
             if (!animation.IsPlaying(ac.name))
             {
