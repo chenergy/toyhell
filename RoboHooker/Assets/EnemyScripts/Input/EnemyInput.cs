@@ -7,10 +7,11 @@ using Actors;
 
 public class EnemyInput : MonoBehaviour
 {
+	public bool			isStatic		= false;
 	public GameObject 	patrolPoint1;
 	public GameObject 	patrolPoint2;
 	public GameObject	hitbox;
-	public bool			isStatic		= false;
+	public GameObject	deathParts;
 	public float		moveSpeed 		= 2.0f;
 	public float 		turnSpeed 		= 5.0f;
 	public float 		agroRange 		= 0.0f; 
@@ -18,6 +19,7 @@ public class EnemyInput : MonoBehaviour
 	public float		attackTime		= 1.0f;
 	public float		attackLength	= 1.0f;
 	public float		attackRange		= 1.0f;
+	public float		fadeTime		= 3.0f;
 	public int			damage			= 10;
 	public int			maxHP			= 100;
 	public int			currentHP		= 100;
@@ -25,7 +27,8 @@ public class EnemyInput : MonoBehaviour
 	private GameObject	hooker;
 	private CharacterController	controller;
 	private Dictionary<string, object> attributes;
-	private bool		isFalling = false;
+	private bool		isFalling 		= false;
+	private bool		isDead			= false;
 	private	Enemy 		enemy;
 	
 	void Start(){
@@ -33,12 +36,13 @@ public class EnemyInput : MonoBehaviour
 		currentHP = 100;
 		
 		// Turn off hitbox and patrol point rendering
+		Physics.IgnoreCollision(hitbox.collider, this.collider);
 		patrolPoint1.renderer.enabled = false;
 		patrolPoint2.renderer.enabled = false;
 		hitbox.renderer.enabled = false;
 		hitbox.collider.enabled = false;
 		hitbox.gameObject.GetComponent<HitboxScript>().Damage = damage;
-		Physics.IgnoreCollision(hitbox.collider, this.collider);
+		
 		
 		controller = this.GetComponent<CharacterController>();
 		
@@ -46,6 +50,8 @@ public class EnemyInput : MonoBehaviour
 		attributes["gameObject"] = this.gameObject;
 		attributes["controller"] = controller;
 		attributes["hooker"] = hooker;
+		attributes["deathParts"] = deathParts;
+		
 		attributes["moveSpeed"] = moveSpeed;
 		attributes["turnSpeed"] = turnSpeed;
 		attributes["patrolPoint1"] = patrolPoint1;
@@ -57,6 +63,7 @@ public class EnemyInput : MonoBehaviour
 		attributes["attackTime"] = attackTime;
 		attributes["attackLength"] = attackLength;
 		attributes["attackRange"] = attackRange;
+		attributes["fadeTime"] = fadeTime;
 		attributes["damage"] = damage;
 		attributes["maxHP"] = maxHP;
 		attributes["currentHP"] = currentHP;
@@ -82,10 +89,23 @@ public class EnemyInput : MonoBehaviour
 		
 		float range = ((CharacterController)hooker.collider).radius + enemy.controller.radius + enemy.AttackRange;
 		
+		checkMovement(targetPos, targetDist, range);
+		checkAttackRange(targetPos, targetDist, range);
+		checkDeath();
+		
+		if (Input.GetKey(KeyCode.Tab)){ // Test case for enemy death
+		//if (enemy.CurrentHP <= 0 ){	// True case
+			isDead = true;		
+		}
+		
+		enemy.Update();
+	}
+	
+	void checkMovement(Vector3 targetPos, float targetDist, float range){
+		
 		if (!isStatic){
 			// Move or Attack to player based on agro range
 			if (targetDist > range && targetDist <= agroRange ){	// Hooker is within agro range, move toward the Hooker
-				//targetPos = new Vector3(hooker.transform.position.x, this.transform.position.y, hooker.transform.position.z);
 				enemy.MoveToPosition(targetPos);
 			}
 			else{
@@ -93,25 +113,22 @@ public class EnemyInput : MonoBehaviour
 			}
 			applyGravity();
 		}
-		
+	}
+	
+	
+	void checkAttackRange(Vector3 targetPos, float targetDist, float range){
 		if (targetDist < range){		// Within attack range, attack
 			enemy.Attack(targetPos);
 		}
-		
-		enemy.Update();
 	}
 	
-	/*
-	void OnTriggerEnter(Collider other){
-		GameObject gobj = other.gameObject;
-		if (gobj.tag == "Hitbox"){
-			Debug.Log("Hit by Attack.");
+	void checkDeath(){
+		if (isDead){
+			enemy.Death();
 		}
 	}
-	*/
 	
-	void applyGravity()
-    {
+	void applyGravity(){
         if (!enemy.controller.isGrounded)
         {
             enemy.controller.Move(new Vector3(0.0f, (Physics.gravity.y * Time.deltaTime), 0.0f));

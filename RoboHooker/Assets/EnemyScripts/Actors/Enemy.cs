@@ -13,16 +13,23 @@ namespace Actors{
 			State S_Idle 			= new State("idle", new A_IdleEnter(), new A_Idle(), new A_IdleExit());
 			State S_MoveToPosition	= new State("moveToPosition", new A_MoveToPositionEnter(), new A_MoveToPosition(), new A_MoveToPositionExit());
 			State S_Attack 			= new State("attack", new A_AttackEnter(), new A_Attack(), new A_AttackExit());
+			State S_Death 			= new State("death", new A_DeathEnter(), new A_Death(), new A_DeathExit());
 			
 			Transition T_Idle 			= new Transition(S_Idle, noAction);
 			Transition T_MoveToPosition	= new Transition(S_MoveToPosition, noAction);
 			Transition T_Attack			= new Transition(S_Attack, noAction);
+			Transition T_Death			= new Transition(S_Death, noAction);
 			
 			S_Idle.addTransition(T_MoveToPosition, "moveToPosition");
 			S_Idle.addTransition(T_Attack, "attack");
+			S_Idle.addTransition(T_Death, "death");
+			
 			S_MoveToPosition.addTransition(T_Idle, "idle");
 			S_MoveToPosition.addTransition(T_Attack, "attack");
+			S_MoveToPosition.addTransition(T_Death, "death");
+			
 			S_Attack.addTransition(T_Idle, "idle");
+			S_Attack.addTransition(T_Death, "death");
 			
 			this.fsmc = FSM.FSM.createFSMInstance(S_Idle, noAction);
 			this.attributes = attributes;

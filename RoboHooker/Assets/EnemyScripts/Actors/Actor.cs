@@ -33,6 +33,12 @@ namespace Actors
 			}
 		}
 		
+		public void Death(){
+			if (fsmc.CurrentState.Name != "death"){
+				fsmc.dispatch("death", this);
+			}
+		}
+		
 		public GameObject gameObject{
 			get{ return (GameObject)attributes["gameObject"]; }
 			set{ attributes["gameObject"] = value; }
@@ -119,6 +125,16 @@ namespace Actors
 		public int MaxHP{
 			get{ return (int)attributes["maxHP"]; }
 			set{ attributes["maxHP"] = value; }
+		}
+		
+		public float FadeTime{
+			get{ return (float)attributes["fadeTime"]; }
+			set{ attributes["fadeTime"] = value; }
+		}
+		
+		public GameObject DeathParts{
+			get{ return (GameObject)attributes["deathParts"]; }
+			set{ attributes["deathParts"] = value; }
 		}
 		
 		public Animation Animation{

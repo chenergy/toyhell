@@ -176,7 +176,7 @@ public class PlayerCharacter : MonoBehaviour {
     {
         set
         {
-            m_gravityOn = value;
+            m_gravityOn = !value;
         }
     }
 }
