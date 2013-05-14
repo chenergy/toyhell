@@ -9,7 +9,13 @@ namespace FSM
     {
         public override void execute(FSMContext fsmc, object o)
         {
+			Actor actor = (Actor) o;
 			
+			if (actor.Animation){
+				if (actor.Animation["Idle"]){
+					actor.Animation.CrossFade("Idle");
+				}
+			}
         }
     }
 }

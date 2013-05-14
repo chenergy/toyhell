@@ -43,6 +43,11 @@ namespace Actors{
 			set{ attributes["patrolTarget"] = value; }
 		}
 		
+		public float AttackRange{
+			get{ return (float)attributes["attackRange"]; }
+			set{ attributes["attackRange"] = value; }
+		}
+		
 		public void Patrol(float patrolPauseTime){
 			// Do not consider y in the target location
 			Vector3 PatrolTargetPosition = new Vector3(this.PatrolTarget.transform.position.x, this.Position.y, this.PatrolTarget.transform.position.z);

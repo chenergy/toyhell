@@ -10,12 +10,14 @@ public class EnemyInput : MonoBehaviour
 	public GameObject 	patrolPoint1;
 	public GameObject 	patrolPoint2;
 	public GameObject	hitbox;
+	public bool			isStatic		= false;
 	public float		moveSpeed 		= 2.0f;
 	public float 		turnSpeed 		= 5.0f;
 	public float 		agroRange 		= 0.0f; 
 	public float		patrolPauseTime = 3.0f;
 	public float		attackTime		= 1.0f;
 	public float		attackLength	= 1.0f;
+	public float		attackRange		= 1.0f;
 	public int			damage			= 10;
 	public int			maxHP			= 100;
 	public int			currentHP		= 100;
@@ -24,12 +26,13 @@ public class EnemyInput : MonoBehaviour
 	private CharacterController	controller;
 	private Dictionary<string, object> attributes;
 	private bool		isFalling = false;
-	
 	private	Enemy 		enemy;
 	
 	void Start(){
 		hooker = GameObject.Find("Hooker");
 		currentHP = 100;
+		
+		// Turn off hitbox and patrol point rendering
 		patrolPoint1.renderer.enabled = false;
 		patrolPoint2.renderer.enabled = false;
 		hitbox.renderer.enabled = false;
@@ -53,9 +56,11 @@ public class EnemyInput : MonoBehaviour
 		attributes["actionTimer"] = 0.0f;
 		attributes["attackTime"] = attackTime;
 		attributes["attackLength"] = attackLength;
+		attributes["attackRange"] = attackRange;
 		attributes["damage"] = damage;
 		attributes["maxHP"] = maxHP;
 		attributes["currentHP"] = currentHP;
+		attributes["animation"] = gameObject.animation;
 		
 		attributes["hasAttacked"] = false;
 		attributes["hitbox"] = hitbox;
@@ -75,21 +80,24 @@ public class EnemyInput : MonoBehaviour
 		float 	targetDist 	= (targetPos - enemy.Position).magnitude;
 		Vector3 targetDir 	= (targetPos - enemy.Position).normalized;
 		
-		float range = ((CharacterController)hooker.collider).radius + enemy.controller.radius + 0.5f;
+		float range = ((CharacterController)hooker.collider).radius + enemy.controller.radius + enemy.AttackRange;
 		
-		// Move or Attack to player based on agro range
-		if (targetDist > range && targetDist <= agroRange ){	// Hooker is within agro range, move toward the Hooker
-			//targetPos = new Vector3(hooker.transform.position.x, this.transform.position.y, hooker.transform.position.z);
-			enemy.MoveToPosition(targetPos);
-		}
-		else{
-			enemy.Patrol(patrolPauseTime);		// Just Patrol
+		if (!isStatic){
+			// Move or Attack to player based on agro range
+			if (targetDist > range && targetDist <= agroRange ){	// Hooker is within agro range, move toward the Hooker
+				//targetPos = new Vector3(hooker.transform.position.x, this.transform.position.y, hooker.transform.position.z);
+				enemy.MoveToPosition(targetPos);
+			}
+			else{
+				enemy.Patrol(patrolPauseTime);		// Just Patrol
+			}
+			applyGravity();
 		}
 		
 		if (targetDist < range){		// Within attack range, attack
-			enemy.Attack();
+			enemy.Attack(targetPos);
 		}
-		applyGravity();
+		
 		enemy.Update();
 	}
 	

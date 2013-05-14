@@ -13,20 +13,24 @@ namespace Actors
 		
 		
 		public void MoveToPosition(Vector3 targetPosition){
-			// Do not consider y in the target location
-			this.TargetPosition = new Vector3(targetPosition.x, this.Position.y, targetPosition.z);
-			
-			//this.TargetPosition = targetPosition;
-			this.TargetRotation = Quaternion.LookRotation(this.TargetPosition - this.Position);
+			if (fsmc.CurrentState.Name != "moveToPosition"){
+				// Do not consider y in the target location
+				this.TargetPosition = new Vector3(targetPosition.x, this.Position.y, targetPosition.z);
+				this.TargetRotation = Quaternion.LookRotation(this.TargetPosition - this.Position);
 
-			if (fsmc.CurrentState.Name != "moveToPosition")
 				fsmc.dispatch("moveToPosition", this);
+			}
 		}
 		
 		
-		public void Attack(){
-			if (fsmc.CurrentState.Name != "attack")
+		public void Attack(Vector3 targetPosition){
+			if (fsmc.CurrentState.Name != "attack"){
+				// Do not consider y in the target location
+				this.TargetPosition = new Vector3(targetPosition.x, this.Position.y, targetPosition.z);
+				this.TargetRotation = Quaternion.LookRotation(this.TargetPosition - this.Position);
+				
 				fsmc.dispatch("attack", this);
+			}
 		}
 		
 		public GameObject gameObject{
@@ -115,6 +119,11 @@ namespace Actors
 		public int MaxHP{
 			get{ return (int)attributes["maxHP"]; }
 			set{ attributes["maxHP"] = value; }
+		}
+		
+		public Animation Animation{
+			get{ return (Animation)attributes["animation"]; }
+			set{ attributes["animation"] = value; }
 		}
 		
 		public void Update(){

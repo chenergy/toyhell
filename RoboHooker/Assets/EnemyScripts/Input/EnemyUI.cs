@@ -35,7 +35,7 @@ public class EnemyUI : MonoBehaviour {
 
 	void OnGUI(){
 		UI_Width = (int)(Screen.width * 0.1f * widthScale);
-		UI_Height = (int)(Screen.height * 0.03f * heightScale);
+		UI_Height = (int)(Screen.height * 0.035f * heightScale);
 		
 		Vector3 screenPos = Camera.mainCamera.WorldToScreenPoint(enemy.transform.position);
 		UI_X = (int)(screenPos.x - UI_Width/2);
@@ -48,7 +48,7 @@ public class EnemyUI : MonoBehaviour {
 		
 		maxHP = enemy.GetComponent<EnemyInput>().maxHP;
 		currentHP = enemy.GetComponent<EnemyInput>().currentHP;
-		UI_Text.fontSize = (int)(Screen.width * .01f);
+		UI_Text.fontSize = (int)(Screen.width * .015f);
 		
 		GUI.Box (new Rect (UI_X, UI_Y, UI_Width, UI_Height), "", maxHpBar);
 		GUI.Box (new Rect (UI_X, UI_Y, UI_Width * (currentHP/maxHP), UI_Height), "", currentHpBar);

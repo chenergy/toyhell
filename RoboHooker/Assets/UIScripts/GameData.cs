@@ -5,7 +5,7 @@ public class GameData {
 	public static GameData instance = new GameData();
 	
 	private GameObject hooker;
-	private int hooker_currenthp = 50;
+	private int hooker_currenthp = 100;
 	private int hooker_maxhp = 100;
 	
 	private GameObject robot;

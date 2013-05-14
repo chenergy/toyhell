@@ -18,7 +18,13 @@ public class LadderScript : MonoBehaviour {
 		
 		if ((Input.GetAxis("P1moveY") > 0) || (Input.GetAxis("P2moveY") > 0)){
 			onLadder = true;
-			player.transform.position += new Vector3(0.0f, 0.2f, 0.0f);
+			player.GetComponent<CharacterController>().Move(new Vector3(0.0f, 0.1f, 0.0f));
+			//player.transform.position += new Vector3(0.0f, 0.1f, 0.0f);
+		}
+		else if ((Input.GetAxis("P1moveY") < 0) || (Input.GetAxis("P2moveY") < 0)){
+			onLadder = true;
+			player.GetComponent<CharacterController>().Move(new Vector3(0.0f, -0.1f, 0.0f));
+			//player.transform.position += new Vector3(0.0f, 0.2f, 0.0f);
 		}
 	}
 	

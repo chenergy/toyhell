@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Actors;
 
 namespace FSM
 {
@@ -8,6 +9,10 @@ namespace FSM
     {
         public override void execute(FSMContext fsmc, object o)
         {
+			Actor actor = (Actor) o;
+			
+			if (actor.Animation) 
+				actor.Animation.Stop();
         }
     }
 }
