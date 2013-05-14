@@ -6,13 +6,13 @@ public class PlayerCharacter : MonoBehaviour {
 
     public float m_movementSpeed;
     public float m_jumpSpeed;
+    public float m_turnSpeed;
 
     public KeyCode m_LeftKey;
     public KeyCode m_RightKey;
     public KeyCode m_JumpKey;
 
     public gamepad m_player;
-
 
     public Weapon m_mainWeaponScript;
     public GameObject m_socketLoc;
@@ -46,31 +46,60 @@ public class PlayerCharacter : MonoBehaviour {
     // Update is called once per frame
     public virtual void Update()
     {
-        float m_Movedir = Input.GetAxis(m_controller.m_MoveAxisX);
-        float m_fire = Input.GetAxis(m_controller.m_Attack);
+        float movedir = Input.GetAxis(m_controller.m_MoveAxisX);
+        float fire = Input.GetAxis(m_controller.m_Attack);
 
-        Vector2 m_Aim = new Vector2(Input.GetAxis(m_controller.m_AimAxisX), Input.GetAxis(m_controller.m_AimAxisY));
-        if (m_fire != 0)
+        Vector2 aim = new Vector2(Input.GetAxis(m_controller.m_AimAxisX), Input.GetAxis(m_controller.m_AimAxisY));
+        if (Input.GetKey(m_LeftKey))
         {
-            if (m_fire > 0)
+            movedir = -1;
+        }
+        else if (Input.GetKey(m_RightKey))
+        {
+            movedir = 1;
+        }
+        if (fire != 0)
+        {
+            if (fire > 0)
             {
                 PlayClip(m_primaryFire,WrapMode.Once);
-                m_mainWeaponScript.fire(m_Aim);
+                m_mainWeaponScript.fire(aim);
             }
             else if (m_LeftWeapon != null)
             {
                 PlayClip(m_socketFire, WrapMode.Once);
-                m_LeftScript.fire(m_Aim);
+                m_LeftScript.fire(aim);
             }
         }
-        m_movement.x = m_movementSpeed * m_Movedir;
+        if ((movedir != transform.forward.x) && movedir != 0)
+        {
+            Debug.Log(movedir+ " " + transform.forward);
+            float rot = m_turnSpeed * Time.deltaTime;
+            float maxRot = Vector2.Angle(new Vector2(movedir, 0), new Vector2(transform.forward.x, transform.forward.z));
+            if (rot > maxRot)
+            {
+                rot = maxRot;
+            }
+            Debug.Log(rot +" max "+ maxRot);
+            if (movedir < 0 && transform.forward.x > 0)
+            {
+                transform.Rotate(transform.up, (-1)*rot);
+            }
+            else
+            {
+                transform.Rotate(transform.up, rot* (1));
+            }
+        }
+            
+        m_movement.x = m_movementSpeed * movedir;
 
-        if (m_gravityOn) applyGravity(); // Added to modify gravity when climbing ladders
+        if (m_gravityOn) 
+            applyGravity(); // Added to modify gravity when climbing ladders
         
 		if ((Input.GetKey(m_JumpKey) || Input.GetButton(m_controller.m_jumpButton)) && m_control.isGrounded)
         {
             Debug.Log("jump");
-            PlayClip(m_jump, WrapMode.PingPong);
+            PlayClip(m_jump, WrapMode.Loop);
             m_movement.y = m_jumpSpeed;
         }
         transform.position = new Vector3(transform.position.x, transform.position.y, m_zPosition);
@@ -88,7 +117,6 @@ public class PlayerCharacter : MonoBehaviour {
             m_LeftScript = null;
             m_LeftWeapon.transform.position = transform.position;
             m_LeftWeapon = null;
-            
         }
     }
 
@@ -134,9 +162,8 @@ public class PlayerCharacter : MonoBehaviour {
     }
     private void PlayClip(AnimationClip ac, WrapMode mode)
     {
-        if (ac != null)
+        if ((ac != null)&&(animation!=null))
         {
-            Debug.Log(ac.name + " not null");
             if (!animation.IsPlaying(ac.name))
             {
                 animation.wrapMode = mode;
@@ -144,13 +171,12 @@ public class PlayerCharacter : MonoBehaviour {
             }
         }
     }
-	
-	public void stopGravity(){
-		m_movement.y = 0;
-		m_gravityOn = false;
-	}
-	
-	public void startGravity(){
-		m_gravityOn = true;
-	}
+
+    public bool Climbing
+    {
+        set
+        {
+            m_gravityOn = value;
+        }
+    }
 }
