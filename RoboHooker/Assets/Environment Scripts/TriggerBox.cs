@@ -3,11 +3,11 @@ using System.Collections;
 
 public class TriggerBox : MonoBehaviour {
 	
-	// public enum Location { TOP, BOTTOM };
+	public enum Location { TOP, BOTTOM, ABOVE_CHAR };
 	
+	public Location UI_Location;
 	public string 	UI_Text 			= "Trigger Text";
 	public int 		UI_FontSize 		= 15;
-	// public Location UI_Location;
 	public int 		UI_Width 			= 200;
 	public int 		UI_OffSet 			= 10;
 	public float 	UI_DisplayDuration	= 5.0f;
@@ -30,13 +30,7 @@ public class TriggerBox : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (triggered){
-			if (timer > UI_DisplayDuration){
-				triggered = false;
-				timer = 0.0f;
-			}
-			else{
-				timer += Time.deltaTime;
-			}
+			
 		}
 	}
 	
@@ -52,19 +46,30 @@ public class TriggerBox : MonoBehaviour {
 	
 	void OnGUI(){
 		if (triggered){
+			if (timer > UI_DisplayDuration){
+				triggered = false;
+				timer = 0.0f;
+			}
+			else{
+				timer += Time.deltaTime;
+			}
+			
 			centeredTextStyle = new GUIStyle("label");
 			centeredTextStyle.alignment = TextAnchor.MiddleCenter;
 			centeredTextStyle.fontSize = UI_FontSize;
 			
 			UI_Height = (int)(centeredTextStyle.CalcHeight(UI_Content, UI_Width));
 			
-			Vector3 screenPos = Camera.mainCamera.WorldToScreenPoint(player.transform.position);
-			UI_X = (int)(screenPos.x - UI_Width/2);
-			UI_Y = (int)(-screenPos.y + (UI_OffSet * -0.01 * Screen.height) + Screen.height);
-			
+			if (UI_Location == Location.ABOVE_CHAR){
+				Vector3 screenPos = Camera.mainCamera.WorldToScreenPoint(player.transform.position);
+				UI_X = (int)(screenPos.x - UI_Width/2);
+				UI_Y = (int)(-screenPos.y + (UI_OffSet * -0.01 * Screen.height) + Screen.height);
+			}
+			else{
 			// Positioning the UI on the Top or Bottom of the Screen
-			// UI_X = Screen.width/2 - UI_Width/2;
-			// UI_Y = (UI_Location == Location.TOP) ? UI_OffSet : (Screen.height - UI_OffSet - UI_Height);
+				UI_X = Screen.width/2 - UI_Width/2;
+				UI_Y = (UI_Location == Location.TOP) ? UI_OffSet : (Screen.height - UI_OffSet - UI_Height);
+			}
 			
 			GUI.Box (new Rect (UI_X, UI_Y - UI_Height, UI_Width + 5, UI_Height + 5), "");
 			GUI.Label (new Rect (UI_X, UI_Y - UI_Height, UI_Width + 5, UI_Height + 5), UI_Content.text, centeredTextStyle);
