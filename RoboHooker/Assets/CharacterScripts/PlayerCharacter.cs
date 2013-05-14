@@ -32,7 +32,7 @@ public class PlayerCharacter : MonoBehaviour {
     protected Vector3 m_movement;
     private CharacterController m_control;
     private float m_zPosition;
-	private bool m_gravityOn = true;
+	private bool m_climbing = false;
     
     // Use this for initialization
     void Start()
@@ -93,8 +93,12 @@ public class PlayerCharacter : MonoBehaviour {
             
         m_movement.x = m_movementSpeed * movedir;
 
-        if (m_gravityOn) 
+        if (!m_climbing){ 
             applyGravity(); // Added to modify gravity when climbing ladders
+		}
+		else{
+			m_movement.y = 0;
+		}
         
 		if ((Input.GetKey(m_JumpKey) || Input.GetButton(m_controller.m_jumpButton)) && m_control.isGrounded)
         {
@@ -176,7 +180,8 @@ public class PlayerCharacter : MonoBehaviour {
     {
         set
         {
-            m_gravityOn = !value;
+            m_climbing = value;
         }
+		get { return m_climbing; }
     }
 }

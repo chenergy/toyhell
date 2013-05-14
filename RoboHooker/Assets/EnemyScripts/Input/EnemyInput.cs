@@ -25,6 +25,7 @@ public class EnemyInput : MonoBehaviour
 	public int			currentHP		= 100;
 	
 	private GameObject	hooker;
+	private GameObject	robot;
 	private CharacterController	controller;
 	private Dictionary<string, object> attributes;
 	private bool		isFalling 		= false;
@@ -33,6 +34,7 @@ public class EnemyInput : MonoBehaviour
 	
 	void Start(){
 		hooker = GameObject.Find("Hooker");
+		robot = GameObject.Find("Robot");
 		currentHP = 100;
 		
 		// Turn off hitbox and patrol point rendering
@@ -50,6 +52,7 @@ public class EnemyInput : MonoBehaviour
 		attributes["gameObject"] = this.gameObject;
 		attributes["controller"] = controller;
 		attributes["hooker"] = hooker;
+		attributes["robot"] = robot;
 		attributes["deathParts"] = deathParts;
 		
 		attributes["moveSpeed"] = moveSpeed;
@@ -83,14 +86,21 @@ public class EnemyInput : MonoBehaviour
 		enemy.TurnSpeed = turnSpeed;
 		enemy.Position 	= enemy.controller.transform.position;
 		
-		Vector3 targetPos 	= hooker.transform.position;
-		float 	targetDist 	= (targetPos - enemy.Position).magnitude;
-		Vector3 targetDir 	= (targetPos - enemy.Position).normalized;
+		Vector3 hookerPos 	= hooker.transform.position;
+		float 	hookerDist 	= (hookerPos - enemy.Position).magnitude;
+		Vector3 hookerDir 	= (hookerPos - enemy.Position).normalized;
 		
-		float range = ((CharacterController)hooker.collider).radius + enemy.controller.radius + enemy.AttackRange;
+		Vector3 robotPos 	= robot.transform.position;
+		float 	robotDist 	= (robotPos - enemy.Position).magnitude;
+		Vector3 robotDir 	= (robotPos - enemy.Position).normalized;
 		
-		checkMovement(targetPos, targetDist, range);
-		checkAttackRange(targetPos, targetDist, range);
+		float hookerRange = ((CharacterController)hooker.collider).radius + enemy.controller.radius + enemy.AttackRange;
+		float robotRange = ((CharacterController)hooker.collider).radius + enemy.controller.radius + enemy.AttackRange;
+		
+		checkMovement(hookerPos, hookerDist, hookerRange);
+		checkAttackRange(hookerPos, hookerDist, hookerRange);
+		checkMovement(robotPos, robotDist, robotRange);
+		checkAttackRange(robotPos, robotDist, robotRange);
 		checkDeath();
 		
 		if (Input.GetKey(KeyCode.Tab)){ // Test case for enemy death
