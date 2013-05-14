@@ -143,44 +143,6 @@ ModelImporter:
     400134: rootJnt
     400136: rThighJnt
     400138: socketJnt
-    2300000: chest
-    2300002: face
-    2300004: hips
-    2300006: jaw
-    2300008: L_brow
-    2300010: lArmBicep
-    2300012: light
-    2300014: lLeg
-    2300016: polySurface526
-    2300018: polySurface527
-    2300020: polySurface528
-    2300022: polySurface531
-    2300024: polySurface539
-    2300026: polySurface540
-    2300028: polySurface545
-    2300030: polySurface546
-    2300032: polySurface548
-    2300034: r_brow
-    2300036: rLeg
-    3300000: chest
-    3300002: face
-    3300004: hips
-    3300006: jaw
-    3300008: L_brow
-    3300010: lArmBicep
-    3300012: light
-    3300014: lLeg
-    3300016: polySurface526
-    3300018: polySurface527
-    3300020: polySurface528
-    3300022: polySurface531
-    3300024: polySurface539
-    3300026: polySurface540
-    3300028: polySurface545
-    3300030: polySurface546
-    3300032: polySurface548
-    3300034: r_brow
-    3300036: rLeg
     4300000: polySurface526
     4300002: polySurface527
     4300004: polySurface528
@@ -239,7 +201,7 @@ ModelImporter:
     animationRotationError: .5
     animationPositionError: .5
     animationScaleError: .5
-    animationWrapMode: 0
+    animationWrapMode: 2
     clipAnimations:
     - name: Idle
       takeName: Take 001
