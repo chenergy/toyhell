@@ -5,7 +5,7 @@ public class HitboxScript : MonoBehaviour {
 	
 	public 	GameObject 	attackParticles;
 	public	float		lifetime = 1.0f;
-	public 	Vector3 	offset = new Vector3(0.0f, 2.0f, 0.0f);
+	public 	float	 	yOffset = 0.5f;
 	private int 		damage = 0;
 	
 	void Start(){
@@ -27,7 +27,8 @@ public class HitboxScript : MonoBehaviour {
 			this.renderer.enabled = false;
 			GameData.LoseHp(player, damage);
 			// Create Particles
-			GameObject newParticle = (GameObject)GameObject.Instantiate(attackParticles, other.collider.transform.position + offset, Quaternion.identity);
+			Vector3 playerPosition = other.collider.transform.position;
+			GameObject newParticle = (GameObject)GameObject.Instantiate(attackParticles, new Vector3(playerPosition.x, this.transform.position.y + yOffset, playerPosition.z), Quaternion.identity);
 			GameObject.Destroy(newParticle, lifetime);
 		}
 	}

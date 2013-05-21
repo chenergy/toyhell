@@ -29,7 +29,9 @@ public class DeathBox : MonoBehaviour {
 				foreach (SkinnedMeshRenderer smr in GameData.Hooker.GetComponentsInChildren<SkinnedMeshRenderer>()){
 					smr.enabled = true;
 				}
-				
+				foreach (MeshRenderer mr in GameData.Hooker.GetComponentsInChildren<MeshRenderer>()){
+					mr.enabled = true;
+				}
 			}
 			hookerTimer += Time.deltaTime;
 			Debug.Log("Respawn" + hookerTimer);
@@ -46,6 +48,9 @@ public class DeathBox : MonoBehaviour {
 				foreach (SkinnedMeshRenderer smr in GameData.Robot.GetComponentsInChildren<SkinnedMeshRenderer>()){
 					smr.enabled = true;
 				}
+				foreach (MeshRenderer mr in GameData.Robot.GetComponentsInChildren<MeshRenderer>()){
+					mr.enabled = true;
+				}
 			}
 			robotTimer += Time.deltaTime;
 			Debug.Log("Respawn" + robotTimer);
@@ -58,6 +63,9 @@ public class DeathBox : MonoBehaviour {
 		player.GetComponent<PlayerCharacter>().Frozen = true;
 		foreach (SkinnedMeshRenderer smr in player.GetComponentsInChildren<SkinnedMeshRenderer>()){
 			smr.enabled = false;
+		}
+		foreach (MeshRenderer mr in player.GetComponentsInChildren<MeshRenderer>()){
+			mr.enabled = false;
 		}
 		// Test with assigned parts
 		GameObject deathParts = (GameObject)GameObject.Instantiate(parts, player.transform.position, Quaternion.identity);

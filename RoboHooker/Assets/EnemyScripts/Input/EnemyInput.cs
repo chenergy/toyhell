@@ -8,10 +8,14 @@ using Actors;
 public class EnemyInput : MonoBehaviour
 {
 	public bool			isStatic		= false;
+	public bool			isRanged		= false;
+	public bool			isFlying		= false;
 	public GameObject 	patrolPoint1;
 	public GameObject 	patrolPoint2;
 	public GameObject	hitbox;
 	public GameObject	deathParts;
+	public GameObject	projectile;
+	public float		projectileSpeed = 2.0f;
 	public float		moveSpeed 		= 2.0f;
 	public float 		turnSpeed 		= 5.0f;
 	public float 		agroRange 		= 0.0f; 
@@ -43,8 +47,10 @@ public class EnemyInput : MonoBehaviour
 		patrolPoint2.renderer.enabled = false;
 		hitbox.renderer.enabled = false;
 		hitbox.collider.enabled = false;
-		hitbox.gameObject.GetComponent<HitboxScript>().Damage = damage;
-		
+		if (hitbox != null) 
+			hitbox.gameObject.GetComponent<HitboxScript>().Damage = damage;
+		if (projectile != null) 
+			projectile.gameObject.GetComponent<ProjectileScript>().Damage = damage;
 		
 		controller = this.GetComponent<CharacterController>();
 		
@@ -54,7 +60,11 @@ public class EnemyInput : MonoBehaviour
 		attributes["hooker"] = hooker;
 		attributes["robot"] = robot;
 		attributes["deathParts"] = deathParts;
+		attributes["projectile"] = projectile;
 		
+		attributes["projectileSpeed"] = projectileSpeed;
+		attributes["isRanged"] = isRanged;
+		attributes["isFlying"] = isFlying;
 		attributes["moveSpeed"] = moveSpeed;
 		attributes["turnSpeed"] = turnSpeed;
 		attributes["patrolPoint1"] = patrolPoint1;
@@ -104,11 +114,17 @@ public class EnemyInput : MonoBehaviour
 		checkDeath();
 		
 		if (Input.GetKey(KeyCode.Tab)){ // Test case for enemy death
-		//if (enemy.CurrentHP <= 0 ){	// True case
-			isDead = true;		
+			enemy.CurrentHP = 0;
+		}
+		
+		if (enemy.CurrentHP <= 0 ){	// True case
+			isDead = true;
 		}
 		
 		enemy.Update();
+	}
+	
+	void Jump(){
 	}
 	
 	void checkMovement(Vector3 targetPos, float targetDist, float range){

@@ -113,7 +113,7 @@ public class PlayerCharacter : MonoBehaviour {
         else
             PlayClip(m_idle, WrapMode.Loop);
 		
-		if (m_frozen) { m_movement = Vector3.zero; }
+		if (m_frozen) { m_movement = Vector3.zero; }	//Added frozen attribute to control movement
 		
         m_control.Move(m_movement*Time.deltaTime);
     }

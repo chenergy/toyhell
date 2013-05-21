@@ -5,7 +5,7 @@ using Actors;
 
 namespace FSM
 {
-    public class A_Attack:FSMAction
+    public class A_Jump:FSMAction
     {
         public override void execute(FSMContext fsmc, object o)
         {

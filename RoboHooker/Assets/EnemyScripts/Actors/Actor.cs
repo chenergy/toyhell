@@ -26,7 +26,12 @@ namespace Actors
 		public void Attack(Vector3 targetPosition){
 			if (fsmc.CurrentState.Name != "attack"){
 				// Do not consider y in the target location
-				this.TargetPosition = new Vector3(targetPosition.x, this.Position.y, targetPosition.z);
+				if (this.IsRanged){
+					this.TargetPosition = targetPosition;
+				}
+				else{
+					this.TargetPosition = new Vector3(targetPosition.x, this.Position.y, targetPosition.z);
+				}
 				this.TargetRotation = Quaternion.LookRotation(this.TargetPosition - this.Position);
 				
 				fsmc.dispatch("attack", this);
@@ -140,6 +145,23 @@ namespace Actors
 		public Animation Animation{
 			get{ return (Animation)attributes["animation"]; }
 			set{ attributes["animation"] = value; }
+		}
+		
+		public bool IsRanged{
+			get{ return (bool)attributes["isRanged"]; }
+		}
+		
+		public GameObject Projectile{
+			get{ return (GameObject)attributes["projectile"]; }
+		}
+		
+		public float ProjectileSpeed{
+			get{ return (float)attributes["projectileSpeed"]; }
+			set{ attributes["projectileSpeed"] = value; }
+		}
+		
+		public bool IsFlying{
+			get{ return (bool)attributes["isFlying"]; }
 		}
 		
 		public void Update(){
