@@ -1,0 +1,85 @@
+fileFormatVersion: 2
+guid: 6d7db2e25babd7344af423d39e89b83d
+ModelImporter:
+  serializedVersion: 15
+  fileIDToRecycleName:
+    100000: train
+    100002: //RootNode
+    100004: train_level
+    100006: tunnel1
+    100008: tunnel_sign
+    100010: tunnelWall
+    400000: train
+    400002: //RootNode
+    400004: train_level
+    400006: tunnel1
+    400008: tunnel_sign
+    400010: tunnelWall
+    2300000: train
+    2300002: train_level
+    2300004: tunnel1
+    2300006: tunnel_sign
+    2300008: tunnelWall
+    3300000: train
+    3300002: train_level
+    3300004: tunnel1
+    3300006: tunnel_sign
+    3300008: tunnelWall
+    4300000: tunnel1
+    4300002: tunnel_sign
+    4300004: tunnelWall
+    4300006: train
+    4300008: train_level
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    handles: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  additionalBone: 1
+  animationType: 2
+  userData: 
