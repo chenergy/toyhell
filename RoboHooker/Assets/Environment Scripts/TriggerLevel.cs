@@ -14,14 +14,14 @@ public class TriggerLevel : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
+		
         // use GamePadManager.Activate to determine the interaction
-        // it'll return true when ever either player hits the interact button
-        if (GamePadManager.Activate)
-        {
-			if (colliding && !activated){
-				Debug.Log("loading next level");
-				Application.LoadLevel("level1");
-			}
+        // it'll return true when ever either player hits the interact butto
+    
+		if (colliding)
+		{
+			Debug.Log("loading next level");
+			Application.LoadLevel("level1");
 		}
 	}
 	
@@ -34,7 +34,7 @@ public class TriggerLevel : MonoBehaviour
 		
     }
 	
-	void OnTriggerExti(Collider player){
+	void OnTriggerExit(Collider player){
 		colliding = false;
 	}
 }

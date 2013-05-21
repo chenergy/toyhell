@@ -18,10 +18,10 @@ public class TriggerTrain : MonoBehaviour
         // it'll return true when ever either player hits the interact button
 		if (colliding && !activated){
 			Debug.Log("playing train animation");
-			GameObject train = GameObject.Find("train");
+			GameObject train = GameObject.Find("Train");
 			//GameObject trigger = GameObject.Find("trigger");
 			//train.animation["train_anim"].speed = .5f;
-			train.animation.Play("train_anim");
+			train.animation.Play("train_animation");
 			//trigger.animation.Play("trigger");
 			
 			activated = true;
