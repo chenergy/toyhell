@@ -14,6 +14,8 @@ public class BarbieHead : MonoBehaviour {
 
     void OnCollisionEnter(Collision other)
     {
+        rigidbody.useGravity = true;
+//        collider.isTrigger = true;
         Debug.Log(other.gameObject.name);
 /*        if (other.gameObject == m_firedHead)
         {
