@@ -12,7 +12,7 @@ public class Hooker : PlayerCharacter {
     }
     public override void Update()
     {
-        float m_fire = Input.GetAxis(m_controller.m_Attack);
+        m_fire = Input.GetAxis(m_controller.m_Attack);
 
         if (!m_swinging)
         {

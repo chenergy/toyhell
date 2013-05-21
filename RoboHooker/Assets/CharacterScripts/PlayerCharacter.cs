@@ -11,6 +11,8 @@ public class PlayerCharacter : MonoBehaviour {
     public KeyCode m_LeftKey;
     public KeyCode m_RightKey;
     public KeyCode m_JumpKey;
+    public KeyCode m_FireSpecial;
+    public KeyCode m_FireSocket;
 
     public gamepad m_player;
 
@@ -30,6 +32,7 @@ public class PlayerCharacter : MonoBehaviour {
 
     protected GamePadManager m_controller;
     protected Vector3 m_movement;
+    protected float m_fire;
     private CharacterController m_control;
     private float m_zPosition;
 	private bool m_climbing = false;
@@ -51,6 +54,8 @@ public class PlayerCharacter : MonoBehaviour {
         float fire = Input.GetAxis(m_controller.m_Attack);
 
         Vector2 aim = new Vector2(Input.GetAxis(m_controller.m_AimAxisX), Input.GetAxis(m_controller.m_AimAxisY));
+        m_fire = Input.GetAxis(m_controller.m_Attack);
+
         if (Input.GetKey(m_LeftKey))
         {
             movedir = -1;
@@ -58,6 +63,14 @@ public class PlayerCharacter : MonoBehaviour {
         else if (Input.GetKey(m_RightKey))
         {
             movedir = 1;
+        }
+        if (Input.GetKey(m_FireSpecial))
+        {
+            fire = 1;
+        }
+        if (Input.GetKey(m_FireSocket))
+        {
+            fire = -1;
         }
         if (fire != 0)
         {
@@ -74,14 +87,14 @@ public class PlayerCharacter : MonoBehaviour {
         }
         if ((movedir != transform.forward.x) && movedir != 0)
         {
-            Debug.Log(movedir+ " " + transform.forward);
+//            Debug.Log(movedir+ " " + transform.forward);
             float rot = m_turnSpeed * Time.deltaTime;
             float maxRot = Vector2.Angle(new Vector2(movedir, 0), new Vector2(transform.forward.x, transform.forward.z));
             if (rot > maxRot)
             {
                 rot = maxRot;
             }
-            Debug.Log(rot +" max "+ maxRot);
+//            Debug.Log(rot +" max "+ maxRot);
             if (movedir < 0 && transform.forward.x > 0)
             {
                 transform.Rotate(transform.up, (-1)*rot);
@@ -107,6 +120,7 @@ public class PlayerCharacter : MonoBehaviour {
             PlayClip(m_jump, WrapMode.Loop);
             m_movement.y = m_jumpSpeed;
         }
+
         transform.position = new Vector3(transform.position.x, transform.position.y, m_zPosition);
         if (m_movement.magnitude > 1)
             PlayClip(m_run, WrapMode.Loop);
