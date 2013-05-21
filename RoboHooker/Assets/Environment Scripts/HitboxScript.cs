@@ -3,7 +3,10 @@ using System.Collections;
 
 public class HitboxScript : MonoBehaviour {
 	
-	private int damage = 0;
+	public 	GameObject 	attackParticles;
+	public	float		lifetime = 1.0f;
+	public 	Vector3 	offset = new Vector3(0.0f, 2.0f, 0.0f);
+	private int 		damage = 0;
 	
 	void Start(){
 	}
@@ -17,11 +20,15 @@ public class HitboxScript : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter(Collider other){
-		if (other.gameObject.tag == "Player"){
+		GameObject player = other.gameObject;
+		if (player.tag == "Player"){
 			//Debug.Break();
 			this.collider.enabled = false;
 			this.renderer.enabled = false;
-			GameData.LoseHp(other.gameObject, damage);
+			GameData.LoseHp(player, damage);
+			// Create Particles
+			GameObject newParticle = (GameObject)GameObject.Instantiate(attackParticles, other.collider.transform.position + offset, Quaternion.identity);
+			GameObject.Destroy(newParticle, lifetime);
 		}
 	}
 }
