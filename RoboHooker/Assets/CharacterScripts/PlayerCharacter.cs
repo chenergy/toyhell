@@ -120,7 +120,7 @@ public class PlayerCharacter : MonoBehaviour {
             m_movement.y = m_jumpSpeed;
         }
 
-//        transform.position = new Vector3(transform.position.x, transform.position.y, m_zPosition);
+        transform.position = new Vector3(transform.position.x, transform.position.y, m_zPosition);
         if (m_movement.magnitude > 1)
             PlayClip(m_run, WrapMode.Loop);
         else

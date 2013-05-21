@@ -18,10 +18,28 @@ public class Cannon : Weapon
             m_loaded = false;
             Debug.Log("dir is " + dir);
             m_firedHead=(GameObject) Instantiate(m_barbieHead, 
-                m_CannonLoc.transform.position/*+transform.forward*2*/, transform.rotation);
+                m_CannonLoc.transform.position+transform.forward*2, transform.rotation);
+            m_firedHead.GetComponent<Weapon>().m_damage = m_damage;
         }
     }
-    void OnCollisionEnter(Collision collision)
+    public override void OnCollisionEnter(Collision collision)
+    {
+        foreach (ContactPoint cp in collision.contacts)
+        {
+            Debug.Log("collision" + cp.otherCollider.name);
+        }
+        if (collision.gameObject == m_firedHead)
+        {
+            Destroy(collision.gameObject);
+            m_loaded = true;
+        }
+    }
+    void OnCollisionStay(Collision collision)
+    {
+        OnCollisionEnter(collision);
+    }
+    /*
+    void OnTriggerEnter(Collider collision)
     {
         Debug.Log(collision.gameObject.name);
         if (collision.gameObject == m_firedHead)
@@ -30,5 +48,6 @@ public class Cannon : Weapon
             m_loaded = true;
         }
     }
+     */
 
 }
