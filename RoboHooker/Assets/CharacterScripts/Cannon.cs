@@ -19,13 +19,15 @@ public class Cannon : Weapon
             Debug.Log("dir is " + dir);
             m_firedHead=(GameObject) Instantiate(m_barbieHead, 
                 m_CannonLoc.transform.position+transform.forward*2, transform.rotation);
+            m_firedHead.GetComponent<Weapon>().m_damage = m_damage;
         }
     }
-    void OnCollisionEnter(Collision collision)
+    public override void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject.name);
         foreach (ContactPoint cp in collision.contacts)
-            Debug.Log(cp.otherCollider.name);
+        {
+            Debug.Log("collision" + cp.otherCollider.name);
+        }
         if (collision.gameObject == m_firedHead)
         {
             Destroy(collision.gameObject);
@@ -36,6 +38,7 @@ public class Cannon : Weapon
     {
         OnCollisionEnter(collision);
     }
+    /*
     void OnTriggerEnter(Collider collision)
     {
         Debug.Log(collision.gameObject.name);
@@ -45,5 +48,6 @@ public class Cannon : Weapon
             m_loaded = true;
         }
     }
+     */
 
 }
