@@ -103,12 +103,12 @@ ModelImporter:
     - name: Idle
       takeName: Take 001
       firstFrame: 2
-      lastFrame: 98
-      wrapMode: 0
+      lastFrame: 96
+      wrapMode: 2
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
-      loop: 0
+      loop: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -118,9 +118,10 @@ ModelImporter:
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
+      keepAdditionalBonesAnimation: 1
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      transformMask: []
+      skeletonMaskElements: []
     - name: Walk
       takeName: Take 001
       firstFrame: 99
@@ -139,9 +140,10 @@ ModelImporter:
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
+      keepAdditionalBonesAnimation: 1
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      transformMask: []
+      skeletonMaskElements: []
     - name: SocketAttack
       takeName: Take 001
       firstFrame: 118
@@ -160,9 +162,10 @@ ModelImporter:
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
+      keepAdditionalBonesAnimation: 1
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      transformMask: []
+      skeletonMaskElements: []
     - name: SpecialAttack_IN
       takeName: Take 001
       firstFrame: 131
@@ -181,9 +184,10 @@ ModelImporter:
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
+      keepAdditionalBonesAnimation: 1
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      transformMask: []
+      skeletonMaskElements: []
     - name: Jump
       takeName: Take 001
       firstFrame: 162
@@ -202,9 +206,10 @@ ModelImporter:
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
+      keepAdditionalBonesAnimation: 1
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      transformMask: []
+      skeletonMaskElements: []
     - name: Hurt
       takeName: Take 001
       firstFrame: 175
@@ -223,9 +228,10 @@ ModelImporter:
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
+      keepAdditionalBonesAnimation: 1
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      transformMask: []
+      skeletonMaskElements: []
     - name: Spawn
       takeName: Take 001
       firstFrame: 192
@@ -244,9 +250,10 @@ ModelImporter:
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
+      keepAdditionalBonesAnimation: 1
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      transformMask: []
+      skeletonMaskElements: []
     - name: SpecialAttack_LOOP
       takeName: Take 001
       firstFrame: 146
@@ -265,9 +272,10 @@ ModelImporter:
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
+      keepAdditionalBonesAnimation: 1
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      transformMask: []
+      skeletonMaskElements: []
     - name: SpecialAttack_OUT
       takeName: Take 001
       firstFrame: 156
@@ -286,21 +294,20 @@ ModelImporter:
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
+      keepAdditionalBonesAnimation: 1
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      transformMask: []
+      skeletonMaskElements: []
     isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: .00999999978
     meshCompression: 0
     addColliders: 0
-    importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1
-    weldVertices: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88

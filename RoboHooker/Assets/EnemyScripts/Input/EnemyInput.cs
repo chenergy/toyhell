@@ -85,12 +85,28 @@ public class EnemyInput : MonoBehaviour
 		enemy.MoveSpeed = moveSpeed;
 		enemy.TurnSpeed = turnSpeed;
 		enemy.Position 	= enemy.controller.transform.position;
-		
-		Vector3 hookerPos 	= hooker.transform.position;
+
+        Vector3 hookerPos = new Vector3();
+        if (hooker != null)                             //todo: check to see the hooker or robot can be reassigned and reassign if possible
+        {
+            hookerPos = hooker.transform.position;      //this will prevent the ai from breaking if the robot dies.
+        }
+        else
+        {
+            hookerPos = robot.transform.position;       //just using the position of the other character, assuming we don't want the ai to freeze when a character dies
+        }
 		float 	hookerDist 	= (hookerPos - enemy.Position).magnitude;
 		Vector3 hookerDir 	= (hookerPos - enemy.Position).normalized;
-		
-		Vector3 robotPos 	= robot.transform.position;
+
+        Vector3 robotPos = new Vector3();
+        if (robot != null)
+        {
+            robotPos = robot.transform.position;
+        }
+        else
+        {
+            robotPos = hooker.transform.position;
+        }
 		float 	robotDist 	= (robotPos - enemy.Position).magnitude;
 		Vector3 robotDir 	= (robotPos - enemy.Position).normalized;
 		

@@ -1,0 +1,182 @@
+fileFormatVersion: 2
+guid: 349433c06f3c5e242a747e2f1d81ba46
+ModelImporter:
+  serializedVersion: 15
+  fileIDToRecycleName:
+    100000: bodyJnt
+    100002: //RootNode
+    100004: furbyMesh
+    100006: joint10
+    100008: joint9
+    100010: lArmEndJnt
+    100012: lArmJnt
+    100014: lEarEndJnt
+    100016: lEarJnt
+    100018: lEyeMesh
+    100020: lFootCtr_Grp
+    100022: lLegEndJnt
+    100024: lLegJnt
+    100026: masterCtr
+    100028: meshes
+    100030: rArmEndJnt
+    100032: rArmJnt
+    100034: rEarEndJnt
+    100036: rEarJnt
+    100038: rEyeMesh
+    100040: rFootCtr_Grp
+    100042: rLegEndJnt
+    100044: rLegJnt
+    100046: ROOTFurbyJnt
+    100048: torsoCtr_Grp
+    400000: bodyJnt
+    400002: //RootNode
+    400004: furbyMesh
+    400006: joint10
+    400008: joint9
+    400010: lArmEndJnt
+    400012: lArmJnt
+    400014: lEarEndJnt
+    400016: lEarJnt
+    400018: lEyeMesh
+    400020: lFootCtr_Grp
+    400022: lLegEndJnt
+    400024: lLegJnt
+    400026: masterCtr
+    400028: meshes
+    400030: rArmEndJnt
+    400032: rArmJnt
+    400034: rEarEndJnt
+    400036: rEarJnt
+    400038: rEyeMesh
+    400040: rFootCtr_Grp
+    400042: rLegEndJnt
+    400044: rLegJnt
+    400046: ROOTFurbyJnt
+    400048: torsoCtr_Grp
+    4300000: furbyMesh
+    4300002: lEyeMesh
+    4300004: rEyeMesh
+    7400000: Idle
+    7400002: Attack
+    7400004: Hurt
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: furbyMesh
+    13700002: lEyeMesh
+    13700004: rEyeMesh
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    clipAnimations:
+    - name: Idle
+      takeName: Take 001
+      firstFrame: 2
+      lastFrame: 50
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      keepAdditionalBonesAnimation: 1
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      skeletonMaskElements: []
+    - name: Attack
+      takeName: Take 001
+      firstFrame: 51
+      lastFrame: 75
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      keepAdditionalBonesAnimation: 1
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      skeletonMaskElements: []
+    - name: Hurt
+      takeName: Take 001
+      firstFrame: 76
+      lastFrame: 100
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      keepAdditionalBonesAnimation: 1
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      skeletonMaskElements: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    handles: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  additionalBone: 1
+  animationType: 1
+  userData: 
