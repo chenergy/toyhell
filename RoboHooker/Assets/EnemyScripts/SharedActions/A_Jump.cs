@@ -40,7 +40,7 @@ namespace FSM
 				}
 			}
 			
-			if ((actor.Hitbox.collider.enabled == true) && (actor.ActionTimer > (actor.AttackTime + actor.AttackLength))){
+			if ((actor.Hitbox.collider.enabled == true) && (actor.ActionTimer > (actor.AttackTime + animationLength))){
 				actor.Hitbox.collider.enabled = false;
 				actor.Hitbox.renderer.enabled = false;
 			}

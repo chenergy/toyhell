@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using FSM;
 using Actors;
 
-namespace Actors{
-	class Enemy : Actor
+namespace Actors
+{
+	public class Enemy : Actor
 	{
 		public Enemy(Dictionary<string, object> attributes){
 			FSMAction noAction 		= new A_None();
@@ -27,12 +28,68 @@ namespace Actors{
 			S_MoveToPosition.addTransition(T_Idle, "idle");
 			S_MoveToPosition.addTransition(T_Attack, "attack");
 			S_MoveToPosition.addTransition(T_Death, "death");
+			S_MoveToPosition.addTransition(T_MoveToPosition, "moveToPosition");
 			
 			S_Attack.addTransition(T_Idle, "idle");
 			S_Attack.addTransition(T_Death, "death");
 			
+			this.HookerData = new PlayerData(GameData.Hooker);
+			this.RobotData = new PlayerData(GameData.Robot);
+			
 			this.fsmc = FSM.FSM.createFSMInstance(S_Idle, noAction);
 			this.attributes = attributes;
+		}
+		
+		
+		public override void Update ()
+		{
+			UpdatePlayerData(HookerData);
+			UpdatePlayerData(RobotData);
+			
+			bool isAttacking;
+			
+			if (!checkAttack(HookerData) || !checkAttack(RobotData)){
+				if (!checkMovement(HookerData)){
+					checkMovement(RobotData);
+				}
+			}
+			checkDeath();
+			
+			if (!this.IsFlying){
+				applyGravity();
+			}
+			
+			fsmc.CurrentState.update(fsmc, this);
+		}
+		
+		bool checkAttack(PlayerData data){
+			if (data.name == "Hooker" && this.gameObject.name == "Barbie")
+				Debug.Log("distance: " + data.distance + ", attackRange: " + this.AttackRange);
+			if (data.distance < this.AttackRange){		// Within attack range, attack
+				this.Attack(data.position);
+				return true;
+			}
+			return false;
+		}
+		
+		bool checkMovement(PlayerData data){
+			if (!this.IsStatic){
+				// Move based on agro range
+				// A Player is within agro range, move toward the Player
+				if (data.distance < this.AgroRange){
+					/*
+					Debug.Log("Target Position: " + data.position);
+					Debug.Log("Hooker Position: " + GameData.Hooker.transform.position);
+					Debug.Log("Current State: " + fsmc.CurrentState.Name);
+					*/
+					this.MoveToPosition(data.position);
+					return true;
+				}
+				else{
+					this.Patrol(this.PatrolPauseTime);		// Out of range, Just Patrol
+				}
+			}
+			return false;
 		}
 		
 		public GameObject PatrolPoint1{
@@ -50,9 +107,9 @@ namespace Actors{
 			set{ attributes["patrolTarget"] = value; }
 		}
 		
-		public float AttackRange{
-			get{ return (float)attributes["attackRange"]; }
-			set{ attributes["attackRange"] = value; }
+		public float PatrolPauseTime{
+			get{ return (float) attributes["patrolPauseTime"]; }
+			set{ attributes["patrolPauseTime"] = value; }
 		}
 		
 		public void Patrol(float patrolPauseTime){
@@ -63,13 +120,11 @@ namespace Actors{
 			if (distance < 0.2f){
 				
 				if (this.ActionTimer < patrolPauseTime){
-					//Debug.Log(this.ActionTimer);
 					this.ActionTimer += Time.deltaTime;
 					this.fsmc.dispatch("idle", this);
 				}
 				
 				else{
-					//this.fsmc.dispatch("moveToPosition", this);
 					this.ActionTimer = 0.0f;
 					if (this.PatrolTarget == this.PatrolPoint1){
 						Debug.Log("Changed To point2");

@@ -18,9 +18,12 @@ namespace FSM
 					actor.Animation.CrossFade("Attack");
 				}
 			}
+			
 			// Quick Rotation
 			actor.controller.transform.LookAt(actor.TargetPosition);
 			Debug.DrawLine(actor.Position, actor.TargetPosition);
+			//Debug.Log("Hooker: " + GameData.Hooker.transform.position);
+			//Debug.Log("TargetPosition: " + actor.TargetPosition);
 			
 			if (!actor.HasAttacked && (actor.ActionTimer > actor.AttackTime)){
 				if (actor.IsRanged){
@@ -29,6 +32,10 @@ namespace FSM
 						GameObject newProjectile = (GameObject)GameObject.Instantiate(attackProjectile, actor.Hitbox.transform.position + actor.gameObject.transform.forward, Quaternion.identity);
 						newProjectile.GetComponent<ProjectileScript>().Damage = actor.Damage;
 						newProjectile.GetComponent<ProjectileScript>().Direction = (actor.TargetPosition - actor.Position).normalized;
+						//Debug.Log("Target Position: " + actor.TargetPosition);
+						//Debug.Log("Enemy Position: " + actor.Position);
+						//Debug.Log("Projectile Direction: " + (actor.TargetPosition - actor.Position).normalized);
+						//Debug.Break();
 						newProjectile.GetComponent<ProjectileScript>().Speed = actor.ProjectileSpeed;
 						GameObject.Destroy(newProjectile, 1.0f);
 					}
@@ -40,12 +47,9 @@ namespace FSM
 				}
 			}
 			
-			if ((actor.Hitbox.collider.enabled == true) && (actor.ActionTimer > (actor.AttackTime + actor.AttackLength))){
+			if (actor.ActionTimer > (animationLength)){
 				actor.Hitbox.collider.enabled = false;
 				actor.Hitbox.renderer.enabled = false;
-			}
-			
-			if (actor.ActionTimer > animationLength){
 				fsmc.dispatch("idle", o);
 			}
 			actor.ActionTimer += Time.deltaTime;

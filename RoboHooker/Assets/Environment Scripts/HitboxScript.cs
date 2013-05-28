@@ -5,7 +5,7 @@ public class HitboxScript : MonoBehaviour {
 	
 	public 	GameObject 	attackParticles;
 	public	float		lifetime = 1.0f;
-	public 	float	 	yOffset = 0.5f;
+	public 	float	 	yOffset = 0.0f;
 	private int 		damage = 0;
 	
 	void Start(){
