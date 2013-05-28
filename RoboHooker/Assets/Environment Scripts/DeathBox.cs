@@ -19,8 +19,10 @@ public class DeathBox : MonoBehaviour {
 	
 	void Update(){
 		if (isHookerDead){
+			GameData.Hooker.transform.position = GameData.Robot.transform.position;
 			if (hookerTimer > respawnTime){
 				isHookerDead = false;
+				GameData.Hooker.collider.enabled = true;
 				hookerTimer = 0.0f;
 				GameData.Hooker.transform.position = GameData.LastCheckpoint.transform.position;
 				GameData.Hooker.GetComponent<PlayerCharacter>().Frozen = false;
@@ -38,8 +40,10 @@ public class DeathBox : MonoBehaviour {
 		}
 		
 		if (isRobotDead){
+			GameData.Robot.transform.position = GameData.Hooker.transform.position;
 			if (robotTimer > respawnTime){
 				isRobotDead = false;
+				GameData.Robot.collider.enabled = true;
 				robotTimer = 0.0f;
 				GameData.Robot.transform.position = GameData.LastCheckpoint.transform.position;
 				GameData.Robot.GetComponent<PlayerCharacter>().Frozen = false;
@@ -74,10 +78,12 @@ public class DeathBox : MonoBehaviour {
 		if (player.tag == "Player"){
 			if (GameObject.Find("Robot") == player){
 				isRobotDead = true;
+				GameData.Robot.collider.enabled = false;
 				GameData.SetDead("robot");
 			}
 			else{
 				isHookerDead = true;
+				GameData.Hooker.collider.enabled = false;
 				GameData.SetDead("hooker");
 			}
 		}

@@ -19,6 +19,25 @@ public class GameData {
 		this.robot = GameObject.Find ("Robot");
 	}
 	
+	public static void GainHp(GameObject player, int hp){
+		if (player == instance.hooker){
+			if (instance.hooker_currenthp + hp > 100){
+				instance.hooker_currenthp = 100;
+			}
+			else{
+				instance.hooker_currenthp += hp;
+			}
+		}
+		else if (player == instance.robot){
+			if (instance.robot_currenthp + hp > 100){
+				instance.robot_currenthp = 100;
+			}
+			else{
+				instance.robot_currenthp += hp;
+			}
+		}
+	}
+	
 	public static void LoseHp(GameObject player, int damage){
 		if (player == instance.hooker){
 			instance.hooker_currenthp -= damage;
