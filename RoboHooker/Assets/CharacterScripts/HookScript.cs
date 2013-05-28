@@ -81,7 +81,7 @@ public class HookScript : Weapon {
         }
 
     }
-    public void OnCollisionEnter(Collision other)
+    public override void OnCollisionEnter(Collision other)
     {
         if ((m_current==FireStage.Firing)&&(other.gameObject.tag=="Grabbable"))
         {

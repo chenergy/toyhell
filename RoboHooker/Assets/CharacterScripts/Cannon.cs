@@ -22,32 +22,13 @@ public class Cannon : Weapon
             m_firedHead.GetComponent<Weapon>().m_damage = m_damage;
         }
     }
-    public override void OnCollisionEnter(Collision collision)
-    {
-        foreach (ContactPoint cp in collision.contacts)
-        {
-            Debug.Log("collision" + cp.otherCollider.name);
-        }
-        if (collision.gameObject == m_firedHead)
-        {
-            Destroy(collision.gameObject);
-            m_loaded = true;
-        }
-    }
-    void OnCollisionStay(Collision collision)
-    {
-        OnCollisionEnter(collision);
-    }
-    /*
     void OnTriggerEnter(Collider collision)
     {
-        Debug.Log(collision.gameObject.name);
         if (collision.gameObject == m_firedHead)
         {
             Destroy(collision.gameObject);
             m_loaded = true;
         }
     }
-     */
 
 }
