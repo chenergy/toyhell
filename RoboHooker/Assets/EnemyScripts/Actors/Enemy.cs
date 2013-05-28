@@ -15,23 +15,29 @@ namespace Actors
 			State S_MoveToPosition	= new State("moveToPosition", new A_MoveToPositionEnter(), new A_MoveToPosition(), new A_MoveToPositionExit());
 			State S_Attack 			= new State("attack", new A_AttackEnter(), new A_Attack(), new A_AttackExit());
 			State S_Death 			= new State("death", new A_DeathEnter(), new A_Death(), new A_DeathExit());
+			State S_Jump			= new State("jump", new A_JumpEnter(), new A_Jump(), new A_JumpExit());
 			
 			Transition T_Idle 			= new Transition(S_Idle, noAction);
 			Transition T_MoveToPosition	= new Transition(S_MoveToPosition, noAction);
 			Transition T_Attack			= new Transition(S_Attack, noAction);
 			Transition T_Death			= new Transition(S_Death, noAction);
+			Transition T_Jump			= new Transition(S_Jump, noAction);
 			
 			S_Idle.addTransition(T_MoveToPosition, "moveToPosition");
 			S_Idle.addTransition(T_Attack, "attack");
 			S_Idle.addTransition(T_Death, "death");
+			S_Idle.addTransition(T_Jump, "jump");
 			
 			S_MoveToPosition.addTransition(T_Idle, "idle");
 			S_MoveToPosition.addTransition(T_Attack, "attack");
 			S_MoveToPosition.addTransition(T_Death, "death");
 			S_MoveToPosition.addTransition(T_MoveToPosition, "moveToPosition");
+			S_MoveToPosition.addTransition(T_Jump, "jump");
 			
 			S_Attack.addTransition(T_Idle, "idle");
 			S_Attack.addTransition(T_Death, "death");
+			
+			S_Jump.addTransition(T_Idle, "idle");
 			
 			this.HookerData = new PlayerData(GameData.Hooker);
 			this.RobotData = new PlayerData(GameData.Robot);
@@ -46,13 +52,35 @@ namespace Actors
 			UpdatePlayerData(HookerData);
 			UpdatePlayerData(RobotData);
 			
-			bool isAttacking;
-			
+			bool isMoving = false;
+			/*
 			if (!checkAttack(HookerData) || !checkAttack(RobotData)){
 				if (!checkMovement(HookerData)){
 					checkMovement(RobotData);
 				}
 			}
+			*/
+			
+			if (checkAttack(HookerData)){
+				this.Attack(HookerData.position);
+				isMoving = true;
+			}
+			else if (checkMovement(HookerData) && !isMoving){
+				this.MoveToPosition(HookerData.position);
+				isMoving = true;
+			}
+			else if (checkAttack(RobotData) && !isMoving){
+				this.MoveToPosition(RobotData.position);
+				isMoving = true;
+			}
+			else if (checkMovement(RobotData) && !isMoving){
+				this.MoveToPosition(RobotData.position);
+				isMoving = true;
+			}
+			else{
+				this.Patrol(this.PatrolPauseTime);
+			}
+			
 			checkDeath();
 			
 			if (!this.IsFlying){
@@ -63,8 +91,13 @@ namespace Actors
 		}
 		
 		bool checkAttack(PlayerData data){
-			if (data.name == "Hooker" && this.gameObject.name == "Barbie")
-				Debug.Log("distance: " + data.distance + ", attackRange: " + this.AttackRange);
+			// todo: check to see the hooker or robot can be reassigned and reassign if possible
+			// this will prevent the ai from breaking if the robot dies.
+			// note: the way respawning is implemented - hooker and robot gameobjects are not destroyed, simply
+			// rendering and collision is turned off, then relocated
+			
+			/*if (data.name == "Hooker" && this.gameObject.name == "Barbie")
+				Debug.Log("distance: " + data.distance + ", attackRange: " + this.AttackRange);*/
 			if (data.distance < this.AttackRange){		// Within attack range, attack
 				this.Attack(data.position);
 				return true;
@@ -76,18 +109,16 @@ namespace Actors
 			if (!this.IsStatic){
 				// Move based on agro range
 				// A Player is within agro range, move toward the Player
+				
 				if (data.distance < this.AgroRange){
-					/*
-					Debug.Log("Target Position: " + data.position);
-					Debug.Log("Hooker Position: " + GameData.Hooker.transform.position);
-					Debug.Log("Current State: " + fsmc.CurrentState.Name);
-					*/
-					this.MoveToPosition(data.position);
+					//this.MoveToPosition(data.position);
 					return true;
 				}
+				/*
 				else{
 					this.Patrol(this.PatrolPauseTime);		// Out of range, Just Patrol
 				}
+				*/
 			}
 			return false;
 		}

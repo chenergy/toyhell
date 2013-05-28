@@ -11,7 +11,8 @@ namespace FSM
         {
 			Actor actor = (Actor) o;
 			actor.ActionTimer = 0.0f;
-			Debug.Log("attacking");
+			Debug.Log("jumping");
+			//actor.controller.transform.LookAt(actor.TargetPosition);
         }
     }
 }
