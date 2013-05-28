@@ -29,7 +29,7 @@ public class BarbieHead : Weapon {
                 m_timer = m_life;
                 transform.position = newPos;
                 rigidbody.useGravity = true;
-                //            Debug.LogError("pause");
+                //Debug.LogError("pause");
             }
         }
     }

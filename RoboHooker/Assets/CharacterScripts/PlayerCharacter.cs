@@ -76,16 +76,14 @@ public class PlayerCharacter : MonoBehaviour {
         {
             if (fire > 0)
             {
-                Debug.Log("Fire Special");
-                PlayClip(m_primaryFire,WrapMode.Once);
-                m_mainWeaponScript.fire(aim);
+                fireSpecial(aim);
             }
             else if (m_LeftWeapon != null)
             {
                 Debug.Log("Fire Socket");
-                PlayClip(m_socketFire, WrapMode.Once);
                 if (m_LeftScript != null)
                 {
+                    PlayClip(m_socketFire, WrapMode.Once);
                     m_LeftScript.fire(aim);
                 }
             }
@@ -139,7 +137,12 @@ public class PlayerCharacter : MonoBehaviour {
             m_LeftWeapon = null;
         }
     }
-
+    protected void fireSpecial(Vector2 aim)
+    {
+        Debug.Log("Fire Special");
+        PlayClip(m_primaryFire, WrapMode.Once);
+        m_mainWeaponScript.fire(aim);
+    }
     private void applyGravity()
     {
         if (!m_control.isGrounded)
