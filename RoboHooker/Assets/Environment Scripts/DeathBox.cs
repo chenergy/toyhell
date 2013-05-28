@@ -4,13 +4,11 @@ using System.Collections;
 public class DeathBox : MonoBehaviour {
 	
 	// Test using random parts. Will get parts from character in later trials
-	public GameObject parts;
-	public float fadeTime = 3.0f;
-	public float respawnTime = 3.0f;
-	private bool isHookerDead = false;
-	private bool isRobotDead = false;
-	private float hookerTimer = 0.0f;	// respawn timers can be placed on characters for data continuity
-	private float robotTimer = 0.0f;
+	//public float respawnTime = 3.0f;
+	//private bool isHookerDead = false;
+	//private bool isRobotDead = false;
+	//private float hookerTimer = 0.0f;	// respawn timers can be placed on characters for data continuity
+	//private float robotTimer = 0.0f;
 	
 	// Use this for initialization
 	void Start () {
@@ -18,22 +16,14 @@ public class DeathBox : MonoBehaviour {
 	}
 	
 	void Update(){
+		/*
 		if (isHookerDead){
 			GameData.Hooker.transform.position = GameData.Robot.transform.position;
 			if (hookerTimer > respawnTime){
 				isHookerDead = false;
-				GameData.Hooker.collider.enabled = true;
 				hookerTimer = 0.0f;
-				GameData.Hooker.transform.position = GameData.LastCheckpoint.transform.position;
-				GameData.Hooker.GetComponent<PlayerCharacter>().Frozen = false;
-				GameData.Respawn("hooker");
-				
-				foreach (SkinnedMeshRenderer smr in GameData.Hooker.GetComponentsInChildren<SkinnedMeshRenderer>()){
-					smr.enabled = true;
-				}
-				foreach (MeshRenderer mr in GameData.Hooker.GetComponentsInChildren<MeshRenderer>()){
-					mr.enabled = true;
-				}
+				GameData.RespawnPlayer(GameData.Hooker);
+
 			}
 			hookerTimer += Time.deltaTime;
 			Debug.Log("Respawn" + hookerTimer);
@@ -43,54 +33,30 @@ public class DeathBox : MonoBehaviour {
 			GameData.Robot.transform.position = GameData.Hooker.transform.position;
 			if (robotTimer > respawnTime){
 				isRobotDead = false;
-				GameData.Robot.collider.enabled = true;
 				robotTimer = 0.0f;
-				GameData.Robot.transform.position = GameData.LastCheckpoint.transform.position;
-				GameData.Robot.GetComponent<PlayerCharacter>().Frozen = false;
-				GameData.Respawn("robot");
+				GameData.RespawnPlayer(GameData.Robot);
 				
-				foreach (SkinnedMeshRenderer smr in GameData.Robot.GetComponentsInChildren<SkinnedMeshRenderer>()){
-					smr.enabled = true;
-				}
-				foreach (MeshRenderer mr in GameData.Robot.GetComponentsInChildren<MeshRenderer>()){
-					mr.enabled = true;
-				}
 			}
 			robotTimer += Time.deltaTime;
 			Debug.Log("Respawn" + robotTimer);
 		}
+		*/
 	}
 	
 	// Update is called once per frame
 	void OnTriggerEnter(Collider other){
 		GameObject player = other.gameObject;
-		player.GetComponent<PlayerCharacter>().Frozen = true;
-		foreach (SkinnedMeshRenderer smr in player.GetComponentsInChildren<SkinnedMeshRenderer>()){
-			smr.enabled = false;
-		}
-		foreach (MeshRenderer mr in player.GetComponentsInChildren<MeshRenderer>()){
-			mr.enabled = false;
-		}
-		// Test with assigned parts
-		GameObject deathParts = (GameObject)GameObject.Instantiate(parts, player.transform.position, Quaternion.identity);
-		GameObject.Destroy(deathParts, fadeTime);
 		
 		if (player.tag == "Player"){
-			if (GameObject.Find("Robot") == player){
+			GameData.KillPlayer(player);
+			/*
+			if (player.name == "Robot"){
 				isRobotDead = true;
-				GameData.Robot.collider.enabled = false;
-				GameData.SetDead("robot");
 			}
 			else{
 				isHookerDead = true;
-				GameData.Hooker.collider.enabled = false;
-				GameData.SetDead("hooker");
 			}
+			*/
 		}
-	}
-	
-	void OnTriggerStay(Collider other){
-		
-		
 	}
 }

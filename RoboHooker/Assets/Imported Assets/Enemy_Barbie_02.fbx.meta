@@ -59,6 +59,7 @@ ModelImporter:
     7400000: Idle
     7400002: Attack
     7400004: Hurt
+    7400006: Walk
     9500000: //RootNode
     11100000: //RootNode
     13700000: group1_R_Leg
@@ -125,6 +126,28 @@ ModelImporter:
       takeName: Take 001
       firstFrame: 76
       lastFrame: 100
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      keepAdditionalBonesAnimation: 1
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      skeletonMaskElements: []
+    - name: Walk
+      takeName: Take 001
+      firstFrame: 51
+      lastFrame: 75
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -14,8 +14,10 @@ public class EnemyInput : MonoBehaviour
 	public GameObject 	patrolPoint2;
 	public GameObject	hitbox;
 	public GameObject	deathParts;
+	public GameObject	socketedDrop;
 	public GameObject	projectile;
 	public float		projectileSpeed = 1.0f;
+	public float		jumpPower		= 5.0f;
 	public float		moveSpeed 		= 2.0f;
 	public float 		turnSpeed 		= 5.0f;
 	public float 		agroRange 		= 0.0f; 
@@ -57,12 +59,14 @@ public class EnemyInput : MonoBehaviour
 		attributes["hooker"] = hooker;
 		attributes["robot"] = robot;
 		attributes["deathParts"] = deathParts;
+		attributes["socketedDrop"] = socketedDrop;
 		attributes["projectile"] = projectile;
 		
 		attributes["projectileSpeed"] = projectileSpeed;
 		attributes["isStatic"] = isStatic;
 		attributes["isRanged"] = isRanged;
 		attributes["isFlying"] = isFlying;
+		attributes["jumpPower"] = jumpPower;
 		attributes["moveSpeed"] = moveSpeed;
 		attributes["turnSpeed"] = turnSpeed;
 		attributes["agroRange"] = agroRange;

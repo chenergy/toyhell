@@ -11,38 +11,41 @@ namespace FSM
         {
 			Actor actor = (Actor) o;
 			float animationLength = 3.0f;
+			float jumpPower = actor.JumpPower;
 			
 			if (actor.Animation){
-				if (actor.Animation["Attack"]){
-					animationLength = actor.Animation["Attack"].clip.length;
-					actor.Animation.CrossFade("Attack");
+				if (actor.Animation["Jump"]){
+					animationLength = actor.Animation["Jump"].clip.length;
+					actor.Animation.CrossFade("Jump");
 				}
 			}
+			
 			// Quick Rotation
 			actor.controller.transform.LookAt(actor.TargetPosition);
 			Debug.DrawLine(actor.Position, actor.TargetPosition);
 			
-			if (!actor.HasAttacked && (actor.ActionTimer > actor.AttackTime)){
-				if (actor.IsRanged){
-					if (actor.Projectile != null){
-						GameObject attackProjectile = actor.Projectile;
-						GameObject newProjectile = (GameObject)GameObject.Instantiate(attackProjectile, actor.Hitbox.transform.position + actor.gameObject.transform.forward, Quaternion.identity);
-						newProjectile.GetComponent<ProjectileScript>().Damage = actor.Damage;
-						newProjectile.GetComponent<ProjectileScript>().Direction = (actor.TargetPosition - actor.Position).normalized;
-						newProjectile.GetComponent<ProjectileScript>().Speed = actor.ProjectileSpeed;
-						GameObject.Destroy(newProjectile, 1.0f);
-					}
-					actor.HasAttacked = true;
-				}
-				else{
-					actor.Hitbox.collider.enabled = true;
-					actor.HasAttacked = true;
-				}
+			Vector3 direction = actor.TargetPosition - actor.Position;
+			
+			// Quick Rotation
+			//actor.controller.transform.LookAt(actor.TargetPosition);
+			
+			// Slow Rotation
+			if (Quaternion.Angle(actor.Rotation, actor.TargetRotation) > 5.0f){
+				actor.Rotation = Quaternion.Slerp(actor.Rotation, actor.TargetRotation, Time.deltaTime * 
+					(actor.TurnSpeed));
 			}
 			
-			if ((actor.Hitbox.collider.enabled == true) && (actor.ActionTimer > (actor.AttackTime + animationLength))){
-				actor.Hitbox.collider.enabled = false;
-				actor.Hitbox.renderer.enabled = false;
+			Debug.DrawRay(actor.Position, actor.controller.transform.forward);
+			
+			if (direction.magnitude > 0.2f){
+				actor.controller.Move(new Vector3((direction.normalized * (actor.MoveSpeed * 0.01f)).x, 0, 
+					(direction.normalized * (actor.MoveSpeed * 0.01f)).z));
+			}
+			
+			if (actor.Animation){
+				if (actor.Animation["Attack"]){
+					actor.Animation.CrossFade("Attack");
+				}
 			}
 			
 			if (actor.ActionTimer > animationLength){

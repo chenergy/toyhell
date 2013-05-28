@@ -57,56 +57,7 @@ namespace Actors
 			}
 		}
 		
-		public abstract void Update();
-			// todo: check to see the hooker or robot can be reassigned and reassign if possible
-			// this will prevent the ai from breaking if the robot dies.
-			
-			// note: the way respawning is implemented - hooker and robot gameobjects are not destroyed, simply
-			// rendering and collision is turned off, then relocated
-	        
-			// Setting Hooker Parameters for action checking
-			/*
-			Vector3 hookerPos = new Vector3();
-	        
-			if 	(hooker != null) 
-					hookerPos = GameData.Hooker.transform.position;
-	        else 	hookerPos = GameData.Robot.transform.position; //just using the position of the other character, assuming we don't want the ai to freeze when a character dies
-			
-			float 	hookerDist 	= (hookerPos - this.Position).magnitude;
-			Vector3 hookerDir 	= (hookerPos - this.Position).normalized;
-			float   hookerRange = ((CharacterController)hooker.collider).radius + this.controller.radius + this.AttackRange;
-			
-			// Setting Robot Parameters for action checking
-			Vector3 robotPos = new Vector3();
-	        
-			if 	(robot != null) 
-					robotPos = GameData.Robot.transform.position;
-	        else 	robotPos = GameData.Hooker.transform.position;
-			
-			float 	robotDist 	= (robotPos - this.Position).magnitude;
-			Vector3 robotDir 	= (robotPos - this.Position).normalized;
-			float   robotRange = ((CharacterController)hooker.collider).radius + this.controller.radius + this.AttackRange;
-			*/
-			/*
-			UpdatePlayerData(HookerData);
-			UpdatePlayerData(RobotData);
-			
-			checkAttackRange(HookerData);
-			checkAttackRange(RobotData);
-			
-			checkMovement(HookerData);
-			checkMovement(RobotData);
-			
-			checkDeath();
-			
-			if (!this.IsFlying){
-				applyGravity();
-			}
-			
-			fsmc.CurrentState.update(fsmc, this);
-			
-		}*/
-		
+		public abstract void Update();		
 		
 		protected void UpdatePlayerData(PlayerData data){
 			if 	(data.player != null) {
@@ -123,26 +74,8 @@ namespace Actors
 			
 			data.distance	= (data.position - this.Position).magnitude;
 			data.direction 	= (data.position - this.Position).normalized;
-			//data.range		= ((CharacterController)data.player.collider).radius + this.controller.radius + this.AttackRange;
 		}
-		
-		/*
-		protected void checkMovement(PlayerData data){
-			if (!this.IsStatic){ // ADD: AND NOT ALREADY ATTACKING
-				// Move or Attack to player based on agro range
-				if (data.distance > data.range && data.distance <= this.AgroRange ){	// Hooker is within agro range, move toward the Hooker
-					this.MoveToPosition(data.position);
-				}
-			}
-		}
-		*/
-		/*
-		protected void checkAttackRange(PlayerData data){
-			if (data.distance < this.AttackRange){		// Within attack range, attack
-				this.Attack(data.position);
-			}
-		}
-		*/
+
 		protected void checkDeath(){
 			if (this.CurrentHP <= 0){
 				this.Death();
@@ -189,6 +122,11 @@ namespace Actors
 		public Quaternion TargetRotation{
 			get{ return (Quaternion)attributes["targetRotation"]; }
 			set{ attributes["targetRotation"] = value; }
+		}
+		
+		public float JumpPower{
+			get{ return (float)attributes["jumpPower"]; }
+			set{ attributes["jumpPower"] = value; }
 		}
 		
 		public float MoveSpeed{
@@ -254,6 +192,11 @@ namespace Actors
 		public GameObject DeathParts{
 			get{ return (GameObject)attributes["deathParts"]; }
 			set{ attributes["deathParts"] = value; }
+		}
+		
+		public GameObject SocketedDrop{
+			get{ return (GameObject)attributes["socketedDrop"]; }
+			set{ attributes["socketedDrop"] = value; }
 		}
 		
 		public Animation Animation{
