@@ -76,33 +76,31 @@ public class PlayerCharacter : MonoBehaviour {
         {
             if (fire > 0)
             {
+                Debug.Log("Fire Special");
                 PlayClip(m_primaryFire,WrapMode.Once);
                 m_mainWeaponScript.fire(aim);
             }
             else if (m_LeftWeapon != null)
             {
+                Debug.Log("Fire Socket");
                 PlayClip(m_socketFire, WrapMode.Once);
-                m_LeftScript.fire(aim);
+                if (m_LeftScript != null)
+                {
+                    m_LeftScript.fire(aim);
+                }
             }
         }
         if ((movedir != transform.forward.x) && movedir != 0)
         {
-//            Debug.Log(movedir+ " " + transform.forward);
+            //            Debug.Log(movedir+ " " + transform.forward);
             float rot = m_turnSpeed * Time.deltaTime;
             float maxRot = Vector2.Angle(new Vector2(movedir, 0), new Vector2(transform.forward.x, transform.forward.z));
             if (rot > maxRot)
             {
                 rot = maxRot;
             }
-//            Debug.Log(rot +" max "+ maxRot);
-            if (movedir < 0 && transform.forward.x > 0)
-            {
-                transform.Rotate(transform.up, (-1)*rot);
-            }
-            else
-            {
-                transform.Rotate(transform.up, rot* (1));
-            }
+            //            Debug.Log(rot +" max "+ maxRot);
+            transform.Rotate(transform.up, rot * (1));
         }
             
         m_movement.x = m_movementSpeed * movedir;
