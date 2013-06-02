@@ -11,11 +11,15 @@ namespace FSM
         {
 			Actor actor = (Actor) o;
 			actor.ActionTimer = 0.0f;
-			actor.gameObject.SetActive(false);
 			
-			actor.DeathParts = (GameObject)GameObject.Instantiate(actor.DeathParts, actor.Position, Quaternion.identity);
-			GameObject.Destroy(actor.DeathParts, actor.FadeTime);
+			GameObject deathParts = (GameObject)GameObject.Instantiate(actor.DeathParts, actor.Position, Quaternion.identity);
+			GameObject.Destroy(deathParts, actor.FadeTime);
+			
+			GameObject socketedDrop = (GameObject)GameObject.Instantiate(actor.SocketedDrop, actor.Position, Quaternion.identity);
+			
 			Debug.Log("death");
+			Debug.Log(socketedDrop.name);
+			GameObject.Destroy(actor.gameObject);
         }
     }
 }

@@ -36,6 +36,7 @@ public class PlayerCharacter : MonoBehaviour {
     private CharacterController m_control;
     private float m_zPosition;
 	private bool m_climbing = false;
+	private bool m_frozen = false;
     
     // Use this for initialization
     void Start()
@@ -125,6 +126,9 @@ public class PlayerCharacter : MonoBehaviour {
             PlayClip(m_run, WrapMode.Loop);
         else
             PlayClip(m_idle, WrapMode.Loop);
+		
+		if (m_frozen) { m_movement = Vector3.zero; }	//Added frozen attribute to control movement
+		
         m_control.Move(m_movement*Time.deltaTime);
     }
     private void Unequip()
@@ -198,4 +202,9 @@ public class PlayerCharacter : MonoBehaviour {
         }
 		get { return m_climbing; }
     }
+	
+	public bool Frozen{
+		get { return m_frozen; }
+		set { m_frozen = value; }
+	}
 }

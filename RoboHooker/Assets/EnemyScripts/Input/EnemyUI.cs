@@ -40,10 +40,10 @@ public class EnemyUI : MonoBehaviour {
 		Vector3 screenPos = Camera.mainCamera.WorldToScreenPoint(enemy.transform.position);
 		UI_X = (int)(screenPos.x - UI_Width/2);
 		UI_Y = (int)(
-			-screenPos.y // Enemy Y Position in Screen point
-			- yOffSet   		  // User defined Y Offset
-			+ Screen.height 	  // Screen Height
-			- UI_Height/2		  // (Optional) Half UI Height
+			-screenPos.y	 // Enemy Y Position in Screen point
+			- yOffSet					// User defined Y Offset
+			+ Screen.height				// Screen Height
+			- UI_Height/2	  			// (Optional) Half UI Height
 			);
 		
 		maxHP = enemy.GetComponent<EnemyInput>().maxHP;
