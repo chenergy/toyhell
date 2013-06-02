@@ -76,33 +76,29 @@ public class PlayerCharacter : MonoBehaviour {
         {
             if (fire > 0)
             {
-                PlayClip(m_primaryFire,WrapMode.Once);
-                m_mainWeaponScript.fire(aim);
+                fireSpecial(aim);
             }
             else if (m_LeftWeapon != null)
             {
-                PlayClip(m_socketFire, WrapMode.Once);
-                m_LeftScript.fire(aim);
+                Debug.Log("Fire Socket");
+                if (m_LeftScript != null)
+                {
+                    PlayClip(m_socketFire, WrapMode.Once);
+                    m_LeftScript.fire(aim);
+                }
             }
         }
         if ((movedir != transform.forward.x) && movedir != 0)
         {
-//            Debug.Log(movedir+ " " + transform.forward);
+            //            Debug.Log(movedir+ " " + transform.forward);
             float rot = m_turnSpeed * Time.deltaTime;
             float maxRot = Vector2.Angle(new Vector2(movedir, 0), new Vector2(transform.forward.x, transform.forward.z));
             if (rot > maxRot)
             {
                 rot = maxRot;
             }
-//            Debug.Log(rot +" max "+ maxRot);
-            if (movedir < 0 && transform.forward.x > 0)
-            {
-                transform.Rotate(transform.up, (-1)*rot);
-            }
-            else
-            {
-                transform.Rotate(transform.up, rot* (1));
-            }
+            //            Debug.Log(rot +" max "+ maxRot);
+            transform.Rotate(transform.up, rot * (1));
         }
             
         m_movement.x = m_movementSpeed * movedir;
@@ -141,7 +137,12 @@ public class PlayerCharacter : MonoBehaviour {
             m_LeftWeapon = null;
         }
     }
-
+    protected void fireSpecial(Vector2 aim)
+    {
+        Debug.Log("Fire Special");
+        PlayClip(m_primaryFire, WrapMode.Once);
+        m_mainWeaponScript.fire(aim);
+    }
     private void applyGravity()
     {
         if (!m_control.isGrounded)

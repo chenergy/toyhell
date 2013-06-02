@@ -1,35 +1,24 @@
 fileFormatVersion: 2
-guid: c97d600feb6470f4da33acdb6b7dda27
+guid: 8ba4f0c71a0ac3c47808f83b297d7a08
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: ikHandle1
-    100004: L_Arm
-    100006: tinyElbowCtr
-    100008: tinyElbowCtr_Grp
-    100010: tinyHandCtr
-    100012: tinyHandCtr_Grp
-    100014: tinyJnt1
-    100016: tinyJnt2
-    100018: tinyMainCtr
-    100020: tinyRootJnt
-    400000: //RootNode
-    400002: ikHandle1
-    400004: L_Arm
-    400006: tinyElbowCtr
-    400008: tinyElbowCtr_Grp
-    400010: tinyHandCtr
-    400012: tinyHandCtr_Grp
-    400014: tinyJnt1
-    400016: tinyJnt2
-    400018: tinyMainCtr
-    400020: tinyRootJnt
-    4300000: L_Arm
+    100000: nerfGun
+    100002: nerfGun_Jnt
+    100004: pivot_nerf_gun
+    100006: root_socketJnt
+    100008: //RootNode
+    400000: nerfGun
+    400002: nerfGun_Jnt
+    400004: pivot_nerf_gun
+    400006: root_socketJnt
+    400008: //RootNode
+    4300000: pivot_nerf_gun
+    4300002: nerfGun
     7400000: Attack
     9500000: //RootNode
-    11100000: //RootNode
-    13700000: L_Arm
+    13700000: nerfGun
+    13700002: pivot_nerf_gun
   materials:
     importMaterials: 1
     materialName: 0
@@ -45,8 +34,8 @@ ModelImporter:
     clipAnimations:
     - name: Attack
       takeName: Take 001
-      firstFrame: 1
-      lastFrame: 13
+      firstFrame: 118
+      lastFrame: 130
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -100,5 +89,5 @@ ModelImporter:
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   additionalBone: 1
-  animationType: 1
+  animationType: 2
   userData: 
