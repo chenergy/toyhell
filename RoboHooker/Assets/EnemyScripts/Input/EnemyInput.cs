@@ -31,6 +31,7 @@ public class EnemyInput : MonoBehaviour
 	public int			maxHP				= 100;
 	public int			currentHP			= 100;
 	
+	private GameObject	targetPlayer;
 	private float		zPlane;
 	private GameObject	hooker;
 	private GameObject	robot;
@@ -46,8 +47,8 @@ public class EnemyInput : MonoBehaviour
 		Physics.IgnoreCollision(hitbox.collider, this.collider);
 		
 		// Can Walk through characters
-		//Physics.IgnoreCollision(this.collider, hooker.collider);
-		//Physics.IgnoreCollision(this.collider, robot.collider);
+		Physics.IgnoreCollision(this.collider, hooker.collider);
+		Physics.IgnoreCollision(this.collider, robot.collider);
 		
 		patrolPoint1.renderer.enabled = false;
 		patrolPoint2.renderer.enabled = false;
@@ -81,6 +82,7 @@ public class EnemyInput : MonoBehaviour
 		attributes["patrolPauseTime"] = patrolPauseTime;
 		attributes["targetPosition"] = controller.transform.position;
 		attributes["targetRotation"] = controller.transform.rotation;
+		attributes["targetPlayer"] = null;
 		attributes["actionTimer"] = 0.0f;
 		attributes["attackTime"] = attackTime;
 		attributes["attackRange"] = attackRange;

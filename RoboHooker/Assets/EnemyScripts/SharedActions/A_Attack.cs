@@ -28,9 +28,18 @@ namespace FSM
 				if (actor.IsRanged){
 					if (actor.Projectile != null){
 						GameObject attackProjectile = actor.Projectile;
-						GameObject newProjectile = (GameObject)GameObject.Instantiate(attackProjectile, actor.Hitbox.transform.position + actor.gameObject.transform.forward, Quaternion.identity);
+						GameObject newProjectile = (GameObject)GameObject.Instantiate(attackProjectile, actor.Hitbox.transform.position, Quaternion.identity);
+						
+						// Enemy Shoots Forward
+						//newProjectile.GetComponent<ProjectileScript>().Direction = (actor.TargetPosition - actor.Position).normalized;
+						
+						// Enemy Shoots Toward Player
+						// START
+						newProjectile.transform.LookAt(actor.TargetPlayer.transform.position + new Vector3(0.0f, actor.controller.height/2.0f, 0.0f));
+						newProjectile.GetComponent<ProjectileScript>().Direction = newProjectile.transform.forward;
+						// END
+						
 						newProjectile.GetComponent<ProjectileScript>().Damage = actor.Damage;
-						newProjectile.GetComponent<ProjectileScript>().Direction = (actor.TargetPosition - actor.Position).normalized;
 						newProjectile.GetComponent<ProjectileScript>().Speed = actor.ProjectileSpeed;
 						newProjectile.GetComponent<ProjectileScript>().Source = (Enemy)actor;
 						GameObject.Destroy(newProjectile, actor.ProjectileDuration);

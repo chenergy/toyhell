@@ -11,7 +11,7 @@ public class PlayerRespawnTimer : MonoBehaviour
 	}
 	
 	public float respawnTime = 3.0f;
-	public Dictionary<string, PlayerRespawnStats> playerStats;
+	public Dictionary<GameObject, PlayerRespawnStats> playerStats;
 	
 	// Use this for initialization
 	void Start ()
@@ -26,9 +26,9 @@ public class PlayerRespawnTimer : MonoBehaviour
 		hooker.isAlive	= true;
 		hooker.player	= GameData.Hooker;
 		
-		this.playerStats = new Dictionary<string, PlayerRespawnStats>();
-		this.playerStats["Robot"] = robot;
-		this.playerStats["Hooker"] = hooker;
+		this.playerStats = new Dictionary<GameObject, PlayerRespawnStats>();
+		this.playerStats[GameData.Robot] = robot;
+		this.playerStats[GameData.Hooker] = hooker;
 	}
 	
 	// Update is called once per frame
@@ -47,8 +47,8 @@ public class PlayerRespawnTimer : MonoBehaviour
 	}
 	
 	public void StartTimer(GameObject player){
-		this.playerStats[player.name].timer = 0.0f;
-		this.playerStats[player.name].isAlive = false;
+		this.playerStats[player].timer = 0.0f;
+		this.playerStats[player].isAlive = false;
 	}
 }
 

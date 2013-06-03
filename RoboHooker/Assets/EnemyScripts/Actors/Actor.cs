@@ -26,8 +26,9 @@ namespace Actors
 		
 		protected FSMContext fsmc;
 		protected Dictionary<string, object> attributes;
-		protected PlayerData HookerData;
-		protected PlayerData RobotData;
+		protected Dictionary<GameObject, PlayerData> playerData;
+		//protected PlayerData HookerData;
+		//protected PlayerData RobotData;
 		
 		public void MoveToPosition(Vector3 targetPosition){
 			if (fsmc.CurrentState.Name != "attack"){
@@ -123,6 +124,11 @@ namespace Actors
 		public Quaternion TargetRotation{
 			get{ return (Quaternion)attributes["targetRotation"]; }
 			set{ attributes["targetRotation"] = value; }
+		}
+		
+		public GameObject TargetPlayer{
+			get{ return (GameObject)attributes["targetPlayer"]; }
+			set{ attributes["targetPlayer"] = value; }
 		}
 		
 		public float JumpPower{

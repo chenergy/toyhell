@@ -39,37 +39,40 @@ namespace Actors
 			
 			S_Jump.addTransition(T_Idle, "idle");
 			
-			this.HookerData = new PlayerData(GameData.Hooker);
-			this.RobotData = new PlayerData(GameData.Robot);
+			PlayerData HookerData = new PlayerData(GameData.Hooker);
+			PlayerData RobotData = new PlayerData(GameData.Robot);
 			
 			this.fsmc = FSM.FSM.createFSMInstance(S_Idle, noAction);
 			this.attributes = attributes;
+			
+			this.playerData = new Dictionary<GameObject, PlayerData>();
+			this.playerData[GameData.Hooker] = HookerData;
+			this.playerData[GameData.Robot] = RobotData;
 		}
 		
 		
 		public override void Update ()
 		{
-			UpdatePlayerData(HookerData);
-			UpdatePlayerData(RobotData);
+			foreach (PlayerData data in this.playerData.Values){
+				UpdatePlayerData(data);
+			}
 			
-			bool isMoving = false;
+			if (this.TargetPlayer == null)
+				this.TargetPlayer = this.GetPlayerInRange();	// Get the player to target
 			
-			if (checkAttack(HookerData)){
-				this.Attack(HookerData.position);
-				isMoving = true;
+			if (this.TargetPlayer != null){
+				bool playerIsAlive = GameObject.Find("PlayerUI").GetComponent<PlayerRespawnTimer>().playerStats[this.TargetPlayer].isAlive;
+				
+				if (playerIsAlive){
+					if (CheckAttackPlayer(this.TargetPlayer)){
+						this.Attack(this.TargetPlayer.transform.position);
+					}
+					else if (CheckMoveToPlayer(this.TargetPlayer) && !this.IsStatic){
+						this.MoveToPosition(this.TargetPlayer.transform.position);
+					}
+				}
 			}
-			else if (checkMovement(HookerData) && !isMoving && !this.IsStatic){
-				this.MoveToPosition(HookerData.position);
-				isMoving = true;
-			}
-			else if (checkAttack(RobotData) && !isMoving){
-				this.MoveToPosition(RobotData.position);
-				isMoving = true;
-			}
-			else if (checkMovement(RobotData) && !isMoving && !this.IsStatic){
-				this.MoveToPosition(RobotData.position);
-				isMoving = true;
-			}
+			
 			else if (!this.IsStatic){
 				this.Patrol(this.PatrolPauseTime);
 			}
@@ -84,23 +87,48 @@ namespace Actors
 			fsmc.CurrentState.update(fsmc, this);
 		}
 		
-		bool checkAttack(PlayerData data){
+		
+		// Finds the closest player
+		private GameObject GetPlayerInRange(){
+			PlayerData hookerData = this.playerData[GameData.Hooker];
+			PlayerData robotData = this.playerData[GameData.Robot];
+			
+			if ((hookerData.distance < this.AgroRange) && (robotData.distance < this.AgroRange)){
+				if (hookerData.distance < robotData.distance){
+					return hookerData.player;
+				}
+				else{
+					return robotData.player;
+				}
+			}
+			else{
+				foreach (PlayerData data in this.playerData.Values){
+					if (data.distance < this.AgroRange){
+						return data.player;
+					}
+				}
+			}
+			return null;
+		}
+		
+		// Checks if self is close enough to attack
+		private bool CheckAttackPlayer(GameObject player){
 			// todo: check to see the hooker or robot can be reassigned and reassign if possible
 			// this will prevent the ai from breaking if the robot dies.
 			// note: the way respawning is implemented - hooker and robot gameobjects are not destroyed, simply
 			// rendering and collision is turned off, then relocated
-			
-			if (data.distance < this.AttackRange){
+			PlayerData data = this.playerData[player];
+			if (data.distance <= this.AttackRange){
 				return true;
 			}
 			return false;
 		}
 		
-		bool checkMovement(PlayerData data){
-			if (!this.IsStatic){
-				if (data.distance < this.AgroRange){
-					return true;
-				}
+		// Checks if self should pursue player
+		private bool CheckMoveToPlayer(GameObject player){
+			PlayerData data = this.playerData[player];
+			if (data.distance <= this.AgroRange){
+				return true;
 			}
 			return false;
 		}
@@ -131,15 +159,14 @@ namespace Actors
 			float distance = (PatrolTargetPosition - this.Position).magnitude;
 			
 			if (distance < 0.2f){
-				
-				if (this.ActionTimer < patrolPauseTime){
+				if (this.ActionTimer < patrolPauseTime){	// Gets within distance of a patrol point and idles
 					this.ActionTimer += Time.deltaTime;
 					this.fsmc.dispatch("idle", this);
 				}
 				
 				else{
 					this.ActionTimer = 0.0f;
-					if (this.PatrolTarget == this.PatrolPoint1){
+					if (this.PatrolTarget == this.PatrolPoint1){	// Move target between patrol points 1 and 2
 						Debug.Log("Changed To point2");
 						this.PatrolTarget = this.PatrolPoint2;
 					}

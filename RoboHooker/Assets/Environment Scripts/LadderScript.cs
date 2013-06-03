@@ -17,6 +17,7 @@ public class LadderScript : MonoBehaviour {
 
             if (climbing)
             {
+				player.transform.LookAt(player.transform.position + new Vector3(0.0f, 0.0f, 1.0f));
                 if (Mathf.Abs(P1_movement) > 0)
                 {
                     if (player.GetComponent<PlayerCharacter>().m_player == gamepad.one)
