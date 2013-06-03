@@ -14,5 +14,8 @@ public class DeathBox : MonoBehaviour {
 		if (player.tag == "Player"){
 			GameData.KillPlayer(player);
 		}
+		else if (player.tag == "Enemy"){
+			player.GetComponent<EnemyInput>().KillEnemy();
+		}
 	}
 }

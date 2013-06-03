@@ -18,7 +18,7 @@ public class EnemyInput : MonoBehaviour
 	public GameObject	projectile;
 	public float		projectileSpeed 	= 1.0f;
 	public float		projectileDuration 	= 2.0f;
-	public float		jumpPower			= 5.0f;
+	public float		jumpPower			= 40.0f;
 	public float		moveSpeed 			= 2.0f;
 	public float 		turnSpeed 			= 5.0f;
 	public float 		agroRange 			= 0.0f; 
@@ -117,7 +117,7 @@ public class EnemyInput : MonoBehaviour
 		enemy.Position 	= enemy.controller.transform.position;
 
 		if (Input.GetKey(KeyCode.Tab)){ // Test case for enemy death
-			enemy.CurrentHP = 0;
+			this.DamageEnemy(10);
 		}
 		
 		enemy.Update();
@@ -125,5 +125,13 @@ public class EnemyInput : MonoBehaviour
 		if(this.transform.position.z != this.zPlane){
 			this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.zPlane);
 		}
+	}
+	
+	public void KillEnemy(){
+		this.enemy.CurrentHP = 0;
+	}
+	
+	public void DamageEnemy(int damage){
+		this.enemy.CurrentHP -= damage;
 	}
 }

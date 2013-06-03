@@ -48,18 +48,30 @@ namespace Actors
 			this.playerData = new Dictionary<GameObject, PlayerData>();
 			this.playerData[GameData.Hooker] = HookerData;
 			this.playerData[GameData.Robot] = RobotData;
+			
+			this.jumpStrength = 0.0f;
+			this.canJump = false;
 		}
 		
 		
 		public override void Update ()
 		{
+			checkDeath();
+			//Debug.DrawRay(this.Position + (this.gameObject.transform.forward * this.controller.radius) + new Vector3(0.0f, this.controller.height/2.0f, 0.0f), new Vector3(0.0f, -this.controller.height/2.0f - 0.5f, 0.0f));
+			Debug.DrawRay(this.Position + (this.gameObject.transform.forward), new Vector3(0.0f, -1.0f, 0.0f));
+			
+			
+			// Update information about the two players
 			foreach (PlayerData data in this.playerData.Values){
 				UpdatePlayerData(data);
 			}
 			
+			// Get a player to target, if possible
 			if (this.TargetPlayer == null)
-				this.TargetPlayer = this.GetPlayerInRange();	// Get the player to target
+				this.TargetPlayer = this.GetPlayerInRange();	
 			
+			
+			// Find out whether to attack or move toward the player
 			if (this.TargetPlayer != null){
 				bool playerIsAlive = GameObject.Find("PlayerUI").GetComponent<PlayerRespawnTimer>().playerStats[this.TargetPlayer].isAlive;
 				
@@ -72,18 +84,56 @@ namespace Actors
 					}
 				}
 			}
-			
-			else if (!this.IsStatic){
-				this.Patrol(this.PatrolPauseTime);
+			// As long as it's non-static, patrol
+			else {
+				if (!this.IsStatic){
+					this.Patrol(this.PatrolPauseTime);
+				}
 			}
 			
-			checkDeath();
 			
+			// If it's non-static and non-flying, apply gravity-based logic
 			if (!this.IsFlying && !this.IsStatic){
-				Debug.Log(this.gameObject.name + " is Flying: " + this.IsFlying);
-				applyGravity();
+				
+				// Adjust Jump strength back to normal
+				if (this.jumpStrength <= 0.1f){
+					this.jumpStrength = 0.0f;
+				}
+				else{
+					this.jumpStrength -= this.jumpStrength * 0.05f;
+				}
+				
+				// Check if there is an existing collider in from of the enemy
+				/*
+				bool shouldJump = !(Physics.Raycast( this.Position + 
+					(this.gameObject.transform.forward * this.controller.radius) + 
+					new Vector3(0.0f, this.controller.height/2.0f, 0.0f)
+					, new Vector3(0.0f, -1.0f, 0.0f), 
+					this.controller.height/2.0f + 0.5f )
+				);*/
+				bool shouldJump = !(Physics.Raycast( this.Position + (this.gameObject.transform.forward), 
+					new Vector3(0.0f, -1.0f, 0.0f), 
+					1.0f )
+				);
+				
+				// If not, jump
+				if(shouldJump){
+					if (this.canJump){
+						this.canJump = false;
+						if (this.jumpStrength == 0.0f){
+							this.jumpStrength = this.JumpPower;
+						}
+					}
+				}
+				else{
+					this.jumpStrength = 0.0f;
+					this.canJump = true;
+				}
+				
+				Debug.Log("jump strength: " + this.jumpStrength);
+				this.applyGravity();
 			}
-			
+
 			fsmc.CurrentState.update(fsmc, this);
 		}
 		
@@ -167,11 +217,11 @@ namespace Actors
 				else{
 					this.ActionTimer = 0.0f;
 					if (this.PatrolTarget == this.PatrolPoint1){	// Move target between patrol points 1 and 2
-						Debug.Log("Changed To point2");
+						//Debug.Log("Changed To point2");
 						this.PatrolTarget = this.PatrolPoint2;
 					}
 					else{
-						Debug.Log("Changed To point1");
+						//Debug.Log("Changed To point1");
 						this.PatrolTarget = this.PatrolPoint1;
 					}
 				}

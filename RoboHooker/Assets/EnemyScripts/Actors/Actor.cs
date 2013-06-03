@@ -27,8 +27,8 @@ namespace Actors
 		protected FSMContext fsmc;
 		protected Dictionary<string, object> attributes;
 		protected Dictionary<GameObject, PlayerData> playerData;
-		//protected PlayerData HookerData;
-		//protected PlayerData RobotData;
+		protected float jumpStrength;
+		protected bool	canJump;
 		
 		public void MoveToPosition(Vector3 targetPosition){
 			if (fsmc.CurrentState.Name != "attack"){
@@ -87,7 +87,7 @@ namespace Actors
 		protected void applyGravity(){
 	        if (!this.controller.isGrounded)
 	        {
-	            this.controller.Move(new Vector3(0.0f, (Physics.gravity.y * Time.deltaTime), 0.0f));
+	            this.controller.Move(new Vector3(0.0f, ((Physics.gravity.y + jumpStrength) * Time.deltaTime), 0.0f));
 	        }
 		}
 		
