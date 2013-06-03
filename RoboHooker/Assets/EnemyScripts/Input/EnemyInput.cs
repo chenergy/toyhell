@@ -113,7 +113,7 @@ public class EnemyInput : MonoBehaviour
 		this.maxHP		= this.enemy.MaxHP;
 		enemy.MoveSpeed = moveSpeed;
 		enemy.TurnSpeed = turnSpeed;
-		enemy.Position 	= enemy.controller.transform.position;
+		enemy.Position 	= this.controller.transform.position;
 
 		if (Input.GetKey(KeyCode.Tab)){ // Test case for enemy death
 			this.DamageEnemy(10);
