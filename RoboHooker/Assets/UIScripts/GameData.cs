@@ -16,12 +16,13 @@ public class GameData {
 	
 	private GameObject lastCheckpoint;
 	private GameObject respawnParticles;
-	
+	private GameObject ui;
 	private float partsFadeTime = 3.0f;
 	
 	private GameData(){
 		this.hooker = GameObject.Find("Hooker");
-		this.robot = GameObject.Find("Robot");
+		this.robot  = GameObject.Find("Robot");
+		this.ui		= GameObject.Find("PlayerUI");
 		this.robotDeathParts = (GameObject)Resources.LoadAssetAtPath("Assets/Prefabs/DeathParts/RobotParts.prefab", typeof(GameObject));
 		this.hookerDeathParts = (GameObject)Resources.LoadAssetAtPath("Assets/Prefabs/DeathParts/RobotParts.prefab", typeof(GameObject));
 		this.respawnParticles = (GameObject)Resources.LoadAssetAtPath("Assets/Prefabs/Particles/RespawnParticles.prefab", typeof(GameObject));
@@ -89,7 +90,7 @@ public class GameData {
 			deathParts = (GameObject)GameObject.Instantiate(instance.hookerDeathParts, player.transform.position, Quaternion.identity);
 		}
 		
-		player.GetComponent<PlayerRespawnTimer>().StartTimer();
+		instance.ui.GetComponent<PlayerRespawnTimer>().StartTimer(player);
 		GameObject.Destroy(deathParts, instance.partsFadeTime);
 	}
 	
@@ -143,5 +144,15 @@ public class GameData {
 	public static GameObject LastCheckpoint{
 		get { return instance.lastCheckpoint; }
 		set { instance.lastCheckpoint = value; }
+	}
+	
+	public static float RobotRespawnTime{
+		get { return instance.ui.GetComponent<PlayerRespawnTimer>().respawnTime -
+			instance.ui.GetComponent<PlayerRespawnTimer>().playerStats["Robot"].timer; }
+	}
+	
+	public static float HookerRespawnTime{
+		get { return instance.ui.GetComponent<PlayerRespawnTimer>().respawnTime -
+			instance.ui.GetComponent<PlayerRespawnTimer>().playerStats["Hooker"].timer; }
 	}
 }

@@ -22,9 +22,8 @@ namespace FSM
 			// Quick Rotation
 			actor.controller.transform.LookAt(actor.TargetPosition);
 			Debug.DrawLine(actor.Position, actor.TargetPosition);
-			//Debug.Log("Hooker: " + GameData.Hooker.transform.position);
-			//Debug.Log("TargetPosition: " + actor.TargetPosition);
 			
+			// Check to see if the enemy has attacked yet
 			if (!actor.HasAttacked && (actor.ActionTimer > actor.AttackTime)){
 				if (actor.IsRanged){
 					if (actor.Projectile != null){
@@ -32,12 +31,9 @@ namespace FSM
 						GameObject newProjectile = (GameObject)GameObject.Instantiate(attackProjectile, actor.Hitbox.transform.position + actor.gameObject.transform.forward, Quaternion.identity);
 						newProjectile.GetComponent<ProjectileScript>().Damage = actor.Damage;
 						newProjectile.GetComponent<ProjectileScript>().Direction = (actor.TargetPosition - actor.Position).normalized;
-						//Debug.Log("Target Position: " + actor.TargetPosition);
-						//Debug.Log("Enemy Position: " + actor.Position);
-						//Debug.Log("Projectile Direction: " + (actor.TargetPosition - actor.Position).normalized);
-						//Debug.Break();
 						newProjectile.GetComponent<ProjectileScript>().Speed = actor.ProjectileSpeed;
-						GameObject.Destroy(newProjectile, 1.0f);
+						newProjectile.GetComponent<ProjectileScript>().Source = (Enemy)actor;
+						GameObject.Destroy(newProjectile, actor.ProjectileDuration);
 					}
 					actor.HasAttacked = true;
 				}

@@ -37,6 +37,7 @@ public class PlayerCharacter : MonoBehaviour {
     private float m_zPosition;
 	private bool m_climbing = false;
 	private bool m_frozen = false;
+	private Vector3 m_knockback;
     
     // Use this for initialization
     void Start()
@@ -46,6 +47,7 @@ public class PlayerCharacter : MonoBehaviour {
         m_movement = new Vector3();
         m_controller = new GamePadManager(m_player);
         PlayClip(m_spawn, WrapMode.Once);
+		m_knockback = Vector3.zero;
     }
     // Update is called once per frame
     public virtual void Update()
@@ -129,6 +131,14 @@ public class PlayerCharacter : MonoBehaviour {
 		
 		if (m_frozen) { m_movement = Vector3.zero; }	//Added frozen attribute to control movement
 		
+		if (m_knockback.magnitude > 0.1f) { 			//Added knockback to control movement after being hit
+			m_movement += m_knockback;
+			m_knockback *= 0.9f;
+		}
+		else{
+			m_knockback = Vector3.zero;
+		}
+		
         m_control.Move(m_movement*Time.deltaTime);
     }
     private void Unequip()
@@ -206,5 +216,10 @@ public class PlayerCharacter : MonoBehaviour {
 	public bool Frozen{
 		get { return m_frozen; }
 		set { m_frozen = value; }
+	}
+	
+	public Vector3 Knockback{
+		get { return m_knockback; }
+		set { m_knockback = value; }
 	}
 }

@@ -53,19 +53,12 @@ namespace Actors
 			UpdatePlayerData(RobotData);
 			
 			bool isMoving = false;
-			/*
-			if (!checkAttack(HookerData) || !checkAttack(RobotData)){
-				if (!checkMovement(HookerData)){
-					checkMovement(RobotData);
-				}
-			}
-			*/
 			
 			if (checkAttack(HookerData)){
 				this.Attack(HookerData.position);
 				isMoving = true;
 			}
-			else if (checkMovement(HookerData) && !isMoving){
+			else if (checkMovement(HookerData) && !isMoving && !this.IsStatic){
 				this.MoveToPosition(HookerData.position);
 				isMoving = true;
 			}
@@ -73,17 +66,18 @@ namespace Actors
 				this.MoveToPosition(RobotData.position);
 				isMoving = true;
 			}
-			else if (checkMovement(RobotData) && !isMoving){
+			else if (checkMovement(RobotData) && !isMoving && !this.IsStatic){
 				this.MoveToPosition(RobotData.position);
 				isMoving = true;
 			}
-			else{
+			else if (!this.IsStatic){
 				this.Patrol(this.PatrolPauseTime);
 			}
 			
 			checkDeath();
 			
-			if (!this.IsFlying){
+			if (!this.IsFlying && !this.IsStatic){
+				Debug.Log(this.gameObject.name + " is Flying: " + this.IsFlying);
 				applyGravity();
 			}
 			
@@ -96,10 +90,7 @@ namespace Actors
 			// note: the way respawning is implemented - hooker and robot gameobjects are not destroyed, simply
 			// rendering and collision is turned off, then relocated
 			
-			/*if (data.name == "Hooker" && this.gameObject.name == "Barbie")
-				Debug.Log("distance: " + data.distance + ", attackRange: " + this.AttackRange);*/
-			if (data.distance < this.AttackRange){		// Within attack range, attack
-				this.Attack(data.position);
+			if (data.distance < this.AttackRange){
 				return true;
 			}
 			return false;
@@ -107,18 +98,9 @@ namespace Actors
 		
 		bool checkMovement(PlayerData data){
 			if (!this.IsStatic){
-				// Move based on agro range
-				// A Player is within agro range, move toward the Player
-				
 				if (data.distance < this.AgroRange){
-					//this.MoveToPosition(data.position);
 					return true;
 				}
-				/*
-				else{
-					this.Patrol(this.PatrolPauseTime);		// Out of range, Just Patrol
-				}
-				*/
 			}
 			return false;
 		}
@@ -170,8 +152,6 @@ namespace Actors
 			else{
 				this.MoveToPosition(this.PatrolTarget.transform.position);
 			}
-			
-			//Debug.Log("Patrol Target: " + this.PatrolTarget.transform.position);
 		}
 	}
 }
