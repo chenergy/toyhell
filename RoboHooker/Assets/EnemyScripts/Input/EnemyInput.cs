@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using FSM;
 using Actors;
 
-[RequireComponent (typeof(CharacterController))]
-
 public class EnemyInput : MonoBehaviour
 {
 	public bool			isStatic		= false;
 	public bool			isRanged		= false;
 	public bool			isFlying		= false;
+	public GameObject 	gobj;	
 	public GameObject 	patrolPoint1;
 	public GameObject 	patrolPoint2;
 	public GameObject	hitbox;
@@ -18,10 +17,10 @@ public class EnemyInput : MonoBehaviour
 	public GameObject	projectile;
 	public float		projectileSpeed 	= 1.0f;
 	public float		projectileDuration 	= 2.0f;
-	public float		jumpPower			= 40.0f;
+	public float		jumpPower			= 20.0f;
 	public float		moveSpeed 			= 2.0f;
 	public float 		turnSpeed 			= 5.0f;
-	public float 		agroRange 			= 0.0f; 
+	public float 		agroRange 			= 5.0f; 
 	public float		attackRange			= 1.0f;
 	public float		attackTime			= 0.0f;
 	public float		knockbackStrength	= 35.0f;
@@ -44,23 +43,23 @@ public class EnemyInput : MonoBehaviour
 		robot = GameObject.Find("Robot");
 		zPlane = this.gameObject.transform.position.z;
 		// Turn off rendering and colliders for hitbox and patrol point
-		Physics.IgnoreCollision(hitbox.collider, this.collider);
+		Physics.IgnoreCollision(hitbox.collider, this.gobj.collider);
 		
 		// Can Walk through characters
-		Physics.IgnoreCollision(this.collider, hooker.collider);
-		Physics.IgnoreCollision(this.collider, robot.collider);
+		Physics.IgnoreCollision(this.gobj.collider, hooker.collider);
+		Physics.IgnoreCollision(this.gobj.collider, robot.collider);
 		
 		patrolPoint1.renderer.enabled = false;
 		patrolPoint2.renderer.enabled = false;
 		hitbox.renderer.enabled = false;
 		hitbox.collider.enabled = false;
 		
-		controller = this.GetComponent<CharacterController>();
+		controller = this.gobj.GetComponent<CharacterController>();
 		
 		attributes = new Dictionary<string, object>();
 		#region attribute dictionary assignments
-		attributes["gameObject"] = this.gameObject;
-		attributes["controller"] = controller;
+		attributes["gameObject"] = this.gobj;
+		attributes["controller"] = this.controller;
 		attributes["hooker"] = hooker;
 		attributes["robot"] = robot;
 		attributes["deathParts"] = deathParts;
@@ -90,7 +89,7 @@ public class EnemyInput : MonoBehaviour
 		attributes["damage"] = damage;
 		attributes["maxHP"] = maxHP;
 		attributes["currentHP"] = currentHP;
-		attributes["animation"] = gameObject.animation;
+		attributes["animation"] = this.gobj.animation;
 		attributes["knockbackStrength"] = knockbackStrength;
 		
 		attributes["hasAttacked"] = false;

@@ -100,7 +100,7 @@ namespace Actors
 					this.jumpStrength = 0.0f;
 				}
 				else{
-					this.jumpStrength -= this.jumpStrength * 0.05f;
+					this.jumpStrength -= this.jumpStrength * 0.01f;
 				}
 				
 				// Check if there is an existing collider in from of the enemy

@@ -69,7 +69,7 @@ public class HitboxScript : MonoBehaviour {
 			// Create Particles
 			Vector3 playerPosition = other.collider.transform.position;
 			GameObject newParticle = (GameObject)GameObject.Instantiate(attackParticles, new Vector3(playerPosition.x, this.transform.position.y + yOffset, playerPosition.z), Quaternion.identity);
-			newParticle.transform.parent = player.transform;
+			//newParticle.transform.parent = player.transform;
 			GameObject.Destroy(newParticle, lifetime);
 		}
 	}
