@@ -15,29 +15,32 @@ namespace Actors
 			State S_MoveToPosition	= new State("moveToPosition", new A_MoveToPositionEnter(), new A_MoveToPosition(), new A_MoveToPositionExit());
 			State S_Attack 			= new State("attack", new A_AttackEnter(), new A_Attack(), new A_AttackExit());
 			State S_Death 			= new State("death", new A_DeathEnter(), new A_Death(), new A_DeathExit());
-			State S_Jump			= new State("jump", new A_JumpEnter(), new A_Jump(), new A_JumpExit());
+			State S_Hurt			= new State("hurt", new A_HurtEnter(), new A_Hurt(), new A_HurtExit());
 			
 			Transition T_Idle 			= new Transition(S_Idle, noAction);
 			Transition T_MoveToPosition	= new Transition(S_MoveToPosition, noAction);
 			Transition T_Attack			= new Transition(S_Attack, noAction);
 			Transition T_Death			= new Transition(S_Death, noAction);
-			Transition T_Jump			= new Transition(S_Jump, noAction);
+			Transition T_Hurt			= new Transition(S_Hurt, noAction);
 			
 			S_Idle.addTransition(T_MoveToPosition, "moveToPosition");
 			S_Idle.addTransition(T_Attack, "attack");
 			S_Idle.addTransition(T_Death, "death");
-			S_Idle.addTransition(T_Jump, "jump");
+			S_Idle.addTransition(T_Hurt, "hurt");
 			
 			S_MoveToPosition.addTransition(T_Idle, "idle");
 			S_MoveToPosition.addTransition(T_Attack, "attack");
 			S_MoveToPosition.addTransition(T_Death, "death");
 			S_MoveToPosition.addTransition(T_MoveToPosition, "moveToPosition");
-			S_MoveToPosition.addTransition(T_Jump, "jump");
+			S_MoveToPosition.addTransition(T_Hurt, "hurt");
 			
 			S_Attack.addTransition(T_Idle, "idle");
 			S_Attack.addTransition(T_Death, "death");
+			S_Attack.addTransition(T_Hurt, "hurt");
 			
-			S_Jump.addTransition(T_Idle, "idle");
+			S_Hurt.addTransition(T_Idle, "idle");
+			S_Hurt.addTransition(T_Death, "death");
+			S_Hurt.addTransition(T_Hurt, "hurt");
 			
 			PlayerData HookerData = new PlayerData(GameData.Hooker);
 			PlayerData RobotData = new PlayerData(GameData.Robot);

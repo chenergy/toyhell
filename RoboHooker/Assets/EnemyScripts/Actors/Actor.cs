@@ -59,6 +59,10 @@ namespace Actors
 			}
 		}
 		
+		public void Hurt(){
+			fsmc.dispatch("hurt", this);
+		}
+		
 		public abstract void Update();		
 		
 		protected void UpdatePlayerData(PlayerData data){

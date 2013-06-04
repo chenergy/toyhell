@@ -136,5 +136,6 @@ public class EnemyInput : MonoBehaviour
 	
 	public void DamageEnemy(int damage){
 		this.enemy.CurrentHP -= damage;
+		this.enemy.Hurt();
 	}
 }

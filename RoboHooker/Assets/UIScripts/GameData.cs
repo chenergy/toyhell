@@ -7,11 +7,13 @@ public class GameData {
 	private GameObject hooker;
 	private int hooker_currenthp = 100;
 	private int hooker_maxhp = 100;
+	private int hooker_lives = 3;
 	private GameObject hookerDeathParts;
 	
 	private GameObject robot;
 	private int robot_currenthp = 100;
 	private int robot_maxhp = 100;
+	private int robot_lives = 3;
 	private GameObject robotDeathParts;
 	
 	private GameObject lastCheckpoint;
@@ -83,14 +85,18 @@ public class GameData {
 			instance.robot_currenthp = 0;
 			//instance.robot.collider.enabled = false;
 			deathParts = (GameObject)GameObject.Instantiate(instance.robotDeathParts, player.transform.position, Quaternion.identity);
+			instance.robot_lives--;
+			if (instance.robot_lives > 0) { instance.ui.GetComponent<PlayerRespawnTimer>().StartTimer(player); }
 		}
 		else{
 			instance.hooker_currenthp = 0;
 			//instance.hooker.collider.enabled = false;
 			deathParts = (GameObject)GameObject.Instantiate(instance.hookerDeathParts, player.transform.position, Quaternion.identity);
+			instance.hooker_lives--;
+			if (instance.robot_lives > 0) { instance.ui.GetComponent<PlayerRespawnTimer>().StartTimer(player); }
 		}
 		
-		instance.ui.GetComponent<PlayerRespawnTimer>().StartTimer(player);
+		
 		GameObject.Destroy(deathParts, instance.partsFadeTime);
 	}
 	
@@ -154,5 +160,13 @@ public class GameData {
 	public static float HookerRespawnTime{
 		get { return instance.ui.GetComponent<PlayerRespawnTimer>().respawnTime -
 			instance.ui.GetComponent<PlayerRespawnTimer>().playerStats[instance.hooker].timer; }
+	}
+	
+	public static int RobotLives{
+		get { return instance.robot_lives; }
+	}
+	
+	public static int HookerLives{
+		get { return instance.hooker_lives; }
 	}
 }
