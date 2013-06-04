@@ -84,6 +84,10 @@ public class PlayerCharacter : MonoBehaviour {
                 Debug.Log("Fire Socket");
                 if (m_LeftScript != null)
                 {
+                    if (aim == Vector2.zero)
+                    {
+                        aim = new Vector2(transform.forward.x, transform.forward.z);
+                    }
                     PlayClip(m_socketFire, WrapMode.Once);
                     m_LeftScript.fire(aim);
                 }
