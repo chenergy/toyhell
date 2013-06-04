@@ -6,7 +6,7 @@ public class TriggerLevel : MonoBehaviour
 	//public GameObject Platform;
 	private bool colliding = false;
 	private bool activated = false;
-	
+	public string levelToLoad = "level";
 	// Use this for initialization
 	void Start () {
 	
@@ -21,15 +21,16 @@ public class TriggerLevel : MonoBehaviour
 		if (colliding)
 		{
 			Debug.Log("loading next level");
-			Application.LoadLevel("level1");
+			Application.LoadLevel(levelToLoad);
 		}
 	}
 	
 	void OnTriggerEnter(Collider player) 
 	{
-		if (player.tag == "Player")
+		if (player.gameObject.tag == "Player")
 		{
-			colliding = true;
+			//colliding = true;
+			Application.LoadLevel(levelToLoad);
 		}
 		
     }
