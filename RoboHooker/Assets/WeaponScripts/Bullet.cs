@@ -27,10 +27,17 @@ public class Bullet : MonoBehaviour {
     {
         Debug.Log(other.gameObject.name);
         EnemyInput enemy=other.gameObject.GetComponent<EnemyInput>();
+        if (other.transform.parent != null)
+        {
+            if (enemy == null)
+            {
+                enemy = other.transform.parent.gameObject.GetComponent<EnemyInput>();
+            }
+        }
         if (enemy != null)
         {
             Debug.Log("damaging");
-            enemy.enemy.CurrentHP -= m_damage;
+            enemy.DamageEnemy(m_damage);
             Destroy(gameObject);
         }
     }

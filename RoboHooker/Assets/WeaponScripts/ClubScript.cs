@@ -33,7 +33,7 @@ public class ClubScript : SocketWeapon
             if (enemy != null)
             {
                 Debug.Log("damaging");
-                enemy.enemy.CurrentHP -= m_damage;
+                enemy.DamageEnemy(m_damage);
                 Destroy(gameObject);
             }
         }

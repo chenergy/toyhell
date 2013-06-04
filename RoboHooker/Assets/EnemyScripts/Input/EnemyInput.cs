@@ -37,7 +37,7 @@ public class EnemyInput : MonoBehaviour
 	private GameObject	robot;
 	private CharacterController	controller;
 	private Dictionary<string, object> attributes;
-	public	Enemy 		enemy;
+	private	Enemy 		enemy;
 	
 	void Start(){
 		hooker = GameData.Hooker;
