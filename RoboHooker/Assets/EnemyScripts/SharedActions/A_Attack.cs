@@ -14,7 +14,8 @@ namespace FSM
 			
 			if (actor.Animation){
 				if (actor.Animation["Attack"]){
-					animationLength = actor.Animation["Attack"].clip.length;
+					animationLength = actor.Animation["Attack"].clip.length * (1.0f/actor.AttackSpeed);
+					actor.Animation["Attack"].speed = actor.AttackSpeed;
 					actor.Animation.CrossFade("Attack");
 				}
 			}
@@ -22,22 +23,27 @@ namespace FSM
 			// Quick Rotation
 			actor.controller.transform.LookAt(actor.TargetPosition);
 			Debug.DrawLine(actor.Position, actor.TargetPosition);
-			//Debug.Log("Hooker: " + GameData.Hooker.transform.position);
-			//Debug.Log("TargetPosition: " + actor.TargetPosition);
 			
+			// Check to see if the enemy has attacked yet
 			if (!actor.HasAttacked && (actor.ActionTimer > actor.AttackTime)){
 				if (actor.IsRanged){
 					if (actor.Projectile != null){
 						GameObject attackProjectile = actor.Projectile;
-						GameObject newProjectile = (GameObject)GameObject.Instantiate(attackProjectile, actor.Hitbox.transform.position + actor.gameObject.transform.forward, Quaternion.identity);
+						GameObject newProjectile = (GameObject)GameObject.Instantiate(attackProjectile, actor.Hitbox.transform.position, Quaternion.identity);
+						
+						// Enemy Shoots Forward
+						//newProjectile.GetComponent<ProjectileScript>().Direction = (actor.TargetPosition - actor.Position).normalized;
+						
+						// Enemy Shoots Toward Player
+						// START
+						newProjectile.transform.LookAt(actor.TargetPlayer.transform.position + new Vector3(0.0f, actor.controller.height/2.0f, 0.0f));
+						newProjectile.GetComponent<ProjectileScript>().Direction = newProjectile.transform.forward;
+						// END
+						
 						newProjectile.GetComponent<ProjectileScript>().Damage = actor.Damage;
-						newProjectile.GetComponent<ProjectileScript>().Direction = (actor.TargetPosition - actor.Position).normalized;
-						//Debug.Log("Target Position: " + actor.TargetPosition);
-						//Debug.Log("Enemy Position: " + actor.Position);
-						//Debug.Log("Projectile Direction: " + (actor.TargetPosition - actor.Position).normalized);
-						//Debug.Break();
 						newProjectile.GetComponent<ProjectileScript>().Speed = actor.ProjectileSpeed;
-						GameObject.Destroy(newProjectile, 1.0f);
+						newProjectile.GetComponent<ProjectileScript>().Source = (Enemy)actor;
+						GameObject.Destroy(newProjectile, actor.ProjectileDuration);
 					}
 					actor.HasAttacked = true;
 				}

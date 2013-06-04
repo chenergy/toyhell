@@ -7,21 +7,24 @@ public class GameData {
 	private GameObject hooker;
 	private int hooker_currenthp = 100;
 	private int hooker_maxhp = 100;
+	private int hooker_lives = 3;
 	private GameObject hookerDeathParts;
 	
 	private GameObject robot;
 	private int robot_currenthp = 100;
 	private int robot_maxhp = 100;
+	private int robot_lives = 3;
 	private GameObject robotDeathParts;
 	
 	private GameObject lastCheckpoint;
 	private GameObject respawnParticles;
-	
+	private GameObject ui;
 	private float partsFadeTime = 3.0f;
 	
 	private GameData(){
 		this.hooker = GameObject.Find("Hooker");
-		this.robot = GameObject.Find("Robot");
+		this.robot  = GameObject.Find("Robot");
+		this.ui		= GameObject.Find("PlayerUI");
 		this.robotDeathParts = (GameObject)Resources.LoadAssetAtPath("Assets/Prefabs/DeathParts/RobotParts.prefab", typeof(GameObject));
 		this.hookerDeathParts = (GameObject)Resources.LoadAssetAtPath("Assets/Prefabs/DeathParts/RobotParts.prefab", typeof(GameObject));
 		this.respawnParticles = (GameObject)Resources.LoadAssetAtPath("Assets/Prefabs/Particles/RespawnParticles.prefab", typeof(GameObject));
@@ -80,21 +83,25 @@ public class GameData {
 	
 		if (player.name == "Robot"){
 			instance.robot_currenthp = 0;
-			instance.robot.collider.enabled = false;
+			//instance.robot.collider.enabled = false;
 			deathParts = (GameObject)GameObject.Instantiate(instance.robotDeathParts, player.transform.position, Quaternion.identity);
+			instance.robot_lives--;
+			if (instance.robot_lives > 0) { instance.ui.GetComponent<PlayerRespawnTimer>().StartTimer(player); }
 		}
 		else{
 			instance.hooker_currenthp = 0;
-			instance.hooker.collider.enabled = false;
+			//instance.hooker.collider.enabled = false;
 			deathParts = (GameObject)GameObject.Instantiate(instance.hookerDeathParts, player.transform.position, Quaternion.identity);
+			instance.hooker_lives--;
+			if (instance.robot_lives > 0) { instance.ui.GetComponent<PlayerRespawnTimer>().StartTimer(player); }
 		}
 		
-		player.GetComponent<PlayerRespawnTimer>().StartTimer();
+		
 		GameObject.Destroy(deathParts, instance.partsFadeTime);
 	}
 	
 	public static void RespawnPlayer(GameObject player){
-		player.collider.enabled = true;
+		//player.collider.enabled = true;
 		player.transform.position = instance.lastCheckpoint.transform.position;
 		player.GetComponent<PlayerCharacter>().Frozen = false;
 		
@@ -143,5 +150,23 @@ public class GameData {
 	public static GameObject LastCheckpoint{
 		get { return instance.lastCheckpoint; }
 		set { instance.lastCheckpoint = value; }
+	}
+	
+	public static float RobotRespawnTime{
+		get { return instance.ui.GetComponent<PlayerRespawnTimer>().respawnTime -
+			instance.ui.GetComponent<PlayerRespawnTimer>().playerStats[instance.robot].timer; }
+	}
+	
+	public static float HookerRespawnTime{
+		get { return instance.ui.GetComponent<PlayerRespawnTimer>().respawnTime -
+			instance.ui.GetComponent<PlayerRespawnTimer>().playerStats[instance.hooker].timer; }
+	}
+	
+	public static int RobotLives{
+		get { return instance.robot_lives; }
+	}
+	
+	public static int HookerLives{
+		get { return instance.hooker_lives; }
 	}
 }

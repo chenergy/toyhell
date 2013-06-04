@@ -13,14 +13,12 @@ namespace Actors
 			public Vector3 		position;
 			public Vector3 		direction;
 			public float 		distance;
-			//public float		range;
 			public GameObject 	player;
 			
 			public PlayerData(GameObject player){
 				this.position 	= Vector3.zero;
 				this.direction 	= Vector3.zero;
 				this.distance 	= 0.0f;
-				//this.range 		= 0.0f;
 				this.player 	= player;
 				this.name		= player.name;
 			}
@@ -28,8 +26,9 @@ namespace Actors
 		
 		protected FSMContext fsmc;
 		protected Dictionary<string, object> attributes;
-		protected PlayerData HookerData;
-		protected PlayerData RobotData;
+		protected Dictionary<GameObject, PlayerData> playerData;
+		protected float jumpStrength;
+		protected bool	canJump;
 		
 		public void MoveToPosition(Vector3 targetPosition){
 			if (fsmc.CurrentState.Name != "attack"){
@@ -43,8 +42,11 @@ namespace Actors
 		
 		public void Attack(Vector3 targetPosition){
 			if (fsmc.CurrentState.Name != "attack"){
-				// Do not consider y in the target location
+				// Use if you DO NOT consider y in the target location
 				this.TargetPosition = new Vector3(targetPosition.x, this.Position.y, targetPosition.z);
+				
+				// Use if you DO consider y in target location
+				//this.TargetPosition = targetPosition;
 				this.TargetRotation = Quaternion.LookRotation(this.TargetPosition - this.Position);
 				
 				fsmc.dispatch("attack", this);
@@ -55,6 +57,10 @@ namespace Actors
 			if (fsmc.CurrentState.Name != "death"){
 				fsmc.dispatch("death", this);
 			}
+		}
+		
+		public void Hurt(){
+			fsmc.dispatch("hurt", this);
 		}
 		
 		public abstract void Update();		
@@ -85,7 +91,7 @@ namespace Actors
 		protected void applyGravity(){
 	        if (!this.controller.isGrounded)
 	        {
-	            this.controller.Move(new Vector3(0.0f, (Physics.gravity.y * Time.deltaTime), 0.0f));
+	            this.controller.Move(new Vector3(0.0f, ((Physics.gravity.y + jumpStrength) * Time.deltaTime), 0.0f));
 	        }
 		}
 		
@@ -124,6 +130,11 @@ namespace Actors
 			set{ attributes["targetRotation"] = value; }
 		}
 		
+		public GameObject TargetPlayer{
+			get{ return (GameObject)attributes["targetPlayer"]; }
+			set{ attributes["targetPlayer"] = value; }
+		}
+		
 		public float JumpPower{
 			get{ return (float)attributes["jumpPower"]; }
 			set{ attributes["jumpPower"] = value; }
@@ -148,15 +159,15 @@ namespace Actors
 			get{ return (float)attributes["attackTime"]; }
 			set{ attributes["attackTime"] = value; }
 		}
-		/*
-		public float AttackLength{
-			get{ return (float)attributes["attackLength"]; }
-			set{ attributes["attackLength"] = value; }
-		}
-		*/
+
 		public float AttackRange{
 			get{ return (float)attributes["attackRange"]; }
 			set{ attributes["attackRange"] = value; }
+		}
+		
+		public float AttackSpeed{
+			get{ return (float)attributes["attackSpeed"]; }
+			set{ attributes["attackSpeed"] = value; }
 		}
 		
 		public bool HasAttacked{
@@ -216,6 +227,16 @@ namespace Actors
 		public float ProjectileSpeed{
 			get{ return (float)attributes["projectileSpeed"]; }
 			set{ attributes["projectileSpeed"] = value; }
+		}
+		
+		public float ProjectileDuration{
+			get{ return (float)attributes["projectileDuration"]; }
+			set{ attributes["projectileDuration"] = value; }
+		}
+		
+		public float KnockbackStrength{
+			get{ return (float)attributes["knockbackStrength"]; }
+			set{ attributes["knockbackStrength"] = value; }
 		}
 		
 		public bool IsRanged{

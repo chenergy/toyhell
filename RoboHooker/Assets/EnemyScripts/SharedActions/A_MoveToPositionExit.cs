@@ -11,6 +11,7 @@ namespace FSM
         {
 			Actor actor = (Actor) o;
 			actor.ActionTimer = 0.0f;
+			actor.TargetPlayer = null;
         }
     }
 }
