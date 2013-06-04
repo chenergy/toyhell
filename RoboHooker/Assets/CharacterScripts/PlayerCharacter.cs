@@ -13,6 +13,7 @@ public class PlayerCharacter : MonoBehaviour {
     public KeyCode m_JumpKey;
     public KeyCode m_FireSpecial;
     public KeyCode m_FireSocket;
+    public KeyCode m_EquipSocket;
 
     public gamepad m_player;
 
@@ -158,7 +159,9 @@ public class PlayerCharacter : MonoBehaviour {
     {
         SocketWeapon sw = (SocketWeapon)other.gameObject.GetComponent<SocketWeapon>();
         if (sw != null)
+        {
             pickUpWeapon(sw);
+        }
     }
     public void OnTriggerStay(Collider other)
     {
@@ -171,13 +174,17 @@ public class PlayerCharacter : MonoBehaviour {
 
     private void pickUpWeapon(SocketWeapon newWeapon)
     {
-        if (Input.GetButtonDown(m_controller.m_LeftEquipKey))
+        Debug.Log("can pick up weapon");
+        if ((Input.GetButtonDown(m_controller.m_LeftEquipKey))||Input.GetKey(m_EquipSocket))
         {
+            Debug.Log("picking up weapon");
             if ((m_LeftWeapon != null)&&(m_LeftScript!=newWeapon))
             {
                 Unequip();
             }
-            newWeapon.gameObject.transform.position = m_socketLoc.transform.position;
+            Debug.Log("picking up" + newWeapon.gameObject.name);
+            newWeapon.m_socketJoint.parent = m_socketLoc.transform;
+            newWeapon.m_socketJoint.localPosition = new Vector3();
             newWeapon.Equip(gameObject);
             m_LeftScript = newWeapon;
             m_LeftWeapon = newWeapon.gameObject;

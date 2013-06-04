@@ -4,14 +4,21 @@ using System.Collections;
 public class SocketWeapon : Weapon {
 
     public AnimationClip m_idleAnimation;
+    public Transform m_socketJoint;
+
+    public void Start()
+    {
+    }
 
     public void Equip(GameObject Character)
     {
-        transform.parent=Character.transform;
+        Debug.Log("Equipping");
+        collider.isTrigger = false;
     }
     public void Deequip()
     {
-        transform.parent = null;
+        m_socketJoint.parent = null;
+        collider.isTrigger = true;
     }
     public override void fire(Vector2 dir)
     {
@@ -19,14 +26,6 @@ public class SocketWeapon : Weapon {
     }
     public void Update()
     {
-        if (!animation.IsPlaying(m_fireAnimation.name))
-        {
-            if (!animation.IsPlaying(m_idleAnimation.name))
-            {
-                animation.wrapMode = WrapMode.Loop;
-                animation.Play(m_idleAnimation.name);
-            }
-        }
-    }
 
+    }
 }
