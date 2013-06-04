@@ -86,6 +86,9 @@ namespace Actors
 						this.MoveToPosition(this.TargetPlayer.transform.position);
 					}
 				}
+				else{
+					this.Patrol(this.PatrolPauseTime);
+				}
 			}
 			// As long as it's non-static, patrol
 			else {

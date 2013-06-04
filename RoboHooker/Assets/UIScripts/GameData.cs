@@ -83,14 +83,14 @@ public class GameData {
 	
 		if (player.name == "Robot"){
 			instance.robot_currenthp = 0;
-			//instance.robot.collider.enabled = false;
+			instance.robot.collider.enabled = false;
 			deathParts = (GameObject)GameObject.Instantiate(instance.robotDeathParts, player.transform.position, Quaternion.identity);
 			instance.robot_lives--;
 			if (instance.robot_lives > 0) { instance.ui.GetComponent<PlayerRespawnTimer>().StartTimer(player); }
 		}
 		else{
 			instance.hooker_currenthp = 0;
-			//instance.hooker.collider.enabled = false;
+			instance.hooker.collider.enabled = false;
 			deathParts = (GameObject)GameObject.Instantiate(instance.hookerDeathParts, player.transform.position, Quaternion.identity);
 			instance.hooker_lives--;
 			if (instance.robot_lives > 0) { instance.ui.GetComponent<PlayerRespawnTimer>().StartTimer(player); }
@@ -101,7 +101,7 @@ public class GameData {
 	}
 	
 	public static void RespawnPlayer(GameObject player){
-		//player.collider.enabled = true;
+		player.collider.enabled = true;
 		player.transform.position = instance.lastCheckpoint.transform.position;
 		player.GetComponent<PlayerCharacter>().Frozen = false;
 		

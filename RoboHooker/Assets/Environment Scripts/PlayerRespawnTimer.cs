@@ -10,7 +10,7 @@ public class PlayerRespawnTimer : MonoBehaviour
 		public GameObject 	player;
 	}
 	
-	public float respawnTime = 3.0f;
+	public float respawnTime = 4.0f;
 	public Dictionary<GameObject, PlayerRespawnStats> playerStats;
 	
 	// Use this for initialization
