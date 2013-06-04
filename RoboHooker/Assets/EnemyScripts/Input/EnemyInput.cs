@@ -119,7 +119,7 @@ public class EnemyInput : MonoBehaviour
 			enemy.Position 	= this.controller.transform.position;
 	
 			if (Input.GetKey(KeyCode.Tab)){ // Test case for enemy death
-				this.DamageEnemy(10);
+				this.TakeDamage(10);
 			}
 			
 			enemy.Update();
@@ -134,7 +134,7 @@ public class EnemyInput : MonoBehaviour
 		this.enemy.CurrentHP = 0;
 	}
 	
-	public void DamageEnemy(int damage){
+	public void TakeDamage(int damage){
 		this.enemy.CurrentHP -= damage;
 		this.enemy.Hurt();
 	}

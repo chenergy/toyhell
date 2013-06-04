@@ -30,7 +30,8 @@ public class Bullet : MonoBehaviour {
         if (enemy != null)
         {
             Debug.Log("damaging");
-            enemy.enemy.CurrentHP -= m_damage;
+            //enemy.enemy.CurrentHP -= m_damage;
+			enemy.TakeDamage(m_damage);
             Destroy(gameObject);
         }
     }

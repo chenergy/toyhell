@@ -26,7 +26,7 @@ public class GameData {
 		this.robot  = GameObject.Find("Robot");
 		this.ui		= GameObject.Find("PlayerUI");
 		this.robotDeathParts = (GameObject)Resources.LoadAssetAtPath("Assets/Prefabs/DeathParts/RobotParts.prefab", typeof(GameObject));
-		this.hookerDeathParts = (GameObject)Resources.LoadAssetAtPath("Assets/Prefabs/DeathParts/RobotParts.prefab", typeof(GameObject));
+		this.hookerDeathParts = (GameObject)Resources.LoadAssetAtPath("Assets/Prefabs/DeathParts/HookerParts.prefab", typeof(GameObject));
 		this.respawnParticles = (GameObject)Resources.LoadAssetAtPath("Assets/Prefabs/Particles/RespawnParticles.prefab", typeof(GameObject));
 	}
 	
@@ -82,22 +82,25 @@ public class GameData {
 		GameObject deathParts;
 	
 		if (player.name == "Robot"){
-			instance.robot_currenthp = 0;
-			instance.robot.collider.enabled = false;
-			deathParts = (GameObject)GameObject.Instantiate(instance.robotDeathParts, player.transform.position, Quaternion.identity);
-			instance.robot_lives--;
-			if (instance.robot_lives > 0) { instance.ui.GetComponent<PlayerRespawnTimer>().StartTimer(player); }
+			if (instance.robot_lives > 0) {
+				instance.robot_currenthp = 0;
+				instance.robot.collider.enabled = false;
+				deathParts = (GameObject)GameObject.Instantiate(instance.robotDeathParts, player.transform.position, Quaternion.identity);
+				GameObject.Destroy(deathParts, instance.partsFadeTime);
+				instance.robot_lives--;
+				instance.ui.GetComponent<PlayerRespawnTimer>().StartTimer(player); 
+			}
 		}
-		else{
-			instance.hooker_currenthp = 0;
-			instance.hooker.collider.enabled = false;
-			deathParts = (GameObject)GameObject.Instantiate(instance.hookerDeathParts, player.transform.position, Quaternion.identity);
-			instance.hooker_lives--;
-			if (instance.robot_lives > 0) { instance.ui.GetComponent<PlayerRespawnTimer>().StartTimer(player); }
+		else if (player.name == "Hooker"){
+			if (instance.hooker_lives > 0) {
+				instance.hooker_currenthp = 0;
+				instance.hooker.collider.enabled = false;
+				deathParts = (GameObject)GameObject.Instantiate(instance.hookerDeathParts, player.transform.position, Quaternion.identity);
+				GameObject.Destroy(deathParts, instance.partsFadeTime);
+				instance.hooker_lives--;
+				instance.ui.GetComponent<PlayerRespawnTimer>().StartTimer(player); 
+			}
 		}
-		
-		
-		GameObject.Destroy(deathParts, instance.partsFadeTime);
 	}
 	
 	public static void RespawnPlayer(GameObject player){
