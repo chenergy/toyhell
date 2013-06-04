@@ -17,6 +17,11 @@ public class ProjectileScript : MonoBehaviour {
 	
 	void Update () {
 		this.collider.transform.position += direction * speed;
+        if (!renderer.isVisible)
+        {
+            Debug.Log("clean up");
+            Destroy(gameObject);
+        }
 		Debug.Log(direction);
 		Debug.Log(speed);
 	}
