@@ -40,8 +40,8 @@ public class EnemyInput : MonoBehaviour
 	public	Enemy 		enemy;
 	
 	void Start(){
-		hooker = GameObject.Find("Hooker");
-		robot = GameObject.Find("Robot");
+		hooker = GameData.Hooker;
+		robot = GameData.Robot;
 		zPlane = this.gameObject.transform.position.z;
 		// Turn off rendering and colliders for hitbox and patrol point
 		Physics.IgnoreCollision(hitbox.collider, this.gobj.collider);
