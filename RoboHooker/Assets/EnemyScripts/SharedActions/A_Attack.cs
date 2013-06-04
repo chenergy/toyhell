@@ -14,7 +14,8 @@ namespace FSM
 			
 			if (actor.Animation){
 				if (actor.Animation["Attack"]){
-					animationLength = actor.Animation["Attack"].clip.length;
+					animationLength = actor.Animation["Attack"].clip.length * (1.0f/actor.AttackSpeed);
+					actor.Animation["Attack"].speed = actor.AttackSpeed;
 					actor.Animation.CrossFade("Attack");
 				}
 			}

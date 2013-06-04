@@ -23,6 +23,7 @@ public class EnemyInput : MonoBehaviour
 	public float 		agroRange 			= 5.0f; 
 	public float		attackRange			= 1.0f;
 	public float		attackTime			= 0.0f;
+	public float		attackSpeed			= 1.0f;
 	public float		knockbackStrength	= 35.0f;
 	public float		patrolPauseTime 	= 3.0f;
 	public float		fadeTime			= 3.0f;
@@ -85,6 +86,7 @@ public class EnemyInput : MonoBehaviour
 		attributes["actionTimer"] = 0.0f;
 		attributes["attackTime"] = attackTime;
 		attributes["attackRange"] = attackRange;
+		attributes["attackSpeed"] = attackSpeed;
 		attributes["fadeTime"] = fadeTime;
 		attributes["damage"] = damage;
 		attributes["maxHP"] = maxHP;
@@ -108,21 +110,23 @@ public class EnemyInput : MonoBehaviour
 	}
 	
 	void Update (){
-		// Update User Attributes
-		this.currentHP 	= this.enemy.CurrentHP;
-		this.maxHP		= this.enemy.MaxHP;
-		enemy.MoveSpeed = moveSpeed;
-		enemy.TurnSpeed = turnSpeed;
-		enemy.Position 	= this.controller.transform.position;
-
-		if (Input.GetKey(KeyCode.Tab)){ // Test case for enemy death
-			this.DamageEnemy(10);
-		}
-		
-		enemy.Update();
-		
-		if(this.transform.position.z != this.zPlane){
-			this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.zPlane);
+		if (this.gobj != null){
+			// Update User Attributes
+			this.currentHP 	= this.enemy.CurrentHP;
+			this.maxHP		= this.enemy.MaxHP;
+			enemy.MoveSpeed = moveSpeed;
+			enemy.TurnSpeed = turnSpeed;
+			enemy.Position 	= this.controller.transform.position;
+	
+			if (Input.GetKey(KeyCode.Tab)){ // Test case for enemy death
+				this.DamageEnemy(10);
+			}
+			
+			enemy.Update();
+			
+			if(this.transform.position.z != this.zPlane){
+				this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.zPlane);
+			}
 		}
 	}
 	

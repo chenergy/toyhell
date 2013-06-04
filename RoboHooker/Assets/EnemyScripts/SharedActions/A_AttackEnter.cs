@@ -12,6 +12,12 @@ namespace FSM
 			Actor actor = (Actor) o;
 			actor.ActionTimer = 0.0f;
 			Debug.Log("attacking");
+			
+			if (actor.Animation){
+				if (actor.Animation["Attack"]){
+					actor.Animation["Attack"].speed = 1.0f;
+				}
+			}
         }
     }
 }

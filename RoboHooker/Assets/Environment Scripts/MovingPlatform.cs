@@ -70,6 +70,20 @@ public class MovingPlatform : MonoBehaviour
 				stats.offset = player2.collider.transform.position.x - this.transform.position.x;
 			}
 		}
+		// Will adjust for enemies, time allowing
+		/*
+		foreach (GameObject gobj in this.playerStats.Keys){
+			if (gobj.tag == "Enemy"){
+				PlayerStats stats = this.playerStats[gobj];
+				if (stats.onPlatform){
+					gobj.collider.transform.position = new Vector3(this.transform.position.x + stats.offset,
+						gobj.collider.transform.position.y,
+						gobj.collider.transform.position.z
+						);
+				}
+				stats.offset = player2.collider.transform.position.x - this.transform.position.x;
+			}
+		}*/
 	}
 	
 	
@@ -97,6 +111,21 @@ public class MovingPlatform : MonoBehaviour
 				stats.onPlatform = true;
 			}
 		}
+		
+		// Will adjust for enemies, time allowing
+		/*
+		else if (player.tag == "Enemy"){
+			PlayerStats stats = this.playerStats[player];
+			
+			if (stats != null){
+				stats.offset = player.collider.transform.position.x - this.transform.position.x;
+				stats.onPlatform = true;
+			}
+			else{
+				PlayerStats enemyStats = new PlayerStats();
+				this.playerStats[player] = enemyStats;
+			}
+		}*/
 	}
 	
 	void OnTriggerStay(Collider other){
@@ -106,7 +135,7 @@ public class MovingPlatform : MonoBehaviour
 	void OnTriggerExit(Collider other){
 		GameObject player = other.gameObject;
 		
-		if (player.tag == "Player"){
+		if (player.tag == "Player" || player.tag == "Enemy"){
 			PlayerStats stats = this.playerStats[player];
 			
 			if (stats != null){

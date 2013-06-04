@@ -14,6 +14,7 @@ public class EnemyStats{
 	public float 		agroRange 			= 5.0f; 
 	public float		attackRange			= 1.0f;
 	public float		attackTime			= 0.0f;
+	public float		attackSpeed			= 1.0f;
 	public float		knockbackStrength	= 35.0f;
 	public float		patrolPauseTime 	= 3.0f;
 	public float		fadeTime			= 3.0f;
@@ -60,6 +61,7 @@ public class EnemySpawner : MonoBehaviour
 				input.agroRange 			= this.enemyStats.agroRange; 
 				input.attackRange			= this.enemyStats.attackRange;
 				input.attackTime			= this.enemyStats.attackTime;
+				input.attackSpeed			= this.enemyStats.attackSpeed;
 				input.knockbackStrength		= this.enemyStats.knockbackStrength;
 				input.patrolPauseTime 		= this.enemyStats.patrolPauseTime;
 				input.fadeTime				= this.enemyStats.fadeTime;

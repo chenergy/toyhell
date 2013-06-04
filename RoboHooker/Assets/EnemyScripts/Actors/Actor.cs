@@ -161,6 +161,11 @@ namespace Actors
 			set{ attributes["attackRange"] = value; }
 		}
 		
+		public float AttackSpeed{
+			get{ return (float)attributes["attackSpeed"]; }
+			set{ attributes["attackSpeed"] = value; }
+		}
+		
 		public bool HasAttacked{
 			get{ return (bool)attributes["hasAttacked"]; }
 			set{ attributes["hasAttacked"] = value; }

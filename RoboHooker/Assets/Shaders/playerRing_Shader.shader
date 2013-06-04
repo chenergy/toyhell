@@ -8,7 +8,10 @@ Shader "Custom/playerRing_Shader" {
 		{ 
 			"RenderType" = "Opaque"
 		}
-		cull off
+		Pass{
+			cull off
+			AlphaTest Less 0.5
+		}
 		
 		CGPROGRAM
 		#pragma surface surf Lambert alpha
