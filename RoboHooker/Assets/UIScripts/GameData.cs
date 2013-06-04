@@ -125,10 +125,12 @@ public class GameData {
 
 	public static GameObject Hooker {
 		get { return instance.hooker; }
+		set { instance.hooker = value; }
 	}
 	
 	public static GameObject Robot {
 		get { return instance.robot; }
+		set { instance.robot = value; }
 	}
 	
 	public static int HookerHp{
