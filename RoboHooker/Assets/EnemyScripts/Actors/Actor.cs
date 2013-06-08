@@ -251,6 +251,14 @@ namespace Actors
 			get{ return (bool)attributes["isStatic"]; }
 		}
 		
+		public bool OnDeathLoadLevel{
+			get{ return (bool)attributes["onDeathLoadLevel"]; }
+		}
+		
+		public string LevelToLoad{
+			get{ return (string)attributes["levelToLoad"]; }
+		}
+		
 		protected GameObject Hooker{
 			get{ return (GameObject)attributes["hooker"]; }
 		}

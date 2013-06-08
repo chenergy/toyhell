@@ -71,6 +71,7 @@ public class GameData {
 	}
 	
 	public static void KillPlayer(GameObject player){
+		player.collider.enabled = false;
 		player.GetComponent<PlayerCharacter>().Frozen = true;
 		foreach (SkinnedMeshRenderer smr in player.GetComponentsInChildren<SkinnedMeshRenderer>()){
 			smr.enabled = false;
@@ -82,24 +83,28 @@ public class GameData {
 		GameObject deathParts;
 	
 		if (player.name == "Robot"){
+			instance.robot_lives--;
 			if (instance.robot_lives > 0) {
 				instance.robot_currenthp = 0;
 				instance.robot.collider.enabled = false;
 				deathParts = (GameObject)GameObject.Instantiate(instance.robotDeathParts, player.transform.position, Quaternion.identity);
 				GameObject.Destroy(deathParts, instance.partsFadeTime);
-				instance.robot_lives--;
 				instance.ui.GetComponent<PlayerRespawnTimer>().StartTimer(player); 
 			}
 		}
 		else if (player.name == "Hooker"){
+			instance.hooker_lives--;
 			if (instance.hooker_lives > 0) {
 				instance.hooker_currenthp = 0;
 				instance.hooker.collider.enabled = false;
 				deathParts = (GameObject)GameObject.Instantiate(instance.hookerDeathParts, player.transform.position, Quaternion.identity);
 				GameObject.Destroy(deathParts, instance.partsFadeTime);
-				instance.hooker_lives--;
 				instance.ui.GetComponent<PlayerRespawnTimer>().StartTimer(player); 
 			}
+		}
+		
+		if (instance.robot_lives <= 0 && instance.hooker_lives <= 0){
+			Application.LoadLevel("LoseScreen");
 		}
 	}
 	
@@ -125,7 +130,7 @@ public class GameData {
 		GameObject newParticles = (GameObject)GameObject.Instantiate(instance.respawnParticles, player.transform.position, Quaternion.identity);
 		GameObject.Destroy(newParticles, 1.0f);
 	}
-
+	
 	public static GameObject Hooker {
 		get { return instance.hooker; }
 		set { instance.hooker = value; }

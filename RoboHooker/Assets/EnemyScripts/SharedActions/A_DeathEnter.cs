@@ -15,10 +15,19 @@ namespace FSM
 			GameObject deathParts = (GameObject)GameObject.Instantiate(actor.DeathParts, actor.Position, Quaternion.identity);
 			GameObject.Destroy(deathParts, actor.FadeTime);
 			
-			GameObject socketedDrop = (GameObject)GameObject.Instantiate(actor.SocketedDrop, actor.Position, Quaternion.identity);
+			Vector3 offset = new Vector3(0.0f, 2.0f, 0.0f);
+			
+			if (actor.SocketedDrop != null){
+				GameObject socketedDrop = (GameObject)GameObject.Instantiate(actor.SocketedDrop, actor.Position + offset, Quaternion.identity);
+			}
+			
+			if (actor.OnDeathLoadLevel){
+				if (actor.LevelToLoad != ""){
+					Application.LoadLevel(actor.LevelToLoad);
+				}
+			}
 			
 			Debug.Log("death");
-			Debug.Log(socketedDrop.name);
 			GameObject.Destroy(actor.gameObject);
         }
     }

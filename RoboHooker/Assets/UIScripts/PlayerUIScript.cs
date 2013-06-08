@@ -48,8 +48,8 @@ public class PlayerUIScript : MonoBehaviour {
 		UI_Width = Screen.width/4;
 		UI_Height = Screen.height/20;
 		
-		hookerLives = GameData.HookerLives;
-		robotLives = GameData.RobotLives;
+		hookerLives = (hookerLives >= 0) ? GameData.HookerLives : 0;
+		robotLives = (robotLives >= 0) ? GameData.RobotLives : 0;
 		
 		// Robot UI
 		robotHp = (float)GameData.RobotHp;

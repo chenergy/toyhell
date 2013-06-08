@@ -5,9 +5,11 @@ using Actors;
 
 public class EnemyInput : MonoBehaviour
 {
-	public bool			isStatic		= false;
-	public bool			isRanged		= false;
-	public bool			isFlying		= false;
+	public bool			isStatic			= false;
+	public bool			isRanged			= false;
+	public bool			isFlying			= false;
+	public bool			onDeathLoadLevel	= false;
+	public string		levelToLoad			= "";
 	public GameObject 	gobj;	
 	public GameObject 	patrolPoint1;
 	public GameObject 	patrolPoint2;
@@ -72,6 +74,8 @@ public class EnemyInput : MonoBehaviour
 		attributes["isStatic"] = isStatic;
 		attributes["isRanged"] = isRanged;
 		attributes["isFlying"] = isFlying;
+		attributes["onDeathLoadLevel"] = onDeathLoadLevel;
+		attributes["levelToLoad"] = levelToLoad;
 		attributes["jumpPower"] = jumpPower;
 		attributes["moveSpeed"] = moveSpeed;
 		attributes["turnSpeed"] = turnSpeed;

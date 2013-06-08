@@ -3,9 +3,11 @@ using System.Collections;
 
 [System.Serializable]
 public class EnemyStats{
-	public bool			isStatic		= false;
-	public bool			isRanged		= false;
-	public bool			isFlying		= false;
+	public bool			isStatic			= false;
+	public bool			isRanged			= false;
+	public bool			isFlying			= false;
+	public bool			onDeathLoadLevel	= false;
+	public string		levelToLoad			= "";
 	public float		projectileSpeed 	= 1.0f;
 	public float		projectileDuration 	= 2.0f;
 	public float		jumpPower			= 20.0f;
@@ -27,8 +29,9 @@ public class EnemySpawner : MonoBehaviour
 {
 	public GameObject 	enemyPrefab;
 	public GameObject	spawnPoint;
-	public float 		spawnTimeInterval = 5.0f;
-	public int			maxEnemies = 1000;
+	public float		spawnDelay 			= 0.0f;
+	public float 		spawnTimeInterval 	= 5.0f;
+	public int			maxEnemies 			= 1000;
 	public EnemyStats enemyStats;
 	
 	
@@ -40,6 +43,7 @@ public class EnemySpawner : MonoBehaviour
 	{
 		this.spawnPoint.renderer.enabled = false;
 		this.spawnPoint.collider.enabled = false;
+		timer = spawnTimeInterval - spawnDelay;
 	}
 	
 	// Update is called once per frame
@@ -53,6 +57,8 @@ public class EnemySpawner : MonoBehaviour
 				input.isStatic				= this.enemyStats.isStatic;
 				input.isRanged				= this.enemyStats.isRanged;
 				input.isFlying				= this.enemyStats.isFlying;
+				input.onDeathLoadLevel		= this.enemyStats.onDeathLoadLevel;
+				input.levelToLoad			= this.enemyStats.levelToLoad;
 				input.projectileSpeed 		= this.enemyStats.projectileSpeed;
 				input.projectileDuration 	= this.enemyStats.projectileDuration;
 				input.jumpPower				= this.enemyStats.jumpPower;
