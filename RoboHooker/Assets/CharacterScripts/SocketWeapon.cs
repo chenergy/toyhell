@@ -5,6 +5,9 @@ public class SocketWeapon : Weapon {
 
     public AnimationClip m_idleAnimation;
     public Transform m_socketJoint;
+    public Animation m_animationController;
+    public float m_fireRate;
+    protected float m_timer;
 
     public void Start()
     {
@@ -12,7 +15,6 @@ public class SocketWeapon : Weapon {
 
     public void Equip(GameObject Character)
     {
-        Debug.Log("Equipping");
         collider.isTrigger = false;
     }
     public void Deequip()
@@ -24,8 +26,22 @@ public class SocketWeapon : Weapon {
     {
         base.fire(dir);
     }
-    public void Update()
+    public virtual void Update()
     {
-
+        if (m_timer < m_fireRate)
+        {
+            m_timer += Time.deltaTime;
+        }
+    }
+    protected void PlayClip(AnimationClip ac, WrapMode mode)
+    {
+        if ((ac != null) && (animation != null))
+        {
+            if (!animation.IsPlaying(ac.name))
+            {
+                animation.wrapMode = mode;
+                animation.Play(ac.name);
+            }
+        }
     }
 }

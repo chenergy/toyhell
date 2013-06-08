@@ -37,5 +37,13 @@ public class BarbieHead : Weapon {
     {
         base.OnCollisionEnter(other);
         collider.isTrigger = true;
+        Debug.Log(other.gameObject.name);
+        EnemyInput enemy=other.gameObject.GetComponent<EnemyInput>();
+        if (enemy != null)
+        {
+            Debug.Log("damaging");
+            enemy.DamageEnemy(m_damage);
+            Destroy(gameObject);
+        }
     }
 }

@@ -27,6 +27,13 @@ public class Bullet : MonoBehaviour {
     {
         Debug.Log(other.gameObject.name);
         EnemyInput enemy=other.gameObject.GetComponent<EnemyInput>();
+        if (other.transform.parent != null)
+        {
+            if (enemy == null)
+            {
+                enemy = other.transform.parent.gameObject.GetComponent<EnemyInput>();
+            }
+        }
         if (enemy != null)
         {
             Debug.Log("damaging");

@@ -5,15 +5,6 @@ public class GunSocket : SocketWeapon {
     public GameObject m_bullet;
     public float m_bulletSpeed;
     public float m_range;
-    public float m_fireRate;
-    private float m_timer;
-    public void Update()
-    {
-        if (m_timer < m_fireRate)
-        {
-            m_timer += Time.deltaTime;
-        }
-    }
     public override void fire(Vector2 dir)
     {
         if (m_timer > m_fireRate)
