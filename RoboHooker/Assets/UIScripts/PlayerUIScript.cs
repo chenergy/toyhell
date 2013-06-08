@@ -23,6 +23,7 @@ public class PlayerUIScript : MonoBehaviour {
 	void Awake(){
 		GameData.Hooker = GameObject.Find("Hooker");
 		GameData.Robot = GameObject.Find("Robot");
+		GameData.UI = this.gameObject;
 	}
 	
 	void Start () {

@@ -174,4 +174,9 @@ public class GameData {
 	public static int HookerLives{
 		get { return instance.hooker_lives; }
 	}
+	
+	public static GameObject UI{
+		get { return instance.ui; }
+		set { instance.ui = value; }
+	}
 }
