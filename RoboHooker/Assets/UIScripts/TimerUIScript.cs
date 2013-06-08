@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 
 public class TimerUIScript : MonoBehaviour {
+	public string	preTimerText		= "";
+	public string	postTimerText		= "";
 	public int		secondsUntilTimeout = 120;
 	public int 		UI_FontSize 		= 30;
 	public int 		UI_Width 			= 200;
@@ -25,10 +27,10 @@ public class TimerUIScript : MonoBehaviour {
 	void OnGUI(){
 		
 		int newTime = secondsUntilTimeout - (int)Time.timeSinceLevelLoad;
+		string text;
 		
-		if (newTime <= 0){
-			Application.LoadLevel("creditsScene");
-		}
+		text = (newTime <= 0) ? postTimerText : preTimerText;
+		//Application.LoadLevel("creditsScene");
 		
 		int minute = ((int)(newTime / 60));
 		int second = ((int)(newTime % 60));
@@ -45,7 +47,7 @@ public class TimerUIScript : MonoBehaviour {
 		UI_X = Screen.width/2 - UI_Width/2;
 		UI_Y = UI_OffSet;
 		
-		GUI.Label (new Rect (UI_X, UI_Y - UI_Height - (UI_OffSet * 0.4f), UI_Width + 5, UI_Height + 5), "Survive!", centeredTextStyle);
+		GUI.Label (new Rect (UI_X, UI_Y - UI_Height - (UI_OffSet * 0.4f), UI_Width + 5, UI_Height + 5), text, centeredTextStyle);
 		GUI.Label (new Rect (UI_X, UI_Y - UI_Height, UI_Width + 5, UI_Height + 5), UI_Content.text, centeredTextStyle);
 		
 	}

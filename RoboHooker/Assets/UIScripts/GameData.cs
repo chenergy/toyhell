@@ -90,6 +90,9 @@ public class GameData {
 				deathParts = (GameObject)GameObject.Instantiate(instance.robotDeathParts, player.transform.position, Quaternion.identity);
 				GameObject.Destroy(deathParts, instance.partsFadeTime);
 				instance.ui.GetComponent<PlayerRespawnTimer>().StartTimer(player); 
+			}else{
+				instance.robot.transform.position = instance.hooker.transform.position;
+				instance.robot.transform.parent = instance.hooker.transform;
 			}
 		}
 		else if (player.name == "Hooker"){
@@ -100,11 +103,15 @@ public class GameData {
 				deathParts = (GameObject)GameObject.Instantiate(instance.hookerDeathParts, player.transform.position, Quaternion.identity);
 				GameObject.Destroy(deathParts, instance.partsFadeTime);
 				instance.ui.GetComponent<PlayerRespawnTimer>().StartTimer(player); 
+			}else{
+				instance.hooker.transform.position = instance.robot.transform.position;
+				instance.hooker.transform.parent = instance.robot.transform;
 			}
 		}
 		
 		if (instance.robot_lives <= 0 && instance.hooker_lives <= 0){
-			Application.LoadLevel("LoseScreen");
+			GameObject.Find("Fader").GetComponent<fadeToBlackScript>().SetLoadLevel("LoseScreen");
+			GameObject.Find("Fader").GetComponent<fadeToBlackScript>().FadeOut();
 		}
 	}
 	

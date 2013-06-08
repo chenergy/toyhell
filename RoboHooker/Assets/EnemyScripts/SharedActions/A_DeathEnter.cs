@@ -22,9 +22,8 @@ namespace FSM
 			}
 			
 			if (actor.OnDeathLoadLevel){
-				if (actor.LevelToLoad != ""){
-					Application.LoadLevel(actor.LevelToLoad);
-				}
+				GameObject.Find("Fader").GetComponent<fadeToBlackScript>().SetLoadLevel(actor.LevelToLoad);
+				GameObject.Find("Fader").GetComponent<fadeToBlackScript>().FadeOut();
 			}
 			
 			Debug.Log("death");
