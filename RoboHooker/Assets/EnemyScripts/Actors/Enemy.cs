@@ -136,7 +136,7 @@ namespace Actors
 					this.canJump = true;
 				}
 				
-				Debug.Log("jump strength: " + this.jumpStrength);
+				//Debug.Log("jump strength: " + this.jumpStrength);
 				this.applyGravity();
 			}
 

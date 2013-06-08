@@ -63,9 +63,10 @@ public class PlayerUIScript : MonoBehaviour {
 		GUI.Label(new Rect(padding * Screen.width, 5 * padding * Screen.height, UI_Width, UI_Height), "Lives: " + robotLives, robotText);
 		
 		if (robotHp <= 0){
-			int robotRespawnTime = (int)GameData.RobotRespawnTime;
-			//string robotCountdown = "Respawning in: " + Math.Round(robotRespawnTime, 2);
-			string robotCountdown = "Respawning in: " + robotRespawnTime;
+			float robotRespawnTime = GameData.RobotRespawnTime;
+			string robotCountdown = "Respawning in: " + Math.Round((float)robotRespawnTime, 2);
+			//int robotRespawnTime = (int)GameData.RobotRespawnTime;
+			//string robotCountdown = "Respawning in: " + robotRespawnTime;
 			GUI.Label(new Rect(padding * Screen.width, 10 * padding * Screen.height, UI_Width, UI_Height), robotCountdown, robotText);
 		}
 		
@@ -82,9 +83,10 @@ public class PlayerUIScript : MonoBehaviour {
 		GUI.Label(new Rect(Screen.width - Screen.width/4 - (padding * Screen.width), 5 * padding * Screen.height, UI_Width, UI_Height), "Lives: " + hookerLives, hookerText);
 		
 		if (hookerHp <= 0){
-			int hookerRespawnTime = (int)GameData.HookerRespawnTime;
-			//string hookerCountdown = "Respawning in: " + Math.Round(hookerRespawnTime, 2);
-			string hookerCountdown = "Respawning in: " + hookerRespawnTime;
+			float hookerRespawnTime = GameData.HookerRespawnTime;
+			string hookerCountdown = "Respawning in: " + Math.Round((float)hookerRespawnTime, 2);
+			//int hookerRespawnTime = (int)GameData.HookerRespawnTime;
+			//string hookerCountdown = "Respawning in: " + hookerRespawnTime;
 			GUI.Label(new Rect(Screen.width - Screen.width/4 - (padding * Screen.width), 10 * padding * Screen.height, UI_Width, UI_Height), hookerCountdown, hookerText);
 		}
 	}
