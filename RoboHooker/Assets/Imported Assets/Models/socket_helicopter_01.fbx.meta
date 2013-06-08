@@ -27,6 +27,7 @@ ModelImporter:
     4300006: toyCoptor
     7400000: Attack
     9500000: //RootNode
+    11100000: //RootNode
     13700000: backPropeller
     13700002: topPropeller_01
     13700004: topPropeller_02
@@ -48,7 +49,7 @@ ModelImporter:
       takeName: Take 001
       firstFrame: 118
       lastFrame: 124
-      wrapMode: 0
+      wrapMode: 2
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
@@ -101,5 +102,5 @@ ModelImporter:
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   additionalBone: 1
-  animationType: 2
+  animationType: 1
   userData: 
