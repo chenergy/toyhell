@@ -30,8 +30,10 @@ public class LoseScreen_UI : MonoBehaviour {
 		if (Input.GetKey(KeyCode.Escape))
 			Application.Quit();
 		
-		if (Input.GetKey(KeyCode.Return)) 
-			Application.LoadLevel("startMenu");
+		if (Input.GetKey(KeyCode.Return)) {
+			GameData.RestartStats();
+			Application.LoadLevel(GameData.LastLevel);
+		}
 	}
 	
 	void OnGUI()
