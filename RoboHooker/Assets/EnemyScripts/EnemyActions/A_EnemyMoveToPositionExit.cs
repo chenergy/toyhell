@@ -5,19 +5,13 @@ using Actors;
 
 namespace FSM
 {
-    public class A_AttackEnter:FSMAction
+    public class A_EnemyMoveToPositionExit:FSMAction
     {
         public override void execute(FSMContext fsmc, object o)
         {
-			Actor actor = (Actor) o;
+			Enemy actor = (Enemy) o;
 			actor.ActionTimer = 0.0f;
-			Debug.Log("attacking");
-			
-			if (actor.Animation){
-				if (actor.Animation["Attack"]){
-					actor.Animation["Attack"].speed = 1.0f;
-				}
-			}
+			actor.TargetPlayer = null;
         }
     }
 }

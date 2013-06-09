@@ -5,13 +5,12 @@ using Actors;
 
 namespace FSM
 {
-    public class A_MoveToPositionExit:FSMAction
+    public class A_EnemyDeathExit:FSMAction
     {
         public override void execute(FSMContext fsmc, object o)
         {
 			Actor actor = (Actor) o;
 			actor.ActionTimer = 0.0f;
-			actor.TargetPlayer = null;
         }
     }
 }

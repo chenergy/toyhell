@@ -56,8 +56,9 @@ public class TriggerBox : MonoBehaviour {
 			
 			centeredTextStyle = new GUIStyle("label");
 			centeredTextStyle.alignment = TextAnchor.MiddleCenter;
-			centeredTextStyle.fontSize = UI_FontSize;
+			centeredTextStyle.fontSize = (int)(UI_FontSize * 0.001f * Screen.width);
 			
+			UI_Width = (int)(centeredTextStyle.CalcSize(UI_Content).x + 5);
 			UI_Height = (int)(centeredTextStyle.CalcHeight(UI_Content, UI_Width));
 			
 			if (UI_Location == Location.ABOVE_CHAR){
@@ -71,8 +72,10 @@ public class TriggerBox : MonoBehaviour {
 				UI_Y = (UI_Location == Location.TOP) ? UI_OffSet : (Screen.height - UI_OffSet - UI_Height);
 			}
 			
+			//UI_Width = Mathf.Lerp(0.0f, UI_Width, Time.deltaTime);
+			
 			GUI.Box (new Rect (UI_X, UI_Y - UI_Height, UI_Width + 5, UI_Height + 5), "");
-			GUI.Label (new Rect (UI_X, UI_Y - UI_Height, UI_Width + 5, UI_Height + 5), UI_Content.text, centeredTextStyle);
+			GUI.Label (new Rect (UI_X, UI_Y - UI_Height, UI_Width + 5, UI_Height + 5), UI_Content, centeredTextStyle);
 		}
 	}
 }

@@ -49,8 +49,8 @@ public class EnemyInput : MonoBehaviour
 		Physics.IgnoreCollision(hitbox.collider, this.gobj.collider);
 		
 		// Can Walk through characters
-		Physics.IgnoreCollision(this.gobj.collider, hooker.collider);
-		Physics.IgnoreCollision(this.gobj.collider, robot.collider);
+		// Physics.IgnoreCollision(this.gobj.collider, hooker.collider);
+		// Physics.IgnoreCollision(this.gobj.collider, robot.collider);
 		
 		patrolPoint1.renderer.enabled = false;
 		patrolPoint2.renderer.enabled = false;
@@ -61,8 +61,8 @@ public class EnemyInput : MonoBehaviour
 		
 		attributes = new Dictionary<string, object>();
 		#region attribute dictionary assignments
-		attributes["gameObject"] = this.gobj;
-		attributes["controller"] = this.controller;
+		attributes["gameObject"] = gobj;
+		attributes["controller"] = controller;
 		attributes["hooker"] = hooker;
 		attributes["robot"] = robot;
 		attributes["deathParts"] = deathParts;

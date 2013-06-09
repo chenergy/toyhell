@@ -8,13 +8,31 @@ namespace Actors
 {
 	public class Enemy : Actor
 	{
+		public class PlayerData{
+			public string		name;
+			public Vector3 		position;
+			public Vector3 		direction;
+			public float 		distance;
+			public GameObject 	player;
+			
+			public PlayerData(GameObject player){
+				this.position 	= Vector3.zero;
+				this.direction 	= Vector3.zero;
+				this.distance 	= 0.0f;
+				this.player 	= player;
+				this.name		= player.name;
+			}
+		}
+		
+		private Dictionary<GameObject, PlayerData> playerData;
+		
 		public Enemy(Dictionary<string, object> attributes){
 			FSMAction noAction 		= new A_None();
 			
 			State S_Idle 			= new State("idle", new A_IdleEnter(), new A_Idle(), new A_IdleExit());
-			State S_MoveToPosition	= new State("moveToPosition", new A_MoveToPositionEnter(), new A_MoveToPosition(), new A_MoveToPositionExit());
-			State S_Attack 			= new State("attack", new A_AttackEnter(), new A_Attack(), new A_AttackExit());
-			State S_Death 			= new State("death", new A_DeathEnter(), new A_Death(), new A_DeathExit());
+			State S_MoveToPosition	= new State("moveToPosition", new A_MoveToPositionEnter(), new A_MoveToPosition(), new A_EnemyMoveToPositionExit());
+			State S_Attack 			= new State("attack", new A_EnemyAttackEnter(), new A_EnemyAttack(), new A_EnemyAttackExit());
+			State S_Death 			= new State("death", new A_EnemyDeathEnter(), new A_EnemyDeath(), new A_EnemyDeathExit());
 			State S_Hurt			= new State("hurt", new A_HurtEnter(), new A_Hurt(), new A_HurtExit());
 			
 			Transition T_Idle 			= new Transition(S_Idle, noAction);
@@ -56,11 +74,26 @@ namespace Actors
 			this.canJump = false;
 		}
 		
+		protected void UpdatePlayerData(PlayerData data){
+			if 	(data.player != null) {
+				data.position = data.player.transform.position;
+			}
+			else{
+				if (data.name == "Hooker"){
+					data.position = this.Robot.transform.position; //just using the position of the other character, assuming we don't want the ai to freeze when a character dies
+				}
+				else if (data.name == "Robot"){
+					data.position = this.Hooker.transform.position;
+				}
+			}
+			data.distance	= (data.position - this.Position).magnitude;
+			data.direction 	= (data.position - this.Position).normalized;
+		}
+		
 		
 		public override void Update ()
 		{
 			checkDeath();
-			//Debug.DrawRay(this.Position + (this.gameObject.transform.forward * this.controller.radius) + new Vector3(0.0f, this.controller.height/2.0f, 0.0f), new Vector3(0.0f, -this.controller.height/2.0f - 0.5f, 0.0f));
 			Debug.DrawRay(this.Position + (this.gameObject.transform.forward), new Vector3(0.0f, -1.0f, 0.0f));
 			
 			
@@ -110,13 +143,6 @@ namespace Actors
 				}
 				
 				// Check if there is an existing collider in from of the enemy
-				/*
-				bool shouldJump = !(Physics.Raycast( this.Position + 
-					(this.gameObject.transform.forward * this.controller.radius) + 
-					new Vector3(0.0f, this.controller.height/2.0f, 0.0f)
-					, new Vector3(0.0f, -1.0f, 0.0f), 
-					this.controller.height/2.0f + 0.5f )
-				);*/
 				bool shouldJump = !(Physics.Raycast( this.Position + (this.gameObject.transform.forward), 
 					new Vector3(0.0f, -1.0f, 0.0f), 
 					1.0f )
@@ -189,26 +215,6 @@ namespace Actors
 			return false;
 		}
 		
-		public GameObject PatrolPoint1{
-			get{ return (GameObject) attributes["patrolPoint1"]; }
-			set{ attributes["patrolPoint1"] = value; }
-		}
-		
-		public GameObject PatrolPoint2{
-			get{ return (GameObject) attributes["patrolPoint2"]; }
-			set{ attributes["patrolPoint2"] = value; }
-		}
-		
-		public GameObject PatrolTarget{
-			get{ return (GameObject) attributes["patrolTarget"]; }
-			set{ attributes["patrolTarget"] = value; }
-		}
-		
-		public float PatrolPauseTime{
-			get{ return (float) attributes["patrolPauseTime"]; }
-			set{ attributes["patrolPauseTime"] = value; }
-		}
-		
 		public void Patrol(float patrolPauseTime){
 			// Do not consider y in the target location
 			Vector3 PatrolTargetPosition = new Vector3(this.PatrolTarget.transform.position.x, this.Position.y, this.PatrolTarget.transform.position.z);
@@ -236,5 +242,108 @@ namespace Actors
 				this.MoveToPosition(this.PatrolTarget.transform.position);
 			}
 		}
+		
+		#region attribute getters and setters
+		public bool IsRanged{
+			get{ return (bool)attributes["isRanged"]; }
+		}
+		
+		public bool IsFlying{
+			get{ return (bool)attributes["isFlying"]; }
+		}
+		
+		public bool IsStatic{
+			get{ return (bool)attributes["isStatic"]; }
+		}
+		
+		public GameObject PatrolPoint1{
+			get{ return (GameObject) attributes["patrolPoint1"]; }
+			set{ attributes["patrolPoint1"] = value; }
+		}
+		
+		public GameObject PatrolPoint2{
+			get{ return (GameObject) attributes["patrolPoint2"]; }
+			set{ attributes["patrolPoint2"] = value; }
+		}
+		
+		public GameObject PatrolTarget{
+			get{ return (GameObject) attributes["patrolTarget"]; }
+			set{ attributes["patrolTarget"] = value; }
+		}
+		
+		public float PatrolPauseTime{
+			get{ return (float) attributes["patrolPauseTime"]; }
+			set{ attributes["patrolPauseTime"] = value; }
+		}
+		
+		public bool OnDeathLoadLevel{
+			get{ return (bool)attributes["onDeathLoadLevel"]; }
+		}
+		
+		public string LevelToLoad{
+			get{ return (string)attributes["levelToLoad"]; }
+		}
+		
+		public GameObject Projectile{
+			get{ return (GameObject)attributes["projectile"]; }
+		}
+		
+		public float ProjectileSpeed{
+			get{ return (float)attributes["projectileSpeed"]; }
+			set{ attributes["projectileSpeed"] = value; }
+		}
+		
+		public float ProjectileDuration{
+			get{ return (float)attributes["projectileDuration"]; }
+			set{ attributes["projectileDuration"] = value; }
+		}
+		
+		public GameObject TargetPlayer{
+			get{ return (GameObject)attributes["targetPlayer"]; }
+			set{ attributes["targetPlayer"] = value; }
+		}
+		
+		public GameObject Hooker{
+			get{ return (GameObject)attributes["hooker"]; }
+			set{ attributes["hooker"] = value; }
+		}
+		
+		public GameObject Robot{
+			get{ return (GameObject)attributes["robot"]; }
+			set{ attributes["robot"] = value; }
+		}
+		
+		public float AgroRange{
+			get{ return (float)attributes["agroRange"]; }
+			set{ attributes["agroRange"] = value; }
+		}
+		
+		public float AttackRange{
+			get{ return (float)attributes["attackRange"]; }
+			set{ attributes["attackRange"] = value; }
+		}
+		public int Damage{
+			get{ return (int)attributes["damage"]; }
+			set{ attributes["damage"] = value; }
+		}
+		
+		public float AttackTime{
+			get{ return (float)attributes["attackTime"]; }
+			set{ attributes["attackTime"] = value; }
+		}
+		
+		public GameObject SocketedDrop{
+			get{ return (GameObject)attributes["socketedDrop"]; }
+			set{ attributes["socketedDrop"] = value; }
+		}
+		
+		public GameObject Hitbox{
+			get{ return (GameObject)attributes["hitbox"]; }
+			set{ attributes["hitbox"] = value; }
+		}
+		
+		#endregion
+		
+		
 	}
 }

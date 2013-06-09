@@ -5,11 +5,11 @@ using Actors;
 
 namespace FSM
 {
-    public class A_Attack:FSMAction
+    public class A_EnemyAttack:FSMAction
     {
         public override void execute(FSMContext fsmc, object o)
         {
-			Actor actor = (Actor) o;
+			Enemy actor = (Enemy) o;
 			float animationLength = 3.0f;
 			
 			if (actor.Animation){

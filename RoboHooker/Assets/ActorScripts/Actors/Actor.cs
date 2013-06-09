@@ -8,25 +8,9 @@ namespace Actors
 {
 	public abstract class Actor
 	{
-		protected class PlayerData{
-			public string		name;
-			public Vector3 		position;
-			public Vector3 		direction;
-			public float 		distance;
-			public GameObject 	player;
-			
-			public PlayerData(GameObject player){
-				this.position 	= Vector3.zero;
-				this.direction 	= Vector3.zero;
-				this.distance 	= 0.0f;
-				this.player 	= player;
-				this.name		= player.name;
-			}
-		}
-		
 		protected FSMContext fsmc;
 		protected Dictionary<string, object> attributes;
-		protected Dictionary<GameObject, PlayerData> playerData;
+		
 		protected float jumpStrength;
 		protected bool	canJump;
 		
@@ -64,23 +48,6 @@ namespace Actors
 		}
 		
 		public abstract void Update();		
-		
-		protected void UpdatePlayerData(PlayerData data){
-			if 	(data.player != null) {
-				data.position = data.player.transform.position;
-			}
-			else{
-				if (data.name == "Hooker"){
-					data.position = this.Robot.transform.position; //just using the position of the other character, assuming we don't want the ai to freeze when a character dies
-				}
-				else if (data.name == "Robot"){
-					data.position = this.Hooker.transform.position;
-				}
-			}
-			
-			data.distance	= (data.position - this.Position).magnitude;
-			data.direction 	= (data.position - this.Position).normalized;
-		}
 
 		protected void checkDeath(){
 			if (this.CurrentHP <= 0){
@@ -130,11 +97,6 @@ namespace Actors
 			set{ attributes["targetRotation"] = value; }
 		}
 		
-		public GameObject TargetPlayer{
-			get{ return (GameObject)attributes["targetPlayer"]; }
-			set{ attributes["targetPlayer"] = value; }
-		}
-		
 		public float JumpPower{
 			get{ return (float)attributes["jumpPower"]; }
 			set{ attributes["jumpPower"] = value; }
@@ -155,34 +117,9 @@ namespace Actors
 			set{ attributes["actionTimer"] = value; }
 		}
 		
-		public float AttackTime{
-			get{ return (float)attributes["attackTime"]; }
-			set{ attributes["attackTime"] = value; }
-		}
-
-		public float AttackRange{
-			get{ return (float)attributes["attackRange"]; }
-			set{ attributes["attackRange"] = value; }
-		}
-		
 		public float AttackSpeed{
 			get{ return (float)attributes["attackSpeed"]; }
 			set{ attributes["attackSpeed"] = value; }
-		}
-		
-		public bool HasAttacked{
-			get{ return (bool)attributes["hasAttacked"]; }
-			set{ attributes["hasAttacked"] = value; }
-		}
-		
-		public GameObject Hitbox{
-			get{ return (GameObject)attributes["hitbox"]; }
-			set{ attributes["hitbox"] = value; }
-		}
-
-		public int Damage{
-			get{ return (int)attributes["damage"]; }
-			set{ attributes["damage"] = value; }
 		}
 		
 		public int CurrentHP{
@@ -195,19 +132,9 @@ namespace Actors
 			set{ attributes["maxHP"] = value; }
 		}
 		
-		public float FadeTime{
-			get{ return (float)attributes["fadeTime"]; }
-			set{ attributes["fadeTime"] = value; }
-		}
-		
 		public GameObject DeathParts{
 			get{ return (GameObject)attributes["deathParts"]; }
 			set{ attributes["deathParts"] = value; }
-		}
-		
-		public GameObject SocketedDrop{
-			get{ return (GameObject)attributes["socketedDrop"]; }
-			set{ attributes["socketedDrop"] = value; }
 		}
 		
 		public Animation Animation{
@@ -215,56 +142,19 @@ namespace Actors
 			set{ attributes["animation"] = value; }
 		}
 		
-		public float AgroRange{
-			get{ return (float)attributes["agroRange"]; }
-			set{ attributes["agroRange"] = value; }
-		}
-		
-		public GameObject Projectile{
-			get{ return (GameObject)attributes["projectile"]; }
-		}
-		
-		public float ProjectileSpeed{
-			get{ return (float)attributes["projectileSpeed"]; }
-			set{ attributes["projectileSpeed"] = value; }
-		}
-		
-		public float ProjectileDuration{
-			get{ return (float)attributes["projectileDuration"]; }
-			set{ attributes["projectileDuration"] = value; }
-		}
-		
 		public float KnockbackStrength{
 			get{ return (float)attributes["knockbackStrength"]; }
 			set{ attributes["knockbackStrength"] = value; }
 		}
 		
-		public bool IsRanged{
-			get{ return (bool)attributes["isRanged"]; }
+		public bool HasAttacked{
+			get{ return (bool)attributes["hasAttacked"]; }
+			set{ attributes["hasAttacked"] = value; }
 		}
 		
-		public bool IsFlying{
-			get{ return (bool)attributes["isFlying"]; }
-		}
-		
-		public bool IsStatic{
-			get{ return (bool)attributes["isStatic"]; }
-		}
-		
-		public bool OnDeathLoadLevel{
-			get{ return (bool)attributes["onDeathLoadLevel"]; }
-		}
-		
-		public string LevelToLoad{
-			get{ return (string)attributes["levelToLoad"]; }
-		}
-		
-		protected GameObject Hooker{
-			get{ return (GameObject)attributes["hooker"]; }
-		}
-		
-		protected GameObject Robot{
-			get{ return (GameObject)attributes["robot"]; }
+		public float FadeTime{
+			get{ return (float)attributes["fadeTime"]; }
+			set{ attributes["fadeTime"] = value; }
 		}
 		
 		#endregion

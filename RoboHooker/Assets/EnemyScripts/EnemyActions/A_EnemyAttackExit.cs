@@ -5,11 +5,11 @@ using Actors;
 
 namespace FSM
 {
-    public class A_AttackExit:FSMAction
+    public class A_EnemyAttackExit:FSMAction
     {
         public override void execute(FSMContext fsmc, object o)
         {
-			Actor actor = (Actor) o;
+			Enemy actor = (Enemy) o;
 			actor.ActionTimer = 0.0f;
 			actor.HasAttacked = false;
 			actor.TargetPlayer = null;

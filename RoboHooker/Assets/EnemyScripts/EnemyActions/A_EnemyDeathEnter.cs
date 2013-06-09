@@ -5,11 +5,11 @@ using Actors;
 
 namespace FSM
 {
-    public class A_DeathEnter:FSMAction
+    public class A_EnemyDeathEnter:FSMAction
     {
         public override void execute(FSMContext fsmc, object o)
         {
-			Actor actor = (Actor) o;
+			Enemy actor = (Enemy) o;
 			actor.ActionTimer = 0.0f;
 			
 			GameObject deathParts = (GameObject)GameObject.Instantiate(actor.DeathParts, actor.Position, Quaternion.identity);
