@@ -11,8 +11,6 @@ public class HitboxScript : MonoBehaviour {
 	private Enemy	source;
 	private int 	damage = 0;
 	private float	timer = 0.0f;
-	//private bool	justHit = false;
-	//private GameObject player;
 	
 	/*
 	void Update(){
@@ -48,13 +46,10 @@ public class HitboxScript : MonoBehaviour {
 	void OnTriggerEnter(Collider other){
 		GameObject player = other.gameObject;
 		if (player.tag == "Player"){
-			//justHit = true;
-			//this.player = player;
 			this.collider.enabled = false;
 			this.renderer.enabled = false;
 			
 			Vector3 knockbackDirection 	= new Vector3(this.source.gameObject.transform.forward.x, 0.0f, 0.0f);
-			//Vector3 knockbackDirection 	= new Vector3(player.transform.forward.x * -1.0f, 0.0f, 0.0f);
 			Vector3 launchDirection		= new Vector3(0.0f, 1.0f, 0.0f);
 			Vector3.Normalize(knockbackDirection);
 			knockbackDirection *= this.source.KnockbackStrength;
@@ -63,7 +58,7 @@ public class HitboxScript : MonoBehaviour {
 			//Debug.Log("Knockback Direction: " + (knockbackDirection + launchDirection));
 			//player.GetComponent<PlayerCharacter>().Knockback = knockbackDirection + launchDirection;
 			player.GetComponent<PlayerInput>().Knockback = knockbackDirection + launchDirection;
-			//this.timer += Time.deltaTime;
+			player.GetComponent<PlayerInput>().Hurt();
 			
 			GameData.LoseHp(player, damage);
 			

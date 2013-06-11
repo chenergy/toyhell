@@ -39,7 +39,7 @@ public class TriggerPlatforms : MonoBehaviour
 		
     }
 	
-	void OnTriggerExti(Collider player){
+	void OnTriggerExit(Collider player){
 		colliding = false;
 	}
 }

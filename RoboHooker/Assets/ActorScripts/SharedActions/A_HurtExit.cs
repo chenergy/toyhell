@@ -11,7 +11,8 @@ namespace FSM
         {
 			Actor actor = (Actor) o;
 			actor.ActionTimer = 0.0f;
-			actor.HasAttacked = false;
+			actor.isFrozen = false;
+			
 			if (actor.Animation) 
 				actor.Animation.Stop();
         }

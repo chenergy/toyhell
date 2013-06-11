@@ -134,7 +134,8 @@ public class GameData {
 	public static void RespawnPlayer(GameObject player){
 		player.collider.enabled = true;
 		player.transform.position = instance.lastCheckpoint.transform.position;
-		player.GetComponent<PlayerCharacter>().Frozen = false;
+		//player.GetComponent<PlayerCharacter>().Frozen = false;
+		player.GetComponent<PlayerInput>().Frozen = false;
 		
 		if (player.name == "Robot"){
 			instance.EnableRenderers("Robot");

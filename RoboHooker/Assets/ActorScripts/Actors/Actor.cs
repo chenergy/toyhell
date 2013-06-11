@@ -12,8 +12,9 @@ namespace Actors
 		protected Dictionary<string, object> attributes;
 		
 		protected 	float 	jumpStrength;
-		//protected bool	canJump;
-		public 		bool 	canJump;
+		//protected	bool	canJump;
+		
+		public		bool	isFrozen;
 		protected	Vector3 extraMovement;
 		
 		public void MoveToPosition(Vector3 targetPosition){
@@ -70,6 +71,7 @@ namespace Actors
 		
 		protected void ApplyExtraMovement(){
 			this.controller.Move(this.extraMovement * Time.deltaTime);
+			this.extraMovement.x = 0;
 		}
 		
 		#region attribute getters and setters
@@ -152,11 +154,6 @@ namespace Actors
 			set{ attributes["animation"] = value; }
 		}
 		
-		public float KnockbackStrength{
-			get{ return (float)attributes["knockbackStrength"]; }
-			set{ attributes["knockbackStrength"] = value; }
-		}
-		
 		public bool HasAttacked{
 			get{ return (bool)attributes["hasAttacked"]; }
 			set{ attributes["hasAttacked"] = value; }
@@ -172,9 +169,8 @@ namespace Actors
 			set{ attributes["forward"] = value; }
 		}
 		
-		public Vector3 Knockback{
-			get{ return (Vector3)attributes["knockback"]; }
-			set{ attributes["knockback"] = value; }
+		public bool IsGrounded{
+			get { return Physics.Raycast( this.Position, new Vector3(0.0f, -1.0f, 0.0f), 0.2f ); }
 		}
 		
 		#endregion

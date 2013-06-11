@@ -5,7 +5,7 @@ using Actors;
 
 namespace FSM
 {
-    public class A_JumpEnter:FSMAction
+    public class A_PlayerJumpEnter:FSMAction
     {
         public override void execute(FSMContext fsmc, object o)
         {

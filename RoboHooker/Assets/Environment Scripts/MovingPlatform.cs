@@ -88,10 +88,16 @@ public class MovingPlatform : MonoBehaviour
 	
 	
 	private GameObject GetPlayerByGamepad(gamepad num){
-		if (GameData.Hooker.GetComponent<PlayerCharacter>().m_player == num){
+		/*if (GameData.Hooker.GetComponent<PlayerCharacter>().m_player == num){
 			return GameData.Hooker;
 		}
 		else if (GameData.Robot.GetComponent<PlayerCharacter>().m_player == num){
+			return GameData.Robot;
+		}*/
+		if (GameData.Hooker.GetComponent<PlayerInput>().playerNumber == num){
+			return GameData.Hooker;
+		}
+		else if (GameData.Robot.GetComponent<PlayerInput>().playerNumber == num){
 			return GameData.Robot;
 		}
 		else{

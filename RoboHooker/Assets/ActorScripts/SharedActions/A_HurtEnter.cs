@@ -13,6 +13,8 @@ namespace FSM
 			actor.ActionTimer = 0.0f;
 			Debug.Log("hurt");
 			
+			actor.isFrozen = true;
+			
 			GameObject attackSparks = (GameObject)Resources.LoadAssetAtPath("Assets/Prefabs/Particles/AttackSparks.prefab", typeof(GameObject));
 			GameObject newParticles = (GameObject)GameObject.Instantiate(attackSparks, actor.Position + new Vector3(0.0f, 2.0f, 0.0f), Quaternion.identity);
 			GameObject.Destroy(newParticles, 1.0f);

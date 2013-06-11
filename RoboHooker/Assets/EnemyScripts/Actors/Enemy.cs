@@ -25,6 +25,7 @@ namespace Actors
 		}
 		
 		private Dictionary<GameObject, PlayerData> playerData;
+		public bool canJump;
 		
 		public Enemy(Dictionary<string, object> attributes){
 			FSMAction noAction 		= new A_None();
@@ -348,6 +349,11 @@ namespace Actors
 		public GameObject Hitbox{
 			get{ return (GameObject)attributes["hitbox"]; }
 			set{ attributes["hitbox"] = value; }
+		}
+		
+		public float KnockbackStrength{
+			get{ return (float)attributes["knockbackStrength"]; }
+			set{ attributes["knockbackStrength"] = value; }
 		}
 		
 		#endregion

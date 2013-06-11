@@ -40,7 +40,6 @@ public class EnemyInput : MonoBehaviour
 	private CharacterController	controller;
 	private Dictionary<string, object> attributes;
 	private Vector3 	forward;
-	private Vector3		extraMovement;
 	private	Enemy 		enemy;
 	
 	void Start(){
@@ -101,7 +100,6 @@ public class EnemyInput : MonoBehaviour
 		attributes["animation"] = this.gobj.animation;
 		attributes["knockbackStrength"] = knockbackStrength;
 		attributes["forward"] = forward;
-		attributes["extraMovement"] = extraMovement;
 		
 		attributes["hasAttacked"] = false;
 		attributes["hitbox"] = hitbox;

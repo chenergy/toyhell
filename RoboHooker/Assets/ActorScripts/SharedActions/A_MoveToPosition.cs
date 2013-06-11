@@ -36,7 +36,7 @@ namespace FSM
 			}
 			
 			if (actor.Animation){
-				if (!actor.canJump){
+				if (!actor.IsGrounded){
 					if (actor.Animation["Jump"]){
 						actor.Animation.CrossFade("Jump");
 						Debug.Log("jumping");

@@ -26,7 +26,6 @@ public class PlayerInput : MonoBehaviour
 	private Vector3 	forward;
 	private	Player 		player;
 	
-	private bool isFrozen = false;
 	private Vector3 knockback;
 	
 	void Start(){
@@ -43,7 +42,6 @@ public class PlayerInput : MonoBehaviour
 		attributes["deathParts"] = deathParts;
 		attributes["socketedWeapon"] = socketedWeapon;
 		
-		attributes["knockback"] = knockback;
 		attributes["jumpPower"] = jumpPower;
 		attributes["moveSpeed"] = moveSpeed;
 		attributes["turnSpeed"] = turnSpeed;
@@ -74,18 +72,21 @@ public class PlayerInput : MonoBehaviour
 			player.Position  = this.controller.transform.position;
 			
 			if (knockback.magnitude > 0.1f) { 			//Added knockback to control movement after being hit
-				this.player.ExtraMovement += knockback;
+				player.Knockback(knockback);
 				knockback *= 0.9f;
 			}
 			else{
 				knockback = Vector3.zero;
 			}
 			
-			if (Input.anyKey && !isFrozen){
+			if (Input.anyKey && !player.isFrozen){
 				float direction = Input.GetAxisRaw(buttons.m_MoveAxisX);
+				
 				if (Mathf.Abs(direction) > 0){
-					//Debug.Log(direction);
-					player.MoveToPosition(this.gobj.transform.position + new Vector3(direction * 0.5f, 0.0f, 0.0f));
+					player.Move(direction);
+				}
+				else{
+					player.Idle();
 				}
 				if (Input.GetButtonDown(buttons.m_Attack)){
 					player.Attack(player.Forward);
@@ -95,9 +96,13 @@ public class PlayerInput : MonoBehaviour
 				}
 			}
 			
+			else{
+				player.isMoving = false;
+			}
+			
 			player.Update();
 			
-			if (this.controller.isGrounded){
+			if (player.IsGrounded){
 				player.AllowJump();
 			}
 			
@@ -111,6 +116,10 @@ public class PlayerInput : MonoBehaviour
 		player.Idle();
 	}
 	
+	public void Hurt(){
+		player.Hurt();
+	}
+	
     public bool Climbing
     {
 		get { return player.isClimbing; }
@@ -118,8 +127,8 @@ public class PlayerInput : MonoBehaviour
     }
 	
 	public bool Frozen{
-		get { return isFrozen; }
-		set { isFrozen = value; }
+		get { return player.isFrozen; }
+		set { player.isFrozen = value; }
 	}
 	
 	public Vector3 Knockback{

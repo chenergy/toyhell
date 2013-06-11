@@ -19,6 +19,10 @@ namespace FSM
 					actor.Animation.CrossFade("SocketAttack");
 				}
 			}
+			
+			if (!actor.IsGrounded){
+				actor.isFrozen = false;
+			}
 			/*
 			// Quick Rotation
 			actor.controller.transform.LookAt(actor.TargetPosition);
