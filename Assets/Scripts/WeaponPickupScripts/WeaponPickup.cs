@@ -28,8 +28,7 @@ public class WeaponPickup : MonoBehaviour {
 			GameObject player = other.gameObject;
 			PlayerInput input = player.GetComponent<PlayerInput>();
 			
-			//if (Input.GetButtonDown(input.buttons.m_LeftEquipKey)){
-			if (Input.GetKeyDown(input.SwapKey)){
+			if (Input.GetKeyDown(input.controls.SwapKey) || Input.GetKeyDown(input.controls.SwapJoystick)){
 				input.SwapWeapons(prefab);
 				GameData.SaveWeapon(player, prefab);
 				GameObject.Destroy(this.gameObject);

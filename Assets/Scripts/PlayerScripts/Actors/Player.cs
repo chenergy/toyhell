@@ -111,18 +111,10 @@ namespace Actors
 		
 		public void MoveY(float direction){
 			Vector3 targetPosition = (this.Position + new Vector3(0, direction, 0));
-			//Quaternion targetRotation = Quaternion.LookRotation((this.Position + new Vector3(direction, 0, 0)) - this.Position);
-			
+
 			// Quick Rotation
-			//this.controller.transform.LookAt(targetPosition);
 			this.gameObject.transform.LookAt(this.Position + new Vector3(0.0f, 0.0f, 1.0f));
-			// Slow Rotation
-			/*
-			if (Quaternion.Angle(this.Rotation, targetRotation) > 5.0f){
-				this.Rotation = Quaternion.Slerp(this.Rotation, targetRotation, Time.deltaTime * 
-					(this.TurnSpeed));
-			}
-			*/
+
 			fsmc.dispatch("move", this);
 			
 			this.isMoving = true;
@@ -138,7 +130,9 @@ namespace Actors
 		}
 		
 		public void Idle(){
-			fsmc.dispatch("idle", this);
+			if (fsmc.CurrentState.Name != "attack"){
+				fsmc.dispatch("idle", this);
+			}
 		}
 		
 		public void Knockback(Vector3 knockback){

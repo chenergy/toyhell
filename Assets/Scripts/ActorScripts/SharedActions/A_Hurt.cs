@@ -10,7 +10,7 @@ namespace FSM
         public override void execute(FSMContext fsmc, object o)
         {
 			Actor actor = (Actor) o;
-			float animationLength = 3.0f;
+			float animationLength = 1.0f;
 			
 			if (actor.Animation){
 				if (actor.Animation["Hurt"]){

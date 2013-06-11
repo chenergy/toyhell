@@ -32,7 +32,7 @@ public class EnemySpawner : MonoBehaviour
 	public float		spawnDelay 			= 0.0f;
 	public float 		spawnTimeInterval 	= 5.0f;
 	public int			maxEnemies 			= 1000;
-	public EnemyStats enemyStats;
+	public EnemyStats 	enemyStats;
 	
 	
 	private float timer = 0.0f;

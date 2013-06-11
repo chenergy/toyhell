@@ -1,11 +1,31 @@
 using UnityEngine;
+using System;
 using System.Collections.Generic;
 using FSM;
 using Actors;
 
+public enum PlayerNumber { P1, P2, P3, P4 }
+
+[System.Serializable]
+public class GamePad{
+	public PlayerNumber	player;
+	public KeyCode		JumpKey;
+	public KeyCode		ActivateKey;
+	public KeyCode		AttackKey;
+	public KeyCode		SwapKey;
+	public KeyCode		LeftKey;
+	public KeyCode		RightKey;
+	public KeyCode		UpKey;
+	public KeyCode		DownKey;
+	
+	public KeyCode		JumpJoystick;
+	public KeyCode		ActivateJoystick;
+	public KeyCode		AttackJoystick;
+	public KeyCode		SwapJoystick;
+}
+
 public class PlayerInput : MonoBehaviour
 {
-	public gamepad		playerNumber;
 	public GameObject 	gobj;
 	public GameObject	deathParts;
 	public GameObject	socketJoint;
@@ -17,14 +37,14 @@ public class PlayerInput : MonoBehaviour
 	public int			maxHP				= 100;
 	public int			currentHP			= 100;
 	public float		fadeTime			= 3.0f;
-	public GamePadManager buttons;
+	public GamePad		controls;
 	
-	public KeyCode		JumpKey;
-	public KeyCode		ActivateKey;
-	public KeyCode		AttackKey;
-	public KeyCode		SwapKey;
+	[HideInInspector]
+	public string		XAxis;
+	[HideInInspector]
+	public string		YAxis;
 	
-	
+	private List<KeyCode> buttons;
 	private GameObject	socketedWeapon;
 	private float		zPlane;
 	private CharacterController	controller;
@@ -35,7 +55,9 @@ public class PlayerInput : MonoBehaviour
 	private Vector3 knockback;
 	
 	void Start(){
-		buttons = new GamePadManager(playerNumber);
+		this.SetControls();
+		XAxis = controls.player.ToString() + "moveX";
+		YAxis = controls.player.ToString() + "moveY";
 		zPlane = this.gameObject.transform.position.z;
 		controller = this.gobj.GetComponent<CharacterController>();
 		attributes = new Dictionary<string, object>();
@@ -69,6 +91,22 @@ public class PlayerInput : MonoBehaviour
 		GameData.CreateWeapons();
 	}
 	
+	private void SetControls(){
+		buttons = new List<KeyCode>();
+		buttons.Add(controls.JumpKey);
+		buttons.Add(controls.ActivateKey);
+		buttons.Add(controls.AttackKey);
+		buttons.Add(controls.SwapKey);
+		buttons.Add(controls.LeftKey);
+		buttons.Add(controls.RightKey);
+		buttons.Add(controls.UpKey);
+		buttons.Add(controls.DownKey);
+		buttons.Add(controls.JumpJoystick);
+		buttons.Add(controls.ActivateJoystick);
+		buttons.Add(controls.AttackJoystick);
+		buttons.Add(controls.SwapJoystick);
+	}
+	
 	void Update (){
 		if (this.gobj != null){
 			// Update User Attributes
@@ -86,39 +124,65 @@ public class PlayerInput : MonoBehaviour
 				knockback = Vector3.zero;
 			}
 			
-			//if (Input.anyKey && !player.isFrozen){
-			if (!player.isFrozen){
-				float directionX = Input.GetAxisRaw(buttons.m_MoveAxisX);
-				float directionY = Input.GetAxisRaw(buttons.m_MoveAxisY);
-				//float directionX = Input.GetKey(KeyCode.Joystick1Button8);
-				
-				if (Mathf.Abs(directionX) > 0){
-					player.MoveX(directionX);
-				}
-				
-				else{
-					player.Idle();
-				}
-				
-				if (Mathf.Abs(directionY) > 0){
-					if (player.isClimbing){
-						player.MoveY(directionY);
+			
+			// Check if any key in the given keys is being pressed
+			bool someKeyPressed = false;
+			if (Input.anyKey){
+				foreach (KeyCode key in this.buttons){
+					Debug.Log("Key: " + key);
+					if (Input.GetKey(key)){
+						someKeyPressed = true;
 					}
-				}
-				
-				//if (Input.GetButtonDown(buttons.m_Attack)){
-				if (Input.GetKeyDown(AttackKey)){
-					player.Attack(player.Forward);
-				}
-				
-				//else if (Input.GetButtonDown(buttons.m_jumpButton)){
-				else if (Input.GetKeyDown(JumpKey)){
-					player.Jump();
 				}
 			}
 			
+			if (someKeyPressed){
+				if (!player.isFrozen){
+					float directionX = Input.GetAxisRaw(XAxis);
+					float directionY = Input.GetAxisRaw(YAxis);
+					//float directionX = Input.GetKey(KeyCode.Joystick1Button8);
+					
+					if ((Mathf.Abs(directionX) > 0) || (Input.GetKey(controls.LeftKey)) || (Input.GetKey(controls.RightKey))){
+						if (Input.GetKey(controls.LeftKey)){
+							directionX = -1;
+						}
+						else if (Input.GetKey(controls.RightKey)){
+							directionX = 1;
+						}
+						player.MoveX(directionX);
+					}
+					
+					/*else{
+						player.Idle();
+					}*/
+					
+					if ((Mathf.Abs(directionY) > 0) || (Input.GetKey(controls.UpKey)) || (Input.GetKey(controls.DownKey))){
+						if (player.isClimbing){
+							if (Input.GetKey(controls.DownKey)){
+								directionY = -1;
+							}
+							else if (Input.GetKey(controls.UpKey)){
+								directionY = 1;
+							}
+							player.MoveY(directionY);
+						}
+					}
+					
+					if (Input.GetKeyDown(controls.AttackKey) || Input.GetKeyDown(controls.AttackJoystick)){
+						player.Attack(player.Forward);
+					}
+					else if (Input.GetKeyDown(controls.JumpKey) || Input.GetKeyDown(controls.JumpJoystick)){
+						player.Jump();
+					}
+				}
+			}
 			else{
 				player.isMoving = false;
+			}
+			
+			
+			if (!player.isMoving && player.IsGrounded){
+				player.Idle();
 			}
 			
 			player.Update();

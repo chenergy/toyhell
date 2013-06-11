@@ -51,15 +51,6 @@ public class GameData {
 	public static void CreateWeapons(){
 		if (instance.hooker_weapon){
 			instance.hooker.GetComponent<PlayerInput>().SwapWeapons(instance.hooker_weapon);
-			/*
-			float rotationModifier = 0.0f;
-			if (instance.hooker.transform.forward.x < 0){
-				rotationModifier = 180.0f;
-			}
-			instance.hooker.GetComponent<PlayerInput>().SocketedWeapon = (GameObject)GameObject.Instantiate(instance.hooker_weapon, instance.hooker_socket_joint.transform.position, instance.hooker_weapon.transform.rotation );
-			player.SocketedWeapon.transform.RotateAround(new Vector3(0, 1, 0), rotationModifier);
-			player.SocketedWeapon.transform.parent = instance.hooker_socket_joint.transform;
-			*/
 		}
 		if (instance.robot_weapon){
 			instance.robot.GetComponent<PlayerInput>().SwapWeapons(instance.robot_weapon);
@@ -113,9 +104,7 @@ public class GameData {
 	
 	public static void KillPlayer(GameObject player){
 		player.collider.enabled = false;
-		//player.GetComponent<PlayerCharacter>().Frozen = true;
-		//player.GetComponent<PlayerCharacter>().Idle();
-		
+
 		player.GetComponent<PlayerInput>().Frozen = true;
 		player.GetComponent<PlayerInput>().Idle();
 		
@@ -170,7 +159,6 @@ public class GameData {
 	public static void RespawnPlayer(GameObject player){
 		player.collider.enabled = true;
 		player.transform.position = instance.lastCheckpoint.transform.position;
-		//player.GetComponent<PlayerCharacter>().Frozen = false;
 		player.GetComponent<PlayerInput>().Frozen = false;
 		
 		if (player.name == "Robot"){

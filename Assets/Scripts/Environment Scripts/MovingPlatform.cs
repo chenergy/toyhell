@@ -16,6 +16,10 @@ public class MovingPlatform : MonoBehaviour
 	
 	private Dictionary<GameObject, PlayerStats> playerStats;
 	
+	private GameObject player1;
+	private GameObject player2;
+	private PlayerInput P1_Input;
+	private PlayerInput P2_Input;
 	// Use this for initialization
 	void Start ()
 	{
@@ -27,21 +31,38 @@ public class MovingPlatform : MonoBehaviour
 		playerStats = new Dictionary<GameObject, PlayerStats>();
 		playerStats[GameData.Hooker] = hookerStats;
 		playerStats[GameData.Robot] = robotStats;
+		
+		player1 = this.GetPlayerByPlayerNumber(PlayerNumber.P1);
+		player2 = this.GetPlayerByPlayerNumber(PlayerNumber.P2);
+		
+		P1_Input = player1.GetComponent<PlayerInput>();
+		P2_Input = player2.GetComponent<PlayerInput>();
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		float P1_movement = Input.GetAxis("P1moveX");
-        float P2_movement = Input.GetAxis("P2moveX");
+		bool P1_movement = false;
+		bool P2_movement = false;
+		/*
+		GameObject player1 = this.GetPlayerByPlayerNumber(PlayerNumber.P1);
+		GameObject player2 = this.GetPlayerByPlayerNumber(PlayerNumber.P2);
 		
-		GameObject player1 = this.GetPlayerByGamepad(gamepad.one);
-		GameObject player2 = this.GetPlayerByGamepad(gamepad.two);
+		PlayerInput P1_Input = player1.GetComponent<PlayerInput>();
+		PlayerInput P2_Input = player2.GetComponent<PlayerInput>();
+		*/
+		if ((Mathf.Abs(Input.GetAxisRaw(P1_Input.XAxis)) > 0) || (Input.GetKey(P1_Input.controls.LeftKey)) || (Input.GetKey(P1_Input.controls.RightKey))){
+			P1_movement = true;
+		}
 		
-		if (player1 != null){
+		if ((Mathf.Abs(Input.GetAxisRaw(P2_Input.XAxis)) > 0) || (Input.GetKey(P2_Input.controls.LeftKey)) || (Input.GetKey(P2_Input.controls.RightKey))){
+			P2_movement = true;
+		}
+		
+		if (this.player1 != null){
 			PlayerStats stats = this.playerStats[player1];
 			
-			if (P1_movement == 0){
+			if (!P1_movement){
 				if (stats.onPlatform){
 					player1.collider.transform.position = new Vector3(this.transform.position.x + stats.offset,
 						player1.collider.transform.position.y,
@@ -55,10 +76,10 @@ public class MovingPlatform : MonoBehaviour
 		}
 		
 		
-		if (player2 != null){
+		if (this.player2 != null){
 			PlayerStats stats = this.playerStats[player2];
 			
-			if (P2_movement == 0){
+			if (!P2_movement){
 				if (stats.onPlatform){
 					player2.collider.transform.position = new Vector3(this.transform.position.x + stats.offset,
 						player2.collider.transform.position.y,
@@ -87,17 +108,11 @@ public class MovingPlatform : MonoBehaviour
 	}
 	
 	
-	private GameObject GetPlayerByGamepad(gamepad num){
-		/*if (GameData.Hooker.GetComponent<PlayerCharacter>().m_player == num){
+	private GameObject GetPlayerByPlayerNumber(PlayerNumber num){
+		if (GameData.Hooker.GetComponent<PlayerInput>().controls.player == num){
 			return GameData.Hooker;
 		}
-		else if (GameData.Robot.GetComponent<PlayerCharacter>().m_player == num){
-			return GameData.Robot;
-		}*/
-		if (GameData.Hooker.GetComponent<PlayerInput>().playerNumber == num){
-			return GameData.Hooker;
-		}
-		else if (GameData.Robot.GetComponent<PlayerInput>().playerNumber == num){
+		else if (GameData.Robot.GetComponent<PlayerInput>().controls.player == num){
 			return GameData.Robot;
 		}
 		else{

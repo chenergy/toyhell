@@ -6,7 +6,7 @@ public class StartScreen_UI : MonoBehaviour {
 	public Vector3 end = new Vector3(75.0f, -112.2f, -293.5f);
 	private string startText = "Press Start \nto Begin";
 	private float toPosRate = 0.03f;
-	
+	/*
 	public KeyCode m_LeftKey;
     public KeyCode m_RightKey;
     public KeyCode m_JumpKey;
@@ -14,7 +14,7 @@ public class StartScreen_UI : MonoBehaviour {
     public KeyCode m_FireSocket;
 	protected GamePadManager m_controller;
 	public gamepad m_player;
-	
+	*/
 	private Color off = new Color(0,0.5f,0,0);
 	private Color on1 = new Color(0.8f,1.0f,0.9f,1.0f);
 	private Color on2 = new Color(0.4f,0.8f,0.5f,1.0f);
@@ -27,8 +27,6 @@ public class StartScreen_UI : MonoBehaviour {
 		startTextGUI = new GUIStyle();
 		startTextGUI.alignment = TextAnchor.MiddleCenter;
 		startTextGUI.normal.textColor = Color.white;
-		
-		m_controller = new GamePadManager(m_player);
 	}
 	
 	// Update is called once per frame
