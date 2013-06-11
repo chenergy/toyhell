@@ -157,6 +157,7 @@ namespace Actors
 						}
 					}
 				}
+				
 				else{
 					this.jumpStrength = 0.0f;
 					this.canJump = true;
@@ -164,11 +165,18 @@ namespace Actors
 				
 				//Debug.Log("jump strength: " + this.jumpStrength);
 				this.applyGravity();
+				//this.ApplyExtraMovement();
 			}
 
 			fsmc.CurrentState.update(fsmc, this);
 		}
 		
+		protected override void applyGravity(){
+	        if (!this.controller.isGrounded)
+	        {
+	            this.controller.Move(new Vector3(0.0f, ((Physics.gravity.y + jumpStrength) * Time.deltaTime), 0.0f));
+			}
+		}
 		
 		// Finds the closest player
 		private GameObject GetPlayerInRange(){

@@ -8,6 +8,9 @@ namespace Actors
 {
 	public class Player : Actor
 	{
+		private bool hasJumped;
+		public bool isClimbing;
+		
 		public Player(Dictionary<string, object> attributes){
 			FSMAction noAction 		= new A_None();
 			
@@ -45,19 +48,63 @@ namespace Actors
 			this.fsmc = FSM.FSM.createFSMInstance(S_Idle, noAction);
 			this.attributes = attributes;
 			
-			this.jumpStrength = 0.0f;
-			this.canJump = false;
+			this.jumpStrength 	= 0.0f;
+			this.canJump 		= false;
+			this.hasJumped 		= false;
+			this.isClimbing		= false;
 		}
 		
 		
 		public override void Update(){
+			/*if (!this.hasJumped && !this.controller.isGrounded){	// If the character has not pressed jump
+				this.extraMovement.y = -Physics.gravity.y * 0.9f;
+				this.hasJumped 		= true;
+			}*/
+			/*
+			else{
+				if (this.jumpStrength <= 0.1f){
+					this.jumpStrength = 0.0f;
+				}
+				else{
+					this.jumpStrength -= this.jumpStrength * 0.01f;
+				}
+			}
+			*/
+			fsmc.CurrentState.update(fsmc, this);
+			
+			if (!this.isClimbing){
+				applyGravity();
+			}
+			this.ApplyExtraMovement();
+		}
+		
+		public void Jump(){	
+			if (this.canJump){
+				if (this.extraMovement.y == 0.0f){
+					this.hasJumped 			= true;
+					this.extraMovement.y	= this.JumpPower;
+					this.canJump 			= false;
+				}
+			}
+		}
+		
+		public void AllowJump(){
+			this.extraMovement.y 	= 0.0f;
+			this.canJump 			= true;
+			this.hasJumped 			= false;
+		}
+		
+		public void Idle(){
+			fsmc.dispatch("idle", this);
 		}
 		
 		#region attribute getters and setters
+		
 		public GameObject SocketedWeapon{
 			get{ return (GameObject)attributes["socketedWeapon"]; }
 			set{ attributes["socketedWeapon"] = value; }
 		}
+		
 		#endregion
 		
 		

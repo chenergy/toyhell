@@ -39,18 +39,21 @@ public class EnemyInput : MonoBehaviour
 	private GameObject	robot;
 	private CharacterController	controller;
 	private Dictionary<string, object> attributes;
+	private Vector3 	forward;
+	private Vector3		extraMovement;
 	private	Enemy 		enemy;
 	
 	void Start(){
 		hooker = GameData.Hooker;
 		robot = GameData.Robot;
 		zPlane = this.gameObject.transform.position.z;
+		forward = new Vector3(1.0f, 0.0f, 0.0f);
 		// Turn off rendering and colliders for hitbox and patrol point
 		Physics.IgnoreCollision(hitbox.collider, this.gobj.collider);
 		
 		// Can Walk through characters
-		// Physics.IgnoreCollision(this.gobj.collider, hooker.collider);
-		// Physics.IgnoreCollision(this.gobj.collider, robot.collider);
+		//Physics.IgnoreCollision(this.gobj.collider, hooker.collider);
+		//Physics.IgnoreCollision(this.gobj.collider, robot.collider);
 		
 		patrolPoint1.renderer.enabled = false;
 		patrolPoint2.renderer.enabled = false;
@@ -97,6 +100,8 @@ public class EnemyInput : MonoBehaviour
 		attributes["currentHP"] = currentHP;
 		attributes["animation"] = this.gobj.animation;
 		attributes["knockbackStrength"] = knockbackStrength;
+		attributes["forward"] = forward;
+		attributes["extraMovement"] = extraMovement;
 		
 		attributes["hasAttacked"] = false;
 		attributes["hitbox"] = hitbox;

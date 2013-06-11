@@ -12,7 +12,13 @@ namespace FSM
 			Actor actor = (Actor) o;
 			
 			if (actor.Animation){
-				if (actor.Animation["Idle"]){
+				if (!actor.canJump){
+					if (actor.Animation["Jump"]){
+						actor.Animation.CrossFade("Jump");
+						Debug.Log("jumping");
+					}
+				}
+				else if (actor.Animation["Idle"]){
 					actor.Animation.CrossFade("Idle");
 				}
 			}

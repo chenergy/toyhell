@@ -11,14 +11,18 @@ namespace Actors
 		protected FSMContext fsmc;
 		protected Dictionary<string, object> attributes;
 		
-		protected float jumpStrength;
-		protected bool	canJump;
+		protected 	float 	jumpStrength;
+		//protected bool	canJump;
+		public 		bool 	canJump;
+		protected	Vector3 extraMovement;
 		
 		public void MoveToPosition(Vector3 targetPosition){
 			if (fsmc.CurrentState.Name != "attack"){
 				// Do not consider y in the target location
 				this.TargetPosition = new Vector3(targetPosition.x, this.Position.y, targetPosition.z);
 				this.TargetRotation = Quaternion.LookRotation(this.TargetPosition - this.Position);
+				
+				this.Forward = (targetPosition - this.Position).normalized;
 				
 				fsmc.dispatch("moveToPosition", this);
 			}
@@ -55,11 +59,17 @@ namespace Actors
 			}
 		}
 		
-		protected void applyGravity(){
-	        if (!this.controller.isGrounded)
-	        {
-	            this.controller.Move(new Vector3(0.0f, ((Physics.gravity.y + jumpStrength) * Time.deltaTime), 0.0f));
+		protected virtual void applyGravity(){
+	        if (!this.controller.isGrounded){
+				this.extraMovement.y += Physics.gravity.y * Time.deltaTime;
 	        }
+			else{
+				this.extraMovement.y = 0.0f;
+			}
+		}
+		
+		protected void ApplyExtraMovement(){
+			this.controller.Move(this.extraMovement * Time.deltaTime);
 		}
 		
 		#region attribute getters and setters
@@ -155,6 +165,16 @@ namespace Actors
 		public float FadeTime{
 			get{ return (float)attributes["fadeTime"]; }
 			set{ attributes["fadeTime"] = value; }
+		}
+		
+		public Vector3 Forward{
+			get{ return (Vector3)attributes["forward"]; }
+			set{ attributes["forward"] = value; }
+		}
+		
+		public Vector3 Knockback{
+			get{ return (Vector3)attributes["knockback"]; }
+			set{ attributes["knockback"] = value; }
 		}
 		
 		#endregion

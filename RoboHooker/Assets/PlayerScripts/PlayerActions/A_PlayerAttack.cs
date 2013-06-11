@@ -11,15 +11,15 @@ namespace FSM
         {
 			Player actor = (Player) o;
 			float animationLength = 3.0f;
-			/*
+			
 			if (actor.Animation){
-				if (actor.Animation["Attack"]){
-					animationLength = actor.Animation["Attack"].clip.length * (1.0f/actor.AttackSpeed);
-					actor.Animation["Attack"].speed = actor.AttackSpeed;
-					actor.Animation.CrossFade("Attack");
+				if (actor.Animation["SocketAttack"]){
+					animationLength = actor.Animation["SocketAttack"].clip.length * (1.0f/actor.AttackSpeed);
+					actor.Animation["SocketAttack"].speed = actor.AttackSpeed;
+					actor.Animation.CrossFade("SocketAttack");
 				}
 			}
-			
+			/*
 			// Quick Rotation
 			actor.controller.transform.LookAt(actor.TargetPosition);
 			Debug.DrawLine(actor.Position, actor.TargetPosition);
@@ -52,14 +52,13 @@ namespace FSM
 					actor.HasAttacked = true;
 				}
 			}
-			
+			*/
 			if (actor.ActionTimer > (animationLength)){
-				actor.Hitbox.collider.enabled = false;
-				actor.Hitbox.renderer.enabled = false;
+				//actor.Hitbox.collider.enabled = false;
+				//actor.Hitbox.renderer.enabled = false;
 				fsmc.dispatch("idle", o);
 			}
 			actor.ActionTimer += Time.deltaTime;
-			*/
         }
     }
 }

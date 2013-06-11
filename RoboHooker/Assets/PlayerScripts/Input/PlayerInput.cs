@@ -5,9 +5,9 @@ using Actors;
 
 public class PlayerInput : MonoBehaviour
 {
+	public gamepad		playerNumber;
 	public GameObject 	gobj;
 	public GameObject	deathParts;
-	public GameObject	socketedWeapon;
 	public float		jumpPower			= 20.0f;
 	public float		moveSpeed 			= 2.0f;
 	public float 		turnSpeed 			= 5.0f;
@@ -17,26 +17,33 @@ public class PlayerInput : MonoBehaviour
 	public int			currentHP			= 100;
 	public float		fadeTime			= 3.0f;
 	
+	
+	private GamePadManager buttons;
+	private GameObject	socketedWeapon;
 	private float		zPlane;
 	private CharacterController	controller;
 	private Dictionary<string, object> attributes;
+	private Vector3 	forward;
 	private	Player 		player;
 	
+	private bool isFrozen = false;
+	private Vector3 knockback;
+	
 	void Start(){
+		buttons = new GamePadManager(playerNumber);
 		zPlane = this.gameObject.transform.position.z;
-		// Turn off rendering and colliders for hitbox and patrol point
-		
-		// Can Walk through characters
-		
 		controller = this.gobj.GetComponent<CharacterController>();
 		attributes = new Dictionary<string, object>();
+		forward = new Vector3(1.0f, 0.0f, 0.0f);
+		knockback = Vector3.zero;
 		
 		#region attribute dictionary assignments
 		attributes["gameObject"] = gobj;
 		attributes["controller"] = controller;
 		attributes["deathParts"] = deathParts;
 		attributes["socketedWeapon"] = socketedWeapon;
-
+		
+		attributes["knockback"] = knockback;
 		attributes["jumpPower"] = jumpPower;
 		attributes["moveSpeed"] = moveSpeed;
 		attributes["turnSpeed"] = turnSpeed;
@@ -50,34 +57,74 @@ public class PlayerInput : MonoBehaviour
 		attributes["animation"] = this.gobj.animation;
 		attributes["knockbackStrength"] = knockbackStrength;
 		attributes["fadeTime"] = fadeTime;
-		
 		attributes["hasAttacked"] = false;
+		attributes["forward"] = forward;
 		#endregion
+		
 		player = new Player(attributes); // Pass the dictionary to the enemy
-
 	}
 	
 	void Update (){
 		if (this.gobj != null){
-			/*
 			// Update User Attributes
 			this.currentHP 	= this.player.CurrentHP;
 			this.maxHP		= this.player.MaxHP;
 			player.MoveSpeed = moveSpeed;
 			player.TurnSpeed = turnSpeed;
 			player.Position  = this.controller.transform.position;
-	
-			if (Input.GetKey(KeyCode.Tab)){ // Test case for enemy death
-				this.DamageEnemy(10);
+			
+			if (knockback.magnitude > 0.1f) { 			//Added knockback to control movement after being hit
+				this.player.ExtraMovement += knockback;
+				knockback *= 0.9f;
 			}
-			*/
+			else{
+				knockback = Vector3.zero;
+			}
+			
+			if (Input.anyKey && !isFrozen){
+				float direction = Input.GetAxisRaw(buttons.m_MoveAxisX);
+				if (Mathf.Abs(direction) > 0){
+					//Debug.Log(direction);
+					player.MoveToPosition(this.gobj.transform.position + new Vector3(direction * 0.5f, 0.0f, 0.0f));
+				}
+				if (Input.GetButtonDown(buttons.m_Attack)){
+					player.Attack(player.Forward);
+				}
+				else if (Input.GetButtonDown(buttons.m_jumpButton)){
+					player.Jump();
+				}
+			}
+			
 			player.Update();
-			/*
+			
+			if (this.controller.isGrounded){
+				player.AllowJump();
+			}
+			
 			if(this.transform.position.z != this.zPlane){
 				this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.zPlane);
 			}
-			*/
 		}
+	}
+	
+	public void Idle(){
+		player.Idle();
+	}
+	
+    public bool Climbing
+    {
+		get { return player.isClimbing; }
+		set { player.isClimbing = value; }
+    }
+	
+	public bool Frozen{
+		get { return isFrozen; }
+		set { isFrozen = value; }
+	}
+	
+	public Vector3 Knockback{
+		get { return knockback; }
+		set { knockback = value; }
 	}
 	/*
 	public void KillEnemy(){

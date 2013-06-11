@@ -77,7 +77,11 @@ public class GameData {
 	
 	public static void KillPlayer(GameObject player){
 		player.collider.enabled = false;
-		player.GetComponent<PlayerCharacter>().Frozen = true;
+		//player.GetComponent<PlayerCharacter>().Frozen = true;
+		//player.GetComponent<PlayerCharacter>().Idle();
+		
+		player.GetComponent<PlayerInput>().Frozen = true;
+		player.GetComponent<PlayerInput>().Idle();
 		
 		// Test with assigned parts
 		GameObject deathParts;
