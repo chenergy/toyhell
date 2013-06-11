@@ -11,6 +11,8 @@ public class GameData {
 	private GameObject hookerDeathParts;
 	private GameObject hooker_mesh;
 	private GameObject hooker_ctr;
+	private GameObject hooker_weapon;
+	private GameObject hooker_socket_joint;
 	
 	private GameObject robot;
 	private int robot_currenthp = 100;
@@ -19,6 +21,8 @@ public class GameData {
 	private GameObject robotDeathParts;
 	private GameObject robot_mesh;
 	private GameObject robot_ctr;
+	private GameObject robot_weapon;
+	private GameObject robot_socket_joint;
 	
 	private GameObject lastCheckpoint;
 	private GameObject respawnParticles;
@@ -33,6 +37,38 @@ public class GameData {
 		this.robotDeathParts = (GameObject)Resources.LoadAssetAtPath("Assets/Prefabs/DeathParts/RobotParts.prefab", typeof(GameObject));
 		this.hookerDeathParts = (GameObject)Resources.LoadAssetAtPath("Assets/Prefabs/DeathParts/HookerParts.prefab", typeof(GameObject));
 		this.respawnParticles = (GameObject)Resources.LoadAssetAtPath("Assets/Prefabs/Particles/RespawnParticles.prefab", typeof(GameObject));
+	}
+	
+	public static void SaveWeapon(GameObject player, GameObject weapon){
+		if (player == instance.hooker){
+			instance.hooker_weapon = weapon;
+		}
+		else if (player == instance.robot){
+			instance.robot_weapon = weapon;
+		}
+	}
+	
+	public static void CreateWeapons(){
+		if (instance.hooker_weapon){
+			instance.hooker.GetComponent<PlayerInput>().SwapWeapons(instance.hooker_weapon);
+			/*
+			float rotationModifier = 0.0f;
+			if (instance.hooker.transform.forward.x < 0){
+				rotationModifier = 180.0f;
+			}
+			instance.hooker.GetComponent<PlayerInput>().SocketedWeapon = (GameObject)GameObject.Instantiate(instance.hooker_weapon, instance.hooker_socket_joint.transform.position, instance.hooker_weapon.transform.rotation );
+			player.SocketedWeapon.transform.RotateAround(new Vector3(0, 1, 0), rotationModifier);
+			player.SocketedWeapon.transform.parent = instance.hooker_socket_joint.transform;
+			*/
+		}
+		if (instance.robot_weapon){
+			instance.robot.GetComponent<PlayerInput>().SwapWeapons(instance.robot_weapon);
+		}
+	}
+	
+	public static void SetSocketJoints(){
+		instance.hooker_socket_joint = instance.hooker.GetComponent<PlayerInput>().socketJoint;
+		instance.robot_socket_joint = instance.robot.GetComponent<PlayerInput>().socketJoint;
 	}
 	
 	public static void GainHp(GameObject player, int hp){

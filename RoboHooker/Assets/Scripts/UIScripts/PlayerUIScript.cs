@@ -27,6 +27,8 @@ public class PlayerUIScript : MonoBehaviour {
 		GameData.SetRobotRenderers();
 		GameData.UI = this.gameObject;
 		GameData.LastLevel = Application.loadedLevelName;
+		//GameData.CreateWeapons();
+		GameData.SetSocketJoints();
 	}
 	
 	void Start () {

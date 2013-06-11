@@ -28,9 +28,13 @@ public class Weapon : MonoBehaviour
 	{
 	}
 	
-	public void Attack(){
+	public void StartAttack(){
 		hitbox.collider.enabled = true;
 		//hitbox.renderer.enabled = true;
+	}
+	
+	public void EndAttack(){
+		hitbox.collider.enabled = false;
 	}
 }
 

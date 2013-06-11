@@ -60,6 +60,7 @@ public class PlayerInput : MonoBehaviour
 		#endregion
 		
 		player = new Player(attributes); // Pass the dictionary to the enemy
+		GameData.CreateWeapons();
 	}
 	
 	void Update (){
@@ -87,9 +88,9 @@ public class PlayerInput : MonoBehaviour
 					player.MoveX(directionX);
 				}
 				
-				else{
+				/*else{
 					player.Idle();
-				}
+				}*/
 				
 				if (Mathf.Abs(directionY) > 0){
 					if (player.isClimbing){

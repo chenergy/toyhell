@@ -30,6 +30,7 @@ public class WeaponPickup : MonoBehaviour {
 			
 			if (Input.GetButtonDown(input.buttons.m_LeftEquipKey)){
 				input.SwapWeapons(prefab);
+				GameData.SaveWeapon(player, prefab);
 				GameObject.Destroy(this.gameObject);
 			}
 		}
