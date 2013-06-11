@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+/*
 public class BarbieHead : Weapon {
     public float m_speed;
     public float m_life;
@@ -47,3 +47,4 @@ public class BarbieHead : Weapon {
         }
     }
 }
+ */

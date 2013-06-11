@@ -2,11 +2,12 @@ using UnityEngine;
 using System.Collections;
 
 public class LadderScript : MonoBehaviour {
-	
+	/*
 	void Start(){
 	}
 	
 	void OnTriggerStay(Collider collider){
+		
 		GameObject player = collider.gameObject;
         //PlayerCharacter pc = (PlayerCharacter)player.GetComponent<PlayerCharacter>();
 		PlayerInput input = player.GetComponent<PlayerInput>();
@@ -41,8 +42,8 @@ public class LadderScript : MonoBehaviour {
                     }
                 }
             }
-        }*/
-	}
+        }
+	}*/
 	
 	void OnTriggerEnter(Collider collider){
 		GameObject player = collider.gameObject;

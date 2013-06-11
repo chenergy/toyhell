@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+/*
 public class Robot : PlayerCharacter
 {
 /*    public GameObject m_RightWeapon;
@@ -12,4 +12,4 @@ public class Robot : PlayerCharacter
         base.Update();
     }
  */
-}
+//}

@@ -12,12 +12,51 @@ namespace FSM
 			Player actor = (Player) o;
 			float animationLength = 3.0f;
 			
-			if (actor.Animation){
-				if (actor.Animation["SocketAttack"]){
-					animationLength = actor.Animation["SocketAttack"].clip.length * (1.0f/actor.AttackSpeed);
-					actor.Animation["SocketAttack"].speed = actor.AttackSpeed;
-					actor.Animation.CrossFade("SocketAttack");
+			if (actor.SocketedWeapon != null){
+				Weapon weapon = actor.SocketedWeapon.gameObject.GetComponent<Weapon>();
+				GameObject model = weapon.model;
+				float attackDelay = weapon.attackDelay;
+				float attackSpeed = weapon.attackSpeed;
+				GameObject hitbox = weapon.hitbox;
+				int attacks = weapon.attacks;
+				bool canKnockback = weapon.canKnockback;
+				
+				if (actor.Animation){
+					if (actor.Animation["SocketAttack"]){
+						animationLength = actor.Animation["SocketAttack"].clip.length * (1.0f/attackSpeed);
+						actor.Animation["SocketAttack"].speed = attackSpeed;
+						actor.Animation.CrossFade("SocketAttack");
+					}
 				}
+				
+				
+				if (model.animation){
+					if (model.animation["Attack"]){
+						model.animation["Attack"].speed = attackSpeed;
+						model.animation.CrossFade("Attack");
+					}
+				}
+				
+				if (!actor.HasAttacked && (actor.ActionTimer > attackDelay)){
+					//hitbox.collider.enabled = true;
+					//hitbox.renderer.enabled = true;
+					weapon.StartAttack();
+					actor.HasAttacked = true;
+				}
+				
+				if (actor.ActionTimer > animationLength/attacks){
+					//hitbox.collider.enabled = false;
+					//hitbox.renderer.enabled = false;
+					weapon.EndAttack();
+					actor.HasAttacked = false;
+					actor.ActionTimer = 0.0f;
+					actor.attackCounter++;
+				}
+				
+				if (actor.attackCounter >= attacks){
+					fsmc.dispatch("idle", o);
+				}
+				
 			}
 			
 			if (!actor.IsGrounded){

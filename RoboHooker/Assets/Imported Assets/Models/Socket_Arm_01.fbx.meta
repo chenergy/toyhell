@@ -32,6 +32,7 @@ ModelImporter:
     4300000: R_arm
     7400000: Attack
     9500000: //RootNode
+    11100000: //RootNode
     13700000: R_arm
   materials:
     importMaterials: 1
@@ -103,5 +104,5 @@ ModelImporter:
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   additionalBone: 1
-  animationType: 2
+  animationType: 1
   userData: 

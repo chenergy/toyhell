@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+/*
 public class Weapon : MonoBehaviour {
     public int m_damage;
     public AnimationClip m_fireAnimation;
@@ -31,3 +31,4 @@ public class Weapon : MonoBehaviour {
         }
     }
 }
+ */

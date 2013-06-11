@@ -61,7 +61,7 @@ public class ProjectileScript : MonoBehaviour {
 			launchDirection *= 0.0f;
 			
 			Debug.Log("Knockback Direction: " + (knockbackDirection + launchDirection));
-			player.GetComponent<PlayerCharacter>().Knockback = knockbackDirection + launchDirection;
+			player.GetComponent<PlayerInput>().Knockback = knockbackDirection + launchDirection;
 			
 			GameData.LoseHp(player, damage);
 			

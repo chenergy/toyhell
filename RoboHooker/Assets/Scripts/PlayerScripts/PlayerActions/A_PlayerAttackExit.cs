@@ -9,12 +9,22 @@ namespace FSM
     {
         public override void execute(FSMContext fsmc, object o)
         {
-			Actor actor = (Actor) o;
+			Player actor = (Player) o;
 			actor.ActionTimer = 0.0f;
 			actor.isFrozen = false;
 			actor.HasAttacked = false;
+			actor.attackCounter = 0;
+			
 			if (actor.Animation) 
 				actor.Animation.Stop();
+			if (actor.SocketedWeapon != null){
+				Weapon weapon = actor.SocketedWeapon.gameObject.GetComponent<Weapon>();
+				GameObject model = weapon.model;
+				
+				if (model.animation){
+					model.animation.Stop();
+				}
+			}
         }
     }
 }

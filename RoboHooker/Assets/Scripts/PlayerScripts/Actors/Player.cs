@@ -10,6 +10,7 @@ namespace Actors
 	{
 		public bool isClimbing;
 		public bool isMoving;
+		public int	attackCounter;
 		
 		public Player(Dictionary<string, object> attributes){
 			FSMAction noAction 		= new A_None();
@@ -58,6 +59,7 @@ namespace Actors
 			
 			this.jumpStrength 	= 0.0f;
 			this.isClimbing		= false;
+			this.attackCounter	= 0;
 		}
 		
 		

@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+/*
 public class RobotCannon : Weapon {
 
 	// Use this for initialization
@@ -13,3 +13,4 @@ public class RobotCannon : Weapon {
 	
 	}
 }
+ */

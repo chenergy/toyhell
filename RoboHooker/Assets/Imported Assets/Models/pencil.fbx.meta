@@ -16,9 +16,10 @@ ModelImporter:
     400008: pencilMesh
     400010: socketJnt1
     4300000: pencilMesh
-    7400000: idle
-    7400002: attack
+    7400000: Idle
+    7400002: Attack
     9500000: //RootNode
+    11100000: //RootNode
     13700000: pencilMesh
   materials:
     importMaterials: 1
@@ -33,7 +34,7 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     clipAnimations:
-    - name: idle
+    - name: Idle
       takeName: Take 001
       firstFrame: 1
       lastFrame: 2
@@ -55,7 +56,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       skeletonMaskElements: []
-    - name: attack
+    - name: Attack
       takeName: Take 001
       firstFrame: 2
       lastFrame: 16
@@ -112,5 +113,5 @@ ModelImporter:
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   additionalBone: 1
-  animationType: 2
+  animationType: 1
   userData: 

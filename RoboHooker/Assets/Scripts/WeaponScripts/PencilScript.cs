@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+/*
 public class PencilScript : SocketWeapon {
 
     public void Start()
@@ -11,3 +11,4 @@ public class PencilScript : SocketWeapon {
 //        m_animator.StartPlayback();
     }
 }
+ */

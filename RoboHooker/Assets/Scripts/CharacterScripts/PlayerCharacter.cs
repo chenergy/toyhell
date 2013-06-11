@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+/*
 [RequireComponent(typeof(CharacterController))]
 public class PlayerCharacter : MonoBehaviour {
 
@@ -235,3 +235,4 @@ public class PlayerCharacter : MonoBehaviour {
 		set { m_knockback = value; }
 	}
 }
+ */

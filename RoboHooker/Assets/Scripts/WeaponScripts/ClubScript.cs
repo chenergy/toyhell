@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+/*
 public class ClubScript : SocketWeapon
 {
     private bool m_attacking;
@@ -39,3 +39,4 @@ public class ClubScript : SocketWeapon
         }
     }
 }
+ */

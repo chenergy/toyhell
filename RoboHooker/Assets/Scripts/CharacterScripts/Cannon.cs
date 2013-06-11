@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+/*
 public class Cannon : Weapon
 {
     public GameObject m_barbieHead;
@@ -32,3 +32,4 @@ public class Cannon : Weapon
     }
 
 }
+ */

@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+/*
 public class GunSocket : SocketWeapon {
     public GameObject m_bullet;
     public float m_bulletSpeed;
@@ -19,3 +19,4 @@ public class GunSocket : SocketWeapon {
         }
     }
 }
+ */

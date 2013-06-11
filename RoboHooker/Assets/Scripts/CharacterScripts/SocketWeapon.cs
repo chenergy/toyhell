@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+/*
 public class SocketWeapon : Weapon {
 
     public AnimationClip m_idleAnimation;
@@ -44,4 +44,4 @@ public class SocketWeapon : Weapon {
             }
         }
     }
-}
+}*/

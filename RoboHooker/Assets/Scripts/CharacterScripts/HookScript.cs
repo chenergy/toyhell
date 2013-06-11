@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+/*
 public class HookScript : Weapon {
     private enum FireStage { Returning, Firing, Ready, Swinging };
     public float m_power;
@@ -116,3 +116,4 @@ public class HookScript : Weapon {
     }
  
 }
+ */

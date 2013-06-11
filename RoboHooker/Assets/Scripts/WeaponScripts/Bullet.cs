@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+/*
 public class Bullet : MonoBehaviour {
     public Vector3 m_dir;
     public float m_speed;
@@ -42,3 +42,4 @@ public class Bullet : MonoBehaviour {
         }
     }
 }
+ */

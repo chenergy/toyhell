@@ -8,6 +8,7 @@ public class PlayerInput : MonoBehaviour
 	public gamepad		playerNumber;
 	public GameObject 	gobj;
 	public GameObject	deathParts;
+	public GameObject	socketJoint;
 	public float		jumpPower			= 20.0f;
 	public float		moveSpeed 			= 2.0f;
 	public float 		turnSpeed 			= 5.0f;
@@ -128,6 +129,37 @@ public class PlayerInput : MonoBehaviour
 		player.Hurt();
 	}
 	
+	public void SwapWeapons(GameObject weapon){
+		float rotationModifier = 0.0f;
+		if (player.gameObject.transform.forward.x < 0){
+			rotationModifier = 180.0f;
+		}
+		
+		Debug.Log(rotationModifier);
+		
+		if (player.SocketedWeapon == null){
+			//player.SocketedWeapon = (GameObject)GameObject.Instantiate(weapon, this.socketJoint.transform.position, Quaternion.Euler(weapon.transform.rotation.x, weapon.transform.rotation.y + rotationModifier, weapon.transform.rotation.z ));
+			player.SocketedWeapon = (GameObject)GameObject.Instantiate(weapon, this.socketJoint.transform.position, weapon.transform.rotation );
+			player.SocketedWeapon.transform.RotateAround(new Vector3(0, 1, 0), rotationModifier);
+			//player.SocketedWeapon.transform.LookAt(weapon.transform.position + player.Forward);
+			
+			player.SocketedWeapon.transform.parent = this.socketJoint.transform;
+		}
+		else{
+			// Drop the weapons
+			string socketName = player.SocketedWeapon.GetComponent<Weapon>().model.name;
+			//Debug.Log("Assets/Prefabs/WeaponPickupPrefabs/" + socketName + "Pickup.prefab");
+			GameObject newPickup = (GameObject)Resources.LoadAssetAtPath("Assets/Prefabs/WeaponPickupPrefabs/" + socketName + "Pickup.prefab", typeof(GameObject));
+			GameObject.Instantiate(newPickup, player.Position + new Vector3(0.0f, 2.0f, 0.0f), Quaternion.identity);
+			GameObject.Destroy(player.SocketedWeapon);
+			
+			// Acquire new weapon
+			player.SocketedWeapon = (GameObject)GameObject.Instantiate(weapon, this.socketJoint.transform.position, weapon.transform.rotation);
+			player.SocketedWeapon.transform.RotateAround(new Vector3(0, 1, 0), rotationModifier);
+			player.SocketedWeapon.transform.parent = this.socketJoint.transform;
+		}
+	}
+	
     public bool Climbing
     {
 		get { return player.isClimbing; }
@@ -143,6 +175,7 @@ public class PlayerInput : MonoBehaviour
 		get { return knockback; }
 		set { knockback = value; }
 	}
+	
 	/*
 	public void KillEnemy(){
 		this.enemy.CurrentHP = 0;

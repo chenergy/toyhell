@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+/*
 public class Hooker : PlayerCharacter {
     private bool m_swinging=false;
     public bool Swing
@@ -29,3 +29,4 @@ public class Hooker : PlayerCharacter {
         m_swinging = false;
     }
 }
+ */
