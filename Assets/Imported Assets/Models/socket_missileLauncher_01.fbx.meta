@@ -1,0 +1,110 @@
+fileFormatVersion: 2
+guid: 0c47c5c51e09dfa4fa9f9175f25a849b
+ModelImporter:
+  serializedVersion: 15
+  fileIDToRecycleName:
+    100000: barrelJnt
+    100002: baseJnt
+    100004: brace
+    100006: chassis
+    100008: missle
+    100010: pivot_missle_Launcher
+    100012: prongs
+    100014: prongsJnt
+    100016: root_socketJnt
+    100018: //RootNode
+    400000: barrelJnt
+    400002: baseJnt
+    400004: brace
+    400006: chassis
+    400008: missle
+    400010: pivot_missle_Launcher
+    400012: prongs
+    400014: prongsJnt
+    400016: root_socketJnt
+    400018: //RootNode
+    2300000: missle
+    3300000: missle
+    4300000: chassis
+    4300002: pivot_missle_Launcher
+    4300004: prongs
+    4300006: brace
+    4300008: missle
+    7400000: Attack
+    9500000: //RootNode
+    13700000: brace
+    13700002: chassis
+    13700004: pivot_missle_Launcher
+    13700006: prongs
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    clipAnimations:
+    - name: Attack
+      takeName: Take 001
+      firstFrame: 118
+      lastFrame: 130
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      keepAdditionalBonesAnimation: 1
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      skeletonMaskElements: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    handles: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  additionalBone: 1
+  animationType: 2
+  userData: 

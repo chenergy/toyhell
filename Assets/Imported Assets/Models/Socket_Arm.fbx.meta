@@ -1,0 +1,117 @@
+fileFormatVersion: 2
+guid: 43e3cfde6ea7d6b4cb56b48c48fc573c
+ModelImporter:
+  serializedVersion: 15
+  fileIDToRecycleName:
+    100000: R_Arm
+    100002: r_f_textCurve1
+    100004: r_fk_clavicleCtr
+    100006: r_fk_clavicleCtr_null
+    100008: r_fk_elbowCtr
+    100010: r_fk_elbowCtr_null
+    100012: r_fk_shoulderCtr
+    100014: r_fk_shoulderCtr_null
+    100016: r_fk_textGrp
+    100018: r_fk_wristCtr
+    100020: r_fk_wristCtr_null
+    100022: r_i_textCurve2
+    100024: r_ik_elbowCtr
+    100026: r_ik_elbowCtr_null
+    100028: r_ik_textGrp
+    100030: r_ik_wristCtr
+    100032: r_ik_wristCtr_null
+    100034: r_ikFkSwitch
+    100036: r_k_textCurve1
+    100038: r_k_textCurve2
+    100040: r_main_clavicleJnt
+    100042: r_main_elbowJnt
+    100044: r_main_shoulderJnt
+    100046: r_main_wristJnt
+    100048: r_main_wristJntLock
+    100050: r_masterArmGrp
+    100052: r_tMainArmGrp
+    100054: rShoulderCtr
+    100056: //RootNode
+    400000: R_Arm
+    400002: r_f_textCurve1
+    400004: r_fk_clavicleCtr
+    400006: r_fk_clavicleCtr_null
+    400008: r_fk_elbowCtr
+    400010: r_fk_elbowCtr_null
+    400012: r_fk_shoulderCtr
+    400014: r_fk_shoulderCtr_null
+    400016: r_fk_textGrp
+    400018: r_fk_wristCtr
+    400020: r_fk_wristCtr_null
+    400022: r_i_textCurve2
+    400024: r_ik_elbowCtr
+    400026: r_ik_elbowCtr_null
+    400028: r_ik_textGrp
+    400030: r_ik_wristCtr
+    400032: r_ik_wristCtr_null
+    400034: r_ikFkSwitch
+    400036: r_k_textCurve1
+    400038: r_k_textCurve2
+    400040: r_main_clavicleJnt
+    400042: r_main_elbowJnt
+    400044: r_main_shoulderJnt
+    400046: r_main_wristJnt
+    400048: r_main_wristJntLock
+    400050: r_masterArmGrp
+    400052: r_tMainArmGrp
+    400054: rShoulderCtr
+    400056: //RootNode
+    4300000: R_Arm
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: R_Arm
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    handles: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  additionalBone: 1
+  animationType: 2
+  userData: 

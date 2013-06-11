@@ -1,0 +1,106 @@
+fileFormatVersion: 2
+guid: 47884b2ec6703a040b323bccbb3fb744
+ModelImporter:
+  serializedVersion: 15
+  fileIDToRecycleName:
+    100000: backPropeller
+    100002: baseJnt
+    100004: blade1Jnt
+    100006: blade2Jnt
+    100008: root_socketJnt
+    100010: //RootNode
+    100012: topPropeller_01
+    100014: topPropeller_02
+    100016: toyCoptor
+    400000: backPropeller
+    400002: baseJnt
+    400004: blade1Jnt
+    400006: blade2Jnt
+    400008: root_socketJnt
+    400010: //RootNode
+    400012: topPropeller_01
+    400014: topPropeller_02
+    400016: toyCoptor
+    4300000: topPropeller_02
+    4300002: topPropeller_01
+    4300004: backPropeller
+    4300006: toyCoptor
+    7400000: Attack
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: backPropeller
+    13700002: topPropeller_01
+    13700004: topPropeller_02
+    13700006: toyCoptor
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    clipAnimations:
+    - name: Attack
+      takeName: Take 001
+      firstFrame: 118
+      lastFrame: 124
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      keepAdditionalBonesAnimation: 1
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      skeletonMaskElements: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    handles: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  additionalBone: 1
+  animationType: 1
+  userData: 
