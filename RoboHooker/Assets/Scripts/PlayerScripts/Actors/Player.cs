@@ -14,7 +14,7 @@ namespace Actors
 		public Player(Dictionary<string, object> attributes){
 			FSMAction noAction 		= new A_None();
 			
-			State S_Idle 			= new State("idle", new A_IdleEnter(), new A_Idle(), new A_IdleExit());
+			State S_Idle 			= new State("idle", new A_PlayerIdleEnter(), new A_PlayerIdle(), new A_PlayerIdleExit());
 			State S_MoveToPosition	= new State("move", new A_PlayerMoveEnter(), new A_PlayerMove(), new A_PlayerMoveExit());
 			State S_Attack 			= new State("attack", new A_PlayerAttackEnter(), new A_PlayerAttack(), new A_PlayerAttackExit());
 			State S_Death 			= new State("death", new A_PlayerDeathEnter(), new A_PlayerDeath(), new A_PlayerDeathExit());
@@ -63,14 +63,20 @@ namespace Actors
 		
 		public override void Update(){
 			fsmc.CurrentState.update(fsmc, this);
-			
+
 			Debug.DrawLine(this.Position, this.Position + new Vector3(0.0f, -0.2f, 0.0f));
 			//Debug.Log(this.gameObject.name + " State: " + fsmc.CurrentState.Name);
-			
+
 			if (!this.isClimbing && !this.IsGrounded){
 				applyGravity();
 			}
-			//Debug.Log("Player Location: " + this.Position);
+			
+			if (this.isClimbing){ 
+				if (!this.isMoving){
+					this.extraMovement.y = 0;
+				}
+			}
+			
 			this.ApplyExtraMovement();
 		}
 		
@@ -83,7 +89,7 @@ namespace Actors
 			}
 		}
 		
-		public void Move(float direction){
+		public void MoveX(float direction){
 			Vector3 targetPosition = (this.Position + new Vector3(direction, 0, 0));
 			Quaternion targetRotation = Quaternion.LookRotation((this.Position + new Vector3(direction, 0, 0)) - this.Position);
 			
@@ -99,6 +105,26 @@ namespace Actors
 			
 			this.isMoving = true;
 			this.extraMovement.x = direction * this.MoveSpeed;
+		}
+		
+		public void MoveY(float direction){
+			Vector3 targetPosition = (this.Position + new Vector3(0, direction, 0));
+			//Quaternion targetRotation = Quaternion.LookRotation((this.Position + new Vector3(direction, 0, 0)) - this.Position);
+			
+			// Quick Rotation
+			//this.controller.transform.LookAt(targetPosition);
+			this.gameObject.transform.LookAt(this.Position + new Vector3(0.0f, 0.0f, 1.0f));
+			// Slow Rotation
+			/*
+			if (Quaternion.Angle(this.Rotation, targetRotation) > 5.0f){
+				this.Rotation = Quaternion.Slerp(this.Rotation, targetRotation, Time.deltaTime * 
+					(this.TurnSpeed));
+			}
+			*/
+			fsmc.dispatch("move", this);
+			
+			this.isMoving = true;
+			this.extraMovement.y = direction * this.MoveSpeed;
 		}
 		
 		public void AllowJump(){

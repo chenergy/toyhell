@@ -16,9 +16,8 @@ public class PlayerInput : MonoBehaviour
 	public int			maxHP				= 100;
 	public int			currentHP			= 100;
 	public float		fadeTime			= 3.0f;
+	public GamePadManager buttons;
 	
-	
-	private GamePadManager buttons;
 	private GameObject	socketedWeapon;
 	private float		zPlane;
 	private CharacterController	controller;
@@ -80,14 +79,23 @@ public class PlayerInput : MonoBehaviour
 			}
 			
 			if (Input.anyKey && !player.isFrozen){
-				float direction = Input.GetAxisRaw(buttons.m_MoveAxisX);
+				float directionX = Input.GetAxisRaw(buttons.m_MoveAxisX);
+				float directionY = Input.GetAxisRaw(buttons.m_MoveAxisY);
 				
-				if (Mathf.Abs(direction) > 0){
-					player.Move(direction);
+				if (Mathf.Abs(directionX) > 0){
+					player.MoveX(directionX);
 				}
+				
 				else{
 					player.Idle();
 				}
+				
+				if (Mathf.Abs(directionY) > 0){
+					if (player.isClimbing){
+						player.MoveY(directionY);
+					}
+				}
+				
 				if (Input.GetButtonDown(buttons.m_Attack)){
 					player.Attack(player.Forward);
 				}

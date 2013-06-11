@@ -11,7 +11,13 @@ namespace FSM
         {
 			Player actor = (Player) o;
 			
-			if (actor.Animation){
+			if (actor.isClimbing){
+				if (actor.Animation["Walk"]){
+					actor.Animation.CrossFade("Walk");
+				}
+			}
+			
+			else if (actor.Animation){
 				if (actor.IsGrounded){
 					if (actor.Animation["Walk"]){
 						actor.Animation.CrossFade("Walk");
