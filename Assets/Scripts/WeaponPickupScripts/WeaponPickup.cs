@@ -2,13 +2,16 @@ using UnityEngine;
 using System.Collections;
 
 public class WeaponPickup : MonoBehaviour {
-	public GameObject gobj;
-	public GameObject prefab;
+	public GameObject 	gobj;
+	public GameObject 	prefab;
+	public float		fadeTime = 10.0f;
+	
 	private float offsetY;
 	// Use this for initialization
 	void Start () {
 		this.collider.isTrigger = true;
 		this.offsetY = this.transform.position.y;
+		GameObject.Destroy(this.gameObject, fadeTime);
 	}
 	
 	// Update is called once per frame

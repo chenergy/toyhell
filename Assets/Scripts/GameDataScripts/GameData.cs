@@ -122,7 +122,7 @@ public class GameData {
 				instance.ui.GetComponent<PlayerRespawnTimer>().StartTimer(player); 
 			}else{
 				instance.robot.transform.position = instance.hooker.transform.position;
-				instance.robot.transform.parent = instance.hooker.transform;
+				//instance.robot.transform.parent = instance.hooker.transform;
 			}
 		}
 		else if (player.name == "Hooker"){
@@ -136,7 +136,7 @@ public class GameData {
 				instance.ui.GetComponent<PlayerRespawnTimer>().StartTimer(player); 
 			}else{
 				instance.hooker.transform.position = instance.robot.transform.position;
-				instance.hooker.transform.parent = instance.robot.transform;
+				//instance.hooker.transform.parent = instance.robot.transform;
 			}
 		}
 		
@@ -177,19 +177,27 @@ public class GameData {
 	
 	public void EnableRenderers(string name){
 		if (name == "Robot"){
-			foreach (SkinnedMeshRenderer smr in instance.robot_mesh.GetComponentsInChildren<SkinnedMeshRenderer>()){
+			foreach (SkinnedMeshRenderer smr in instance.robot.GetComponentsInChildren<SkinnedMeshRenderer>()){
 				smr.enabled = true;
 			}
-			foreach (MeshRenderer mr in instance.robot_ctr.GetComponentsInChildren<MeshRenderer>()){
+			foreach (MeshRenderer mr in instance.robot.GetComponentsInChildren<MeshRenderer>()){
 				mr.enabled = true;
+			}
+			if (instance.robot_weapon){
+				GameObject hitbox = instance.robot_socket_joint.GetComponentInChildren<Weapon>().hitbox;
+				hitbox.renderer.enabled = false;
 			}
 		}
 		else if (name == "Hooker"){
-			foreach (SkinnedMeshRenderer smr in instance.hooker_mesh.GetComponentsInChildren<SkinnedMeshRenderer>()){
+			foreach (SkinnedMeshRenderer smr in instance.hooker.GetComponentsInChildren<SkinnedMeshRenderer>()){
 				smr.enabled = true;
 			}
-			foreach (MeshRenderer mr in instance.hooker_ctr.GetComponentsInChildren<MeshRenderer>()){
+			foreach (MeshRenderer mr in instance.hooker.GetComponentsInChildren<MeshRenderer>()){
 				mr.enabled = true;
+			}
+			if (instance.hooker_weapon){
+				GameObject hitbox = instance.hooker_socket_joint.GetComponentInChildren<Weapon>().hitbox;
+				hitbox.renderer.enabled = false;
 			}
 		}
 	}
@@ -197,18 +205,18 @@ public class GameData {
 	
 	public void DisableRenderers(string name){
 		if (name == "Robot"){
-			foreach (SkinnedMeshRenderer smr in instance.robot_mesh.GetComponentsInChildren<SkinnedMeshRenderer>()){
+			foreach (SkinnedMeshRenderer smr in instance.robot.GetComponentsInChildren<SkinnedMeshRenderer>()){
 				smr.enabled = false;
 			}
-			foreach (MeshRenderer mr in instance.robot_ctr.GetComponentsInChildren<MeshRenderer>()){
+			foreach (MeshRenderer mr in instance.robot.GetComponentsInChildren<MeshRenderer>()){
 				mr.enabled = false;
 			}
 		}
 		else if (name == "Hooker"){
-			foreach (SkinnedMeshRenderer smr in instance.hooker_mesh.GetComponentsInChildren<SkinnedMeshRenderer>()){
+			foreach (SkinnedMeshRenderer smr in instance.hooker.GetComponentsInChildren<SkinnedMeshRenderer>()){
 				smr.enabled = false;
 			}
-			foreach (MeshRenderer mr in instance.hooker_ctr.GetComponentsInChildren<MeshRenderer>()){
+			foreach (MeshRenderer mr in instance.hooker.GetComponentsInChildren<MeshRenderer>()){
 				mr.enabled = false;
 			}
 		}

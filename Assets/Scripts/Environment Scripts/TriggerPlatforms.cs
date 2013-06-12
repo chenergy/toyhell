@@ -14,10 +14,6 @@ public class TriggerPlatforms : MonoBehaviour
 	
 	// Use this for initialization
 	void Start () {
-		this.hookerActivateKey = GameData.Hooker.GetComponent<PlayerInput>().controls.ActivateKey;
-		this.hookerActivateJoystick = GameData.Hooker.GetComponent<PlayerInput>().controls.ActivateJoystick;
-		this.robotActivateKey = GameData.Robot.GetComponent<PlayerInput>().controls.ActivateKey;
-		this.robotActivateJoystick = GameData.Robot.GetComponent<PlayerInput>().controls.ActivateJoystick;
 	}
 	
 	// Update is called once per frame
@@ -43,6 +39,10 @@ public class TriggerPlatforms : MonoBehaviour
 	{
 		if (player.tag == "Player")
 		{
+			this.hookerActivateKey = GameData.Hooker.GetComponent<PlayerInput>().controls.ActivateKey;
+			this.hookerActivateJoystick = GameData.Hooker.GetComponent<PlayerInput>().controls.ActivateJoystick;
+			this.robotActivateKey = GameData.Robot.GetComponent<PlayerInput>().controls.ActivateKey;
+			this.robotActivateJoystick = GameData.Robot.GetComponent<PlayerInput>().controls.ActivateJoystick;
 			colliding = true;
 		}
 		

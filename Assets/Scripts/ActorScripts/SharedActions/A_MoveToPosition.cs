@@ -31,9 +31,9 @@ namespace FSM
 				actor.controller.Move(new Vector3((direction.normalized * (actor.MoveSpeed * 0.01f)).x, 0, 
 					(direction.normalized * (actor.MoveSpeed * 0.01f)).z));
 			}
-			else{
+			/*else{
 				fsmc.dispatch("idle", o);
-			}
+			}*/
 			
 			if (actor.Animation){
 				if (!actor.IsGrounded){

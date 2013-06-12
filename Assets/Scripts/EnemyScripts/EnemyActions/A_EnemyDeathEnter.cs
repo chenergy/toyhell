@@ -13,6 +13,14 @@ namespace FSM
 			actor.ActionTimer = 0.0f;
 			
 			GameObject deathParts = (GameObject)GameObject.Instantiate(actor.DeathParts, actor.Position, Quaternion.identity);
+			foreach (Collider c in deathParts.GetComponentsInChildren<Collider>()){
+				foreach (Collider h in GameData.Hooker.GetComponentsInChildren<Collider>()){
+					Physics.IgnoreCollision(c, h);
+				}
+				foreach (Collider r in GameData.Robot.GetComponentsInChildren<Collider>()){
+					Physics.IgnoreCollision(c, r);
+				}
+			}
 			GameObject.Destroy(deathParts, actor.FadeTime);
 			
 			Vector3 offset = new Vector3(0.0f, 2.0f, 0.0f);

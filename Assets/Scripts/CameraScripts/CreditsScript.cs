@@ -28,7 +28,7 @@ public class CreditsScript : MonoBehaviour {
 			Application.Quit();
 		
 		if (Input.GetKey(KeyCode.Return)) 
-			Application.LoadLevel("cine1");
+			Application.LoadLevel("startMenu");
 	}
 	
 	void OnGUI()

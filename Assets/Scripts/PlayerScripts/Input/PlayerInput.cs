@@ -92,6 +92,15 @@ public class PlayerInput : MonoBehaviour
 	}
 	
 	private void SetControls(){
+		//Debug.Log(Application.platform.ToString().Substring(0, 3));
+		if (Application.platform.ToString().Substring(0, 3) == "OSX"){
+			string thisPlayer = controls.player.ToString();
+			controls.JumpJoystick = (KeyCode) Enum.Parse(typeof(KeyCode), "Joystick" + thisPlayer[1] + "Button16");
+			controls.ActivateJoystick = (KeyCode) Enum.Parse(typeof(KeyCode), "Joystick" + thisPlayer[1] + "Button19");
+			controls.AttackJoystick = (KeyCode) Enum.Parse(typeof(KeyCode), "Joystick" + thisPlayer[1] + "Button17");
+			controls.SwapJoystick = (KeyCode) Enum.Parse(typeof(KeyCode), "Joystick" + thisPlayer[1] + "Button18");
+		}
+		
 		buttons = new List<KeyCode>();
 		buttons.Add(controls.JumpKey);
 		buttons.Add(controls.ActivateKey);
@@ -108,6 +117,7 @@ public class PlayerInput : MonoBehaviour
 	}
 	
 	void Update (){
+		Debug.Log(controls.ActivateJoystick);
 		if (this.gobj != null){
 			// Update User Attributes
 			this.currentHP 	= this.player.CurrentHP;
@@ -136,38 +146,33 @@ public class PlayerInput : MonoBehaviour
 				}
 			}
 			
-			if (someKeyPressed){
-				if (!player.isFrozen){
-					float directionX = Input.GetAxisRaw(XAxis);
-					float directionY = Input.GetAxisRaw(YAxis);
-					//float directionX = Input.GetKey(KeyCode.Joystick1Button8);
-					
-					if ((Mathf.Abs(directionX) > 0) || (Input.GetKey(controls.LeftKey)) || (Input.GetKey(controls.RightKey))){
-						if (Input.GetKey(controls.LeftKey)){
-							directionX = -1;
-						}
-						else if (Input.GetKey(controls.RightKey)){
-							directionX = 1;
-						}
-						player.MoveX(directionX);
+			if (!player.isFrozen){
+				float directionX = Input.GetAxisRaw(XAxis);
+				float directionY = Input.GetAxisRaw(YAxis);
+				
+				if ((Mathf.Abs(directionX) > 0) || (Input.GetKey(controls.LeftKey)) || (Input.GetKey(controls.RightKey))){
+					if (Input.GetKey(controls.LeftKey)){
+						directionX = -1;
 					}
-					
-					/*else{
-						player.Idle();
-					}*/
-					
-					if ((Mathf.Abs(directionY) > 0) || (Input.GetKey(controls.UpKey)) || (Input.GetKey(controls.DownKey))){
-						if (player.isClimbing){
-							if (Input.GetKey(controls.DownKey)){
-								directionY = -1;
-							}
-							else if (Input.GetKey(controls.UpKey)){
-								directionY = 1;
-							}
-							player.MoveY(directionY);
-						}
+					else if (Input.GetKey(controls.RightKey)){
+						directionX = 1;
 					}
-					
+					player.MoveX(directionX);
+				}
+				
+				if ((Mathf.Abs(directionY) > 0) || (Input.GetKey(controls.UpKey)) || (Input.GetKey(controls.DownKey))){
+					if (player.isClimbing){
+						if (Input.GetKey(controls.DownKey)){
+							directionY = -1;
+						}
+						else if (Input.GetKey(controls.UpKey)){
+							directionY = 1;
+						}
+						player.MoveY(directionY);
+					}
+				}
+				
+				if (someKeyPressed || (directionX != 0) || (directionY != 0)){
 					if (Input.GetKeyDown(controls.AttackKey) || Input.GetKeyDown(controls.AttackJoystick)){
 						player.Attack(player.Forward);
 					}
@@ -175,9 +180,21 @@ public class PlayerInput : MonoBehaviour
 						player.Jump();
 					}
 				}
+				else{
+					player.isMoving = false;
+				}
 			}
-			else{
-				player.isMoving = false;
+			
+			// Parent to other object if dead
+			if (this.gobj == GameData.Hooker){
+				if (GameData.HookerLives <= 0){
+					this.gobj.transform.position = GameData.Robot.transform.position;
+				}
+			}
+			else if (this.gobj == GameData.Robot){
+				if (GameData.RobotLives <= 0){
+					this.gobj.transform.position = GameData.Hooker.transform.position;
+				}
 			}
 			
 			

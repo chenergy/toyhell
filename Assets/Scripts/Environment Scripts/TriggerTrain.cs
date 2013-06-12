@@ -37,7 +37,7 @@ public class TriggerTrain : MonoBehaviour
 		
     }
 	
-	void OnTriggerExti(Collider player){
+	void OnTriggerExit(Collider player){
 		colliding = false;
 	}
 }
