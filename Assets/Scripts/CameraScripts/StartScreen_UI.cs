@@ -37,7 +37,7 @@ public class StartScreen_UI : MonoBehaviour {
 		if (Input.GetKey(KeyCode.Escape))
 			Application.Quit();
 		
-		if (Input.GetKey(KeyCode.Joystick1Button7) || Input.GetKey(KeyCode.Joystick2Button7)) 
+		if (Input.GetKey(KeyCode.Joystick1Button7) || Input.GetKey(KeyCode.Joystick2Button7) || Input.GetKeyDown(KeyCode.Return)) 
 			Application.LoadLevel("cine1");
 	}
 	

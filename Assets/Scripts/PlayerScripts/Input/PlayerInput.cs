@@ -139,7 +139,7 @@ public class PlayerInput : MonoBehaviour
 			bool someKeyPressed = false;
 			if (Input.anyKey){
 				foreach (KeyCode key in this.buttons){
-					Debug.Log("Key: " + key);
+					//Debug.Log("Key: " + key);
 					if (Input.GetKey(key)){
 						someKeyPressed = true;
 					}
