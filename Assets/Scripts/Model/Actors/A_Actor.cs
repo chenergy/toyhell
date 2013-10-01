@@ -20,8 +20,8 @@ namespace ToyHell
 		public Dictionary<FighterAnimation, string> animationNameMap;
 		
 		protected A_Actor( GameObject gobj ){
-			this.gobj 		= gobj;
-			this.controller	= gobj.GetComponent<CharacterController>();
+			this.gobj 				= gobj;
+			this.controller			= gobj.GetComponent<CharacterController>();
 		}
 		
 		public virtual void Update()
@@ -38,13 +38,14 @@ namespace ToyHell
 			if (!this.controller.isGrounded){
 				this.movement.y += Physics.gravity.y * 0.1f;
 			}
+			/*
 			else{
 				if (this.jumpPressed == false){
 					this.gobj.transform.position = new Vector3(this.gobj.transform.position.x, 0.0f, this.gobj.transform.position.z);
 					this.movement.y = 0.0f;
 				}
 			}
-			
+			*/
 		}
 		
 		public bool IsGrounded{
@@ -60,9 +61,6 @@ namespace ToyHell
 					this.movement = Vector3.zero;
 				}
 			}
-			if (this.IsGrounded){
-				this.jumpPressed = false;
-			}
 		}
 		
 		public void AddMovement( Vector3 movement ){
@@ -74,7 +72,6 @@ namespace ToyHell
 				this.gobj.transform.position = new Vector3(this.gobj.transform.position.x, this.gobj.transform.position.y, 0.0f);
 		}
 		
-		protected virtual void Move( MoveCommand direction ) {}
 		protected virtual void InitStateMachine() {}
 		public abstract void TakeDamage ( int damage, Vector3 direction );
 	}

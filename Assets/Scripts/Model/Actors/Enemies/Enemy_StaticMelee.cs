@@ -8,7 +8,7 @@ namespace ToyHell
 {
 	public class Enemy_StaticMelee : Enemy_Static
 	{
-		public Enemy_StaticMelee ()
+		public Enemy_StaticMelee (GameObject gobj) : base(gobj)
 		{
 		}
 	}

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using ToyHell;
 
 [System.Serializable]
-public class Animations{
+public class FighterAnimations{
 	public AnimationClip Idle;
 	public AnimationClip Walk;
 	public AnimationClip SocketAttack;
@@ -16,15 +16,13 @@ public class Animations{
 	public AnimationClip Block;
 }
 
-public enum FighterAnimation { IDLE, WALK, SOCKET_ATTACK, SPECIAL_ATTACK, JUMP, HURT, SPAWN, BLOCK };
-
 public class FighterInput : MonoBehaviour
 {
 	public string 			name;
 	public float 			moveSpeed;
 	public float			jumpHeight;
 	public Transform		socketJoint;
-	public Animations 		animations;
+	public FighterAnimations animations;
 	
 	[HideInInspector]
 	public Dictionary<FighterAnimation, string> animationNameMap;

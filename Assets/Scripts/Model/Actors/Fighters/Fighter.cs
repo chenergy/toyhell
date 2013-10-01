@@ -70,6 +70,7 @@ namespace ToyHell
 		
 		public override void Update(){
 			this.AddGravity();
+			this.SetJumpPressed();
 			base.Update();
 		}
 		
@@ -123,7 +124,13 @@ namespace ToyHell
 			}
 		}
 		
-		protected override void Move (MoveCommand direction){
+		protected void SetJumpPressed(){
+			if (this.controller.isGrounded){
+				this.jumpPressed = false;
+			}
+		}
+		
+		protected void Move (MoveCommand direction){
 			if(direction == MoveCommand.LEFT)
 			{
 				this.gobj.transform.position -= new Vector3(this.moveSpeed * Time.deltaTime, 0, 0);

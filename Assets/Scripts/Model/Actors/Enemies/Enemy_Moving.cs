@@ -10,12 +10,30 @@ namespace ToyHell
 	{
 		protected GameObject	patrolPoint1;
 		protected GameObject	patrolPoint2;
-		protected GameObject	patrolTarget;
+		protected float 		patrolPauseTime;
+		protected GameObject	currentPatrolTarget;
+		protected float			agroRange;
+		protected bool			canJump;
 		
 		public Enemy_Moving ( GameObject gobj ) : base( gobj )
 		{
-			MovingEnemyInput input = gobj.GetComponent<MovingEnemyInput>();
+			MovingEnemyInput input 	= gobj.GetComponent<MovingEnemyInput>();
+			this.controller			= gobj.GetComponent<CharacterController>();
+			this.animationNameMap	= input.animationNameMap;
+			this.moveSpeed			= input.moveSpeed;
+			this.name				= input.name;
+			this.socketJoint		= input.socketJoint;
+			this.jumpHeight			= input.jumpHeight;
+			this.agroRange			= input.agroRange;
+			this.attackRange		= input.attackRange;
+			this.damage				= input.damage;
+			this.knockbackStrength	= input.knockbackStrength;
+			this.patrolPoint1		= input.patrolPoint1;
+			this.patrolPoint2		= input.patrolPoint2;
+			this.patrolPauseTime	= input.patrolPauseTime;
 			
+			this.canJump 				= false;
+			this.currentPatrolTarget 	= patrolPoint1;
 		}
 		
 		public override void Update ()
@@ -67,7 +85,12 @@ namespace ToyHell
 						break;
 					}
 					else if (this.IsFighterInAgroRange(fighter)){
-						this.MoveToPosition(fighter.gobj.transform.position);
+						if (fighter.gobj.transform.position.x > this.gobj.transform.position.x){
+							this.Move( MoveCommand.RIGHT );
+						}
+						else{
+							this.Move( MoveCommand.LEFT );
+						}
 						break;
 					}
 					else{
@@ -79,7 +102,7 @@ namespace ToyHell
 				}
 			}
 			
-			bool shouldJump = !this.IsGrounded;
+			bool shouldJump = !this.controller.isGrounded;
 			// If not, jump
 			if(shouldJump){
 				if (this.canJump){
@@ -127,6 +150,8 @@ namespace ToyHell
 			//}
 
 			//fsmc.CurrentState.update(fsmc, this);
+			this.AddGravity();
+			base.Update();
 		}
 		
 		/*public void MoveToPosition(Vector3 targetPosition){
@@ -139,18 +164,24 @@ namespace ToyHell
 			}
 		}*/
 		
-		protected override void Move (MoveCommand direction)
+		// Checks if self should pursue player
+		protected bool IsFighterInAgroRange(Fighter fighter){
+			float distance = (this.gobj.transform.position - fighter.gobj.transform.position).magnitude;
+			return (distance < this.agroRange);
+		}
+		
+		protected void Move (MoveCommand direction)
 		{
 			if (mc != MoveCommand.NONE && this.fsmc.CurrentState.Name != "attack"){
 				if(direction == MoveCommand.LEFT)
 				{
-					this.gobj.transform.position -= new Vector3(this.moveSpeed * Time.deltaTime, 0, 0);
+					this.controller.transform.Translate(-new Vector3(this.moveSpeed * Time.deltaTime, 0, 0));
 					this.gobj.transform.LookAt(this.gobj.transform.position + new Vector3(-1, 0, 0));
 					this.globalForwardVector = new Vector3(-1, 0, 0);
 				}
 				else if(direction == MoveCommand.RIGHT)
 				{
-					this.gobj.transform.position += new Vector3(this.moveSpeed * Time.deltaTime, 0, 0);
+					this.controller.transform.Translate(new Vector3(this.moveSpeed * Time.deltaTime, 0, 0));
 					this.gobj.transform.LookAt(this.gobj.transform.position + new Vector3(1, 0, 0));
 					this.globalForwardVector = new Vector3(1, 0, 0);
 				}
@@ -175,38 +206,35 @@ namespace ToyHell
 			*/
 		}
 		
-		public void Patrol(float patrolPauseTime){
+		public void Patrol(){
 			// Do not consider y in the target location
-			Vector3 PatrolTargetPosition = new Vector3(this.PatrolTarget.transform.position.x, this.Position.y, this.PatrolTarget.transform.position.z);
-			float distance = (PatrolTargetPosition - this.Position).magnitude;
+			Vector3 patrolTargetPosition = new Vector3(this.currentPatrolTarget.transform.position.x, this.gobj.transform.position.y, this.currentPatrolTarget.transform.position.z);
+			float distance = (patrolTargetPosition - this.gobj.transform.position).magnitude;
 			
 			if (distance < 0.2f){
-				if (this.ActionTimer < patrolPauseTime){	// Gets within distance of a patrol point and idles
-					this.ActionTimer += Time.deltaTime;
+				if (this.globalActionTimer < this.patrolPauseTime){	// Gets within distance of a patrol point and idles
+					this.globalActionTimer += Time.deltaTime;
 					this.fsmc.dispatch("idle", this);
 				}
 				
 				else{
-					this.ActionTimer = 0.0f;
-					if (this.PatrolTarget == this.PatrolPoint1){	// Move target between patrol points 1 and 2
-						//Debug.Log("Changed To point2");
-						this.PatrolTarget = this.PatrolPoint2;
-					}
-					else{
-						//Debug.Log("Changed To point1");
-						this.PatrolTarget = this.PatrolPoint1;
-					}
+					this.globalActionTimer = 0.0f;
+					// Move target between patrol points 1 and 2
+					this.currentPatrolTarget = (this.currentPatrolTarget == this.patrolPoint1) ? this.patrolPoint2 : this.patrolPoint1;
 				}
 			}
 			else{
-				this.MoveToPosition(this.PatrolTarget.transform.position);
+				//this.MoveToPosition(this.PatrolTarget.transform.position);
+				MoveCommand direction = (this.currentPatrolTarget.transform.position.x > this.gobj.transform.position.x) ? MoveCommand.RIGHT : MoveCommand.LEFT;
+				this.Move( direction );
 			}
 		}
 		
-		protected override void InitFSM(){
+		protected override void InitStateMachine(){
 			FSMAction noAction 		= new A_None();
 			
 			State S_Idle 			= new State("idle", new A_IdleEnter(), new A_Idle(), new A_IdleExit());
+			/*
 			State S_MoveToPosition	= new State("moveToPosition", new A_MoveToPositionEnter(), new A_MoveToPosition(), new A_EnemyMoveToPositionExit());
 			State S_Attack 			= new State("attack", new A_EnemyAttackEnter(), new A_EnemyAttack(), new A_EnemyAttackExit());
 			State S_Death 			= new State("death", new A_EnemyDeathEnter(), new A_EnemyDeath(), new A_EnemyDeathExit());
@@ -236,19 +264,8 @@ namespace ToyHell
 			S_Hurt.addTransition(T_Idle, "idle");
 			S_Hurt.addTransition(T_Death, "death");
 			S_Hurt.addTransition(T_Hurt, "hurt");
-			
-			PlayerData HookerData = new PlayerData(GameData.Hooker);
-			PlayerData RobotData = new PlayerData(GameData.Robot);
-			
+			*/
 			this.fsmc = FSM.FSM.createFSMInstance(S_Idle, noAction);
-			this.attributes = attributes;
-			
-			this.playerData = new Dictionary<GameObject, PlayerData>();
-			this.playerData[GameData.Hooker] = HookerData;
-			this.playerData[GameData.Robot] = RobotData;
-			
-			this.jumpStrength = 0.0f;
-			this.canJump = false;
 		}
 	}
 }

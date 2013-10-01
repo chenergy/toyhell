@@ -8,7 +8,7 @@ namespace ToyHell
 {
 	public class Enemy_MovingBoss : Enemy_Moving
 	{
-		public Enemy_MovingBoss ()
+		public Enemy_MovingBoss (GameObject gobj) : base(gobj)
 		{
 		}
 	}

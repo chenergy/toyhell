@@ -8,58 +8,25 @@ namespace ToyHell
 {
 	public abstract class A_Enemy : A_Actor
 	{
-		//protected GameObject 			gobj;
-		//protected CharacterController 	controller;
-		//protected Vector3				targetPosition;
-		//protected Quaternion			targetRotation;
-		//protected float					jumpPower;
-		//protected float					moveSpeed;
-		//protected float					turnSpeed;
-		//protected float					actionTimer;
-		protected float					attackSpeed;
+		// From EnemyInput
 		protected GameObject			deathParts;
-		protected float					knockbackStrength;
-		protected bool					hasAttacked;
-		protected float					fadeTime;
-		protected float					agroRange;
-		protected float					attackRange;
-		protected float					damage;
-		//protected float				attackTime;
 		protected GameObject			drop;
-		protected GameObject			hitbox;
+		protected float					attackSpeed;
+		protected float					knockbackStrength;
+		protected float					fadeTime;
+		protected float					attackRange;
+		protected float					damage;	
 		
-		//protected bool					isFlying;
-		//protected bool					isRanged;
-		//protected bool					isStatic;
-		
-		//protected GameObject			patrolPoint1;
-		//protected GameObject			patrolPoint2;
-		//protected GameObject			patrolTarget;
-		//protected GameObject			targetPlayer;
-		
-		
+		protected bool					hasAttacked;
 		protected float					currentHp;
 		protected float					maxHp;
-		
-		//protected FSMContext 			fsmc;
-		
-		//protected float 				jumpStrength;
-		protected bool					canJump;
-		
-		//protected Dictionary<FighterAnimation, string> animationNameMap;
-		
+
 		protected A_Enemy( GameObject gobj ) : base( gobj ) { }
 		
 		// Checks if self is close enough to attack
 		protected bool IsFighterInAttackRange(Fighter fighter){
-			float distance = Mathf.Abs( this.gobj.transform.position - fighter.gobj.transform.position );
+			float distance = ( this.gobj.transform.position - fighter.gobj.transform.position ).magnitude;
 			return (distance < this.attackRange);
-		}
-		
-		// Checks if self should pursue player
-		protected bool IsFighterInAgroRange(Fighter fighter){
-			float distance = Mathf.Abs( this.gobj.transform.position - fighter.gobj.transform.position );
-			return (distance < this.agroRange);
 		}
 		
 		public string StateName{
@@ -77,8 +44,6 @@ namespace ToyHell
 		protected void Hurt(){
 			fsmc.dispatch("hurt", this);
 		}
-		
-		
 	}
 }
 
